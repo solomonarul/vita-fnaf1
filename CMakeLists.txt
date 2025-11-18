@@ -14,6 +14,7 @@ add_executable(
         "src/core/file.cpp"
         "src/gl/window.cpp"
         "src/gl/shader.cpp"
+        "src/gl/texture.cpp"
 )
 
 find_package(SDL3 REQUIRED)

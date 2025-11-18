@@ -1,5 +1,6 @@
 #include "gl/window.hpp"
 #include "gl/shader.hpp"
+#include "gl/texture.hpp"
 
 #ifdef __psp2__
 int _newlib_heap_size_user   = 100 * 1024 * 1024;   // 100MB
@@ -11,7 +12,7 @@ int main(int argc, char *argv[])
     (void)argc; (void)argv;
 
     // Create and use window.
-    GL::Window window(GL::WindowConfig{.title = "Five Nights at Freddy's 1", .w = 960, .h = 544});
+    GL::Window window(GL::WindowConfig{.title = "Five Nights at Freddy's", .w = 960, .h = 544});
     window.use();
 
     // Build shaders
@@ -26,10 +27,10 @@ int main(int argc, char *argv[])
 
     // Background buffers.
     float verts[] = {
-        -1.0f, -1.0f, 0.0f, 0.0f,
-        1.0f, -1.0, 1.0f, 0.0f,
-        -1.0f, 1.0f, 0.0f, 1.0f,
-        1.0f, 1.0f, 1.0f, 1.0f
+        -1.0f, -1.0f, 0.0f, 1.0f,
+        1.0f, -1.0, 1.0f, 1.0f,
+        -1.0f, 1.0f, 0.0f, 0.0f,
+        1.0f, 1.0f, 1.0f, 0.0f,
     };
 
     GLuint vbo;
@@ -44,25 +45,12 @@ int main(int argc, char *argv[])
     glVertexAttribPointer(a_position, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
 
     glEnableVertexAttribArray(a_texture_coords);
-    glVertexAttribPointer(a_texture_coords, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));    
+    glVertexAttribPointer(a_texture_coords, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 
-    GLuint tex;
-    glGenTextures(1, &tex);
-    glBindTexture(GL_TEXTURE_2D, tex);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-    unsigned char pixels[] = {
-        255, 255, 0, 255,   0, 255, 255, 255,
-        255, 0, 0, 255,   255, 0, 255, 255
-    };
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+    GL::Texture background("assets/431.png");
 
     // Draw.
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, tex);
+    background.activate(GL_TEXTURE0);
 
     GLint u_texture = glGetUniformLocation(shader.id, "u_texture");
     glUniform1i(u_texture, 0);
@@ -74,7 +62,6 @@ int main(int argc, char *argv[])
     SDL_Delay(4000);
 
     // Cleanup.
-    glDeleteTextures(1, &tex);
     glDeleteBuffers(1, &vbo);
     return 0;
 }
