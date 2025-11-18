@@ -17,6 +17,7 @@ add_executable(
         "src/gl/shader.cpp"
         "src/gl/texture.cpp"
         "src/game/menu.cpp"
+        "src/game/menu/background.cpp"
 )
 
 find_package(SDL3 REQUIRED)

@@ -8,8 +8,8 @@ void StateManager::draw()
         state->draw();
 }
 
-void StateManager::update()
+void StateManager::update(double dt)
 {
     for(auto& state : states)
-        state->update();
+        state->update(dt);
 }
