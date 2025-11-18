@@ -32,4 +32,5 @@ vita_create_vpk(
     NAME ${VITA_APP_NAME}
     FILE platform/vita/sce_sys sce_sys
     FILE platform/vita/module module
+    FILE assets assets
 )

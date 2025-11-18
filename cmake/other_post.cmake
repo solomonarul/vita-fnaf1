@@ -4,3 +4,8 @@ target_link_libraries(
     PRIVATE
         GL
 )
+
+install(
+    DIRECTORY ${CMAKE_SOURCE_DIR}/assets
+    DESTINATION bin
+)

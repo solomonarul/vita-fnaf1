@@ -1,30 +1,10 @@
 #include "gl/window.hpp"
+#include "gl/shader.hpp"
 
 #ifdef __psp2__
 int _newlib_heap_size_user   = 100 * 1024 * 1024;   // 100MB
 unsigned int sceLibcHeapSize = 50 * 1024 * 1024;    // 50MB
 #endif
-
-// Simple passthrough shader
-const char *vertexShaderSrc =
-    "attribute vec2 aPos;"
-    "void main() {"
-    "    gl_Position = vec4(aPos, 0.0, 1.0);"
-    "}";
-
-const char *fragmentShaderSrc =
-    "precision mediump float;"
-    "void main() {"
-    "    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);"
-    "}";
-
-GLuint compile(GLenum type, const char *src)
-{
-    GLuint shader = glCreateShader(type);
-    glShaderSource(shader, 1, &src, NULL);
-    glCompileShader(shader);
-    return shader; // no error checks for brevity
-}
 
 int main(int argc, char *argv[])
 {
@@ -35,26 +15,21 @@ int main(int argc, char *argv[])
     window.use();
 
     // Build shaders
-    GLuint vs = compile(GL_VERTEX_SHADER,   vertexShaderSrc);
-    GLuint fs = compile(GL_FRAGMENT_SHADER, fragmentShaderSrc);
+    std::ifstream shader_in("assets/shaders/bg.vert");
+    GL::VertexShader vs(shader_in);
+    shader_in.close();
+    shader_in.open("assets/shaders/bg.frag");
+    GL::FragmentShader fs(shader_in);
+    shader_in.close();
 
-    GLuint program = glCreateProgram();
-    glAttachShader(program, vs);
-    glAttachShader(program, fs);
-    glLinkProgram(program);
-    glUseProgram(program);
+    GL::Shader shader(vs, fs);
 
-    // Rectangle in NDC
-    float x = -0.5f;
-    float y = -0.5f;
-    float w = 1.0f;
-    float h = 1.0f;
-
+    // Background buffers.
     float verts[] = {
-        x,     y,
-        x+w,   y,
-        x,     y+h,
-        x+w,   y+h
+        -1.0f, -1.0f, 0.0f, 0.0f,
+        1.0f, -1.0, 1.0f, 0.0f,
+        -1.0f, 1.0f, 0.0f, 1.0f,
+        1.0f, 1.0f, 1.0f, 1.0f
     };
 
     GLuint vbo;
@@ -62,23 +37,44 @@ int main(int argc, char *argv[])
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
 
-    GLint aPos = glGetAttribLocation(program, "aPos");
-    glEnableVertexAttribArray(aPos);
-    glVertexAttribPointer(aPos, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    GLint a_position = glGetAttribLocation(shader.id, "a_position");
+    GLint a_texture_coords = glGetAttribLocation(shader.id, "a_texture_coords");
 
-    // Draw loop (single frame)
+    glEnableVertexAttribArray(a_position);
+    glVertexAttribPointer(a_position, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+
+    glEnableVertexAttribArray(a_texture_coords);
+    glVertexAttribPointer(a_texture_coords, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));    
+
+    GLuint tex;
+    glGenTextures(1, &tex);
+    glBindTexture(GL_TEXTURE_2D, tex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+    unsigned char pixels[] = {
+        255, 255, 0, 255,   0, 255, 255, 255,
+        255, 0, 0, 255,   255, 0, 255, 255
+    };
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+
+    // Draw.
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, tex);
+
+    GLint u_texture = glGetUniformLocation(shader.id, "u_texture");
+    glUniform1i(u_texture, 0);
+
     glViewport(0, 0, 960, 544);
-    glClearColor(0, 0, 0, 1);
-    glClear(GL_COLOR_BUFFER_BIT);
-
+    shader.use();
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     window.swap();
     SDL_Delay(4000);
 
-    // Cleanup
-    glDeleteProgram(program);
-    glDeleteShader(vs);
-    glDeleteShader(fs);
+    // Cleanup.
+    glDeleteTextures(1, &tex);
     glDeleteBuffers(1, &vbo);
     return 0;
 }

@@ -11,7 +11,9 @@ project(app)
 add_executable(
     ${PROJECT_NAME}
         "src/main.cpp"
+        "src/core/file.cpp"
         "src/gl/window.cpp"
+        "src/gl/shader.cpp"
 )
 
 find_package(SDL3 REQUIRED)

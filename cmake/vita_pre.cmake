@@ -5,7 +5,7 @@ endif()
 set(CMAKE_TOOLCHAIN_FILE $ENV{VITASDK}/share/vita.toolchain.cmake CACHE PATH "")
 include("$ENV{VITASDK}/share/vita.cmake" REQUIRED)
 
-set(VITA_APP_NAME "Five Nights at Freddy's 1")
+set(VITA_APP_NAME "Five Nights at Freddy's")
 set(VITA_TITLEID "SLMN00001")
 set(VITA_VERSION "01.00")
 
