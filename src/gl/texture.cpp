@@ -38,6 +38,7 @@ Texture::~Texture()
 {
     if(this->id)
     {
+        stbi_image_free(this->data);
         glDeleteTextures(1, &this->id);
         std::cout << TTY_BLUE << "[INFO]: Destroyed texture (id: " << this->id << ")\n" << TTY_RESET;
     }

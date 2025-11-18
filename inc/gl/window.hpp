@@ -18,9 +18,9 @@ namespace GL
         SDL_Window* sdl = nullptr;
         SDL_GLContext gl = nullptr;
 
-        Window(WindowConfig);
         void use();
         void swap();
+        Window(WindowConfig);
         ~Window();
     };
 };
