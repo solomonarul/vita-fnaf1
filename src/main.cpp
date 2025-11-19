@@ -9,8 +9,8 @@
 #ifdef __psp2__
 // PSVita newlib + Sony SDK heap sizes.
 // TODO: I don't actually need this much.
-int _newlib_heap_size_user   = 10 * 1024 * 1024;   // 10MB
-unsigned int sceLibcHeapSize = 5 * 1024 * 1024;    //  5MB
+int _newlib_heap_size_user   = 100 * 1024 * 1024;   // 100MB
+unsigned int sceLibcHeapSize = 50 * 1024 * 1024;    //  50MB
 #endif
 
 int main(int argc, char *argv[])
