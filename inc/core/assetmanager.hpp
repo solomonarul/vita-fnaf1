@@ -64,24 +64,8 @@ namespace Core
             return std::dynamic_pointer_cast<T>(it->second);
         }
 
-        static bool remove(const std::string& key)
-        {
-            std::lock_guard<std::mutex> lock(mutex());
-
-            auto& assets = storage();
-            auto it = assets.find(key);
-            if (it == assets.end())
-                return false;
-
-            assets.erase(it);  
-            return true;
-        }
-
-        static void remove_all()
-        {
-            auto& assets = storage();
-            assets.clear();
-        }
+        static bool remove(const std::string& key);
+        static void remove_all();
 
     private:
         using Storage = std::unordered_map<std::string, AssetPtr>;

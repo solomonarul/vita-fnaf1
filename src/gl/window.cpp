@@ -22,7 +22,7 @@ static bool init_sdl_video()
 
 static void free_sdl_video()
 {
-    SDL_Quit();
+    SDL_QuitSubSystem(SDL_INIT_VIDEO);
 }
 
 Window::Window(WindowConfig cfg)
@@ -69,11 +69,12 @@ void Window::swap()
 Window::~Window()
 {
     window_count--;
-    if(window_count == 0) free_sdl_video();
+
+    if(this->gl)
+        SDL_GL_DestroyContext(this->gl), this->gl = nullptr;
 
     if(this->sdl)
         SDL_DestroyWindow(this->sdl), this->sdl = nullptr;
 
-    if(this->gl)
-        SDL_GL_DestroyContext(this->gl), this->gl = nullptr;
+    if(window_count == 0) free_sdl_video();
 }

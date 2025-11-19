@@ -1,9 +1,8 @@
 #pragma once
 
+#include "core/audio.hpp"
 #include "core/state.hpp"
 #include "game/menu/background.hpp"
-
-#include <SDL3_mixer/SDL_mixer.h>
 
 namespace Game::States
 {
@@ -12,14 +11,11 @@ namespace Game::States
         Menu();
         ~Menu();
 
-        MIX_Mixer* a_mixer;
-        MIX_Audio* a_static2;
-        MIX_Audio* a_blip3;
-        MIX_Audio* a_darkness_music;
-        MIX_Track* a_darkness_music_track;
+        std::shared_ptr<Core::Audio> a_static2;
+        std::shared_ptr<Core::Audio> a_darkness_music;
+        std::shared_ptr<Core::Audio> a_blip3;
 
         Objects::Menu::Background bkg;
-
         virtual void draw(int w, int h) override;
         virtual void update(double dt) override;
     };

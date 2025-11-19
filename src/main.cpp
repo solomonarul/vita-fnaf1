@@ -21,13 +21,6 @@ int main(int argc, char *argv[])
     GL::Window window(GL::WindowConfig{.title = "Five Nights at Freddy's", .w = 960, .h = 544});
     window.use();
 
-    // Audio mix.
-    if(!MIX_Init())
-    {
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Could not init SDL3 mixer!", SDL_GetError(), NULL);
-        exit(-1);
-    }
-
     Core::StateManager manager;
     manager.states.push_back(std::make_unique<Game::States::Menu>());
 
@@ -56,11 +49,8 @@ int main(int argc, char *argv[])
         }
         manager.update(dt.tick());
         manager.draw(window.w, window.h);
-
         window.swap();
     }
 
-    MIX_Quit();
-    
     return EXIT_SUCCESS;
 }

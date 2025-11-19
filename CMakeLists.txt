@@ -11,8 +11,9 @@ project(app)
 add_executable(
     ${PROJECT_NAME}
         "src/main.cpp"
-        "src/core/state.cpp"
         "src/core/file.cpp"
+        "src/core/state.cpp"
+        "src/core/audio.cpp"
         "src/core/assetmanager.cpp"
         "src/gl/window.cpp"
         "src/gl/shader.cpp"
