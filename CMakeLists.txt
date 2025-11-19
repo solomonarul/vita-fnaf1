@@ -21,6 +21,7 @@ add_executable(
 )
 
 find_package(SDL3 REQUIRED)
+find_package(SDL3_mixer REQUIRED)
 target_link_libraries(
     ${PROJECT_NAME}
     PUBLIC

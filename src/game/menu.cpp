@@ -5,7 +5,7 @@ using namespace Game;
 States::Menu::Menu()
 {
     SDL_AudioSpec spec;
-    spec.channels = 3;
+    spec.channels = 2;
     spec.format = SDL_AudioFormat::SDL_AUDIO_S16;
     spec.freq = 44100;
 
