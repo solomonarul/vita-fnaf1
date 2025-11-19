@@ -33,7 +33,7 @@ Window::Window(WindowConfig cfg)
         exit(-1);
     }
 
-    this->sdl = SDL_CreateWindow(cfg.title.c_str(), cfg.w, cfg.h, SDL_WINDOW_OPENGL);
+    this->sdl = SDL_CreateWindow(cfg.title.c_str(), cfg.w, cfg.h, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
     if(!this->sdl)
     {
         if(window_count == 0) free_sdl_video();

@@ -2,10 +2,10 @@
 
 using namespace Core;
 
-void StateManager::draw()
+void StateManager::draw(int w, int h)
 {
     for(auto& state : states)
-        state->draw();
+        state->draw(w, h);
 }
 
 void StateManager::update(double dt)

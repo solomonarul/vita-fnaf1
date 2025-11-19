@@ -25,6 +25,7 @@ target_link_libraries(
     ${PROJECT_NAME}
     PUBLIC
         SDL3
+        SDL3_mixer
 )
 target_include_directories(
     ${PROJECT_NAME}

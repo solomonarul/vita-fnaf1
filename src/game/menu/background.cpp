@@ -36,15 +36,32 @@ Background::Background()
     glEnableVertexAttribArray(a_texture_coords);
     glVertexAttribPointer(a_texture_coords, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 
+    this->shader->use();
+
     GLint u_texture = glGetUniformLocation(this->shader->id, "u_texture");
     glUniform1i(u_texture, 0);
 
-    this->u_alpha = glGetUniformLocation(this->shader->id, "u_alpha");
+    GLint u_static_texture = glGetUniformLocation(this->shader->id, "u_static_texture");
+    glUniform1i(u_static_texture, 1);
 
-    this->textures[0] = std::make_shared<GL::Texture>("assets/images/431.png");
-    this->textures[1] = std::make_shared<GL::Texture>("assets/images/440.png");
-    this->textures[2] = std::make_shared<GL::Texture>("assets/images/441.png");
-    this->textures[3] = std::make_shared<GL::Texture>("assets/images/442.png");
+    this->u_alpha = glGetUniformLocation(this->shader->id, "u_alpha");
+    this->u_static_alpha = glGetUniformLocation(this->shader->id, "u_static_alpha");
+
+    this->textures[0] = std::make_shared<GL::Texture>("assets/images/menu/background/431.png");
+    this->textures[1] = std::make_shared<GL::Texture>("assets/images/menu/background/440.png");
+    this->textures[2] = std::make_shared<GL::Texture>("assets/images/menu/background/441.png");
+    this->textures[3] = std::make_shared<GL::Texture>("assets/images/menu/background/442.png");
+
+    // TODO: this is messy.
+
+    this->static_textures[0] = std::make_shared<GL::Texture>("assets/images/menu/static/12.png");
+    this->static_textures[1] = std::make_shared<GL::Texture>("assets/images/menu/static/13.png");
+    this->static_textures[2] = std::make_shared<GL::Texture>("assets/images/menu/static/14.png");
+    this->static_textures[3] = std::make_shared<GL::Texture>("assets/images/menu/static/15.png");
+    this->static_textures[4] = std::make_shared<GL::Texture>("assets/images/menu/static/16.png");
+    this->static_textures[5] = std::make_shared<GL::Texture>("assets/images/menu/static/17.png");
+    this->static_textures[6] = std::make_shared<GL::Texture>("assets/images/menu/static/18.png");
+    this->static_textures[7] = std::make_shared<GL::Texture>("assets/images/menu/static/20.png");
 }
 
 Background::~Background()
@@ -55,6 +72,7 @@ Background::~Background()
 void Background::draw()
 {
     this->textures[current_texture]->activate(GL_TEXTURE0);
+    this->static_textures[current_static_texture]->activate(GL_TEXTURE1);
 
     this->shader->use();
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -62,17 +80,30 @@ void Background::draw()
 
 void Background::update(double dt)
 {
-    update_timer += dt;
+    this->update_timer += dt;
+    this->static_image_update_timer += dt;
+    this->static_update_timer += dt;
 
-    auto alpha = Core::Random::range(0, 249) / 255.0;
-    glUniform1f(this->u_alpha, alpha);
+    glUniform1f(this->u_alpha, Core::Random::range(0, 249) / 255.0);
 
-    while(update_timer > update_rate)
+    if(this->update_timer > update_rate)
     {
         auto current = Core::Random::range(0, 99);
         if(current < 96) current_texture = 0;
         else current_texture = current - 96;
-        update_timer -= update_rate;
+        this->update_timer = std::fmod(this->update_timer, update_rate);
+    }
+
+    if(this->static_image_update_timer > static_image_update_rate)
+    {
+        current_static_texture = (current_static_texture + 1) % 7;
+        this->static_image_update_timer = std::fmod(this->static_image_update_timer, static_image_update_rate);
+    }
+
+    if(this->static_update_timer > static_update_rate)
+    {
+        glUniform1f(this->u_static_alpha, Core::Random::range(50, 149) / 255.0);
+        this->static_update_timer = std::fmod(this->update_timer, static_update_rate);      
     }
 }
 
