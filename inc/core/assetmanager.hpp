@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <string>
+#include <mutex>
 #include <unordered_map>
 
 #include "asset.hpp"
