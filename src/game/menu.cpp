@@ -18,10 +18,7 @@ States::Menu::Menu()
 
     this->a_darkness_music_track = MIX_CreateTrack(this->a_mixer);
     MIX_SetTrackAudio(this->a_darkness_music_track, this->a_darkness_music);
-
-    SDL_PropertiesID id = SDL_CreateProperties();
-    SDL_SetNumberProperty(id, "MIX_PROP_PLAY_LOOPS_NUMBER", -1);
-    MIX_PlayTrack(this->a_darkness_music_track, id);
+    MIX_PlayTrack(this->a_darkness_music_track, 0);
     MIX_PlayAudio(this->a_mixer, this->a_blip3);
 }
 
@@ -44,5 +41,8 @@ void States::Menu::draw(int w, int h)
 
 void States::Menu::update(double dt)
 {
+    if(!MIX_TrackPlaying(this->a_darkness_music_track))
+        MIX_PlayTrack(this->a_darkness_music_track, 0);
+    
     this->bkg.update(dt);
 }
