@@ -18,7 +18,6 @@ int main(int argc, char *argv[])
     UNUSED(argc); UNUSED(argv);
 
     // Create and use window.
-    // TODO: Make resizable and figure out positioning in the screen for non-16:9 sizes.
     GL::Window window(GL::WindowConfig{.title = "Five Nights at Freddy's", .w = 960, .h = 544});
     window.use();
 
@@ -29,9 +28,8 @@ int main(int argc, char *argv[])
         exit(-1);
     }
 
-    // TODO: decouple someday states from renderer so we can perhaps draw states to a texture.
     Core::StateManager manager;
-    manager.states.push_back(std::make_shared<Game::States::Menu>());
+    manager.states.push_back(std::make_unique<Game::States::Menu>());
 
     bool running = true;
     SDL_Event event;
@@ -42,20 +40,22 @@ int main(int argc, char *argv[])
         {
             switch(event.type)
             {
+            case SDL_EVENT_WINDOW_RESIZED:
+                window.w = event.window.data1;
+                window.h = event.window.data2;
+                break;
+
             case SDL_EVENT_QUIT:
                 running = false;
                 break;
+            
             default:
                 // TODO: propagate through state manager.
                 break;
             }
         }
-
-        int window_x, window_y;
-        SDL_GetWindowSize(window.sdl, &window_x, &window_y);
-
         manager.update(dt.tick());
-        manager.draw(window_x, window_y);
+        manager.draw(window.w, window.h);
 
         window.swap();
     }

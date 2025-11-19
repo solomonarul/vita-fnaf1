@@ -50,6 +50,9 @@ Window::Window(WindowConfig cfg)
         exit(-1);
     }
 
+    this->w = cfg.w;
+    this->h = cfg.h;
+
     window_count++;
 }
 

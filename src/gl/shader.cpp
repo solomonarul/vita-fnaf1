@@ -9,7 +9,7 @@ using namespace GL;
 
 static GLchar log[512];
 
-VertexShader::VertexShader(std::ifstream& file) : VertexShader(Core::read_file_contents(file)) {}
+VertexShader::VertexShader(std::ifstream file) : VertexShader(Core::read_file_contents(file)) {}
 
 VertexShader::VertexShader(std::string code)
 {
@@ -38,7 +38,7 @@ VertexShader::~VertexShader()
         glDeleteShader(this->id), std::cout << TTY_BLUE << "[INFO]: Destroyed vertex shader (id: " << this->id << ")\n" << TTY_RESET;
 }
 
-FragmentShader::FragmentShader(std::ifstream& file) : FragmentShader(Core::read_file_contents(file)) {}
+FragmentShader::FragmentShader(std::ifstream file) : FragmentShader(Core::read_file_contents(file)) {}
 
 FragmentShader::FragmentShader(std::string code)
 {
@@ -91,6 +91,11 @@ Shader::Shader(const VertexShader& vert, const FragmentShader& frag)
 
     std::cout << TTY_BLUE << "[INFO]: Loaded full shader (id: " << this->id << ") made out of vertex (id: " << vert.id << ") and fragment (id: " << frag.id << ") shaders.\n" << TTY_RESET;
 }
+
+Shader::Shader(std::string vertex_path, std::string fragment_path) : Shader(
+    GL::VertexShader(std::ifstream(vertex_path)),
+    GL::FragmentShader(std::ifstream(fragment_path))
+) {}
 
 void Shader::use()
 {

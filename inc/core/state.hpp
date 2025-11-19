@@ -17,6 +17,6 @@ namespace Core
         void draw(int w, int h);
         void update(double dt);
 
-        std::vector<std::shared_ptr<IState>> states;
+        std::vector<std::unique_ptr<IState>> states;
     };
 };

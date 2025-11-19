@@ -4,17 +4,14 @@
 
 using namespace Game::Objects::Menu;
 
+#include "core/assetmanager.hpp"
+
 Background::Background()
 {
-    // Build shaders
-    std::ifstream shader_in("assets/shaders/menu/background.vert");
-    GL::VertexShader vs(shader_in);
-    shader_in.close();
-    shader_in.open("assets/shaders/menu/background.frag");
-    GL::FragmentShader fs(shader_in);
-    shader_in.close();
-
-    this->shader = std::make_unique<GL::Shader>(vs, fs);
+    this->shader = Core::AssetManager::load<GL::Shader>("bg-sh",
+        "assets/shaders/menu/background.vert",
+        "assets/shaders/menu/background.frag"
+    );
 
     static float verts[] = {
         -1.0f, -1.0f, 0.0f, 1.0f,
@@ -47,26 +44,25 @@ Background::Background()
     this->u_alpha = glGetUniformLocation(this->shader->id, "u_alpha");
     this->u_static_alpha = glGetUniformLocation(this->shader->id, "u_static_alpha");
 
-    this->textures[0] = std::make_shared<GL::Texture>("assets/images/menu/background/431.png");
-    this->textures[1] = std::make_shared<GL::Texture>("assets/images/menu/background/440.png");
-    this->textures[2] = std::make_shared<GL::Texture>("assets/images/menu/background/441.png");
-    this->textures[3] = std::make_shared<GL::Texture>("assets/images/menu/background/442.png");
-
-    // TODO: this is messy.
-
-    this->static_textures[0] = std::make_shared<GL::Texture>("assets/images/menu/static/12.png");
-    this->static_textures[1] = std::make_shared<GL::Texture>("assets/images/menu/static/13.png");
-    this->static_textures[2] = std::make_shared<GL::Texture>("assets/images/menu/static/14.png");
-    this->static_textures[3] = std::make_shared<GL::Texture>("assets/images/menu/static/15.png");
-    this->static_textures[4] = std::make_shared<GL::Texture>("assets/images/menu/static/16.png");
-    this->static_textures[5] = std::make_shared<GL::Texture>("assets/images/menu/static/17.png");
-    this->static_textures[6] = std::make_shared<GL::Texture>("assets/images/menu/static/18.png");
-    this->static_textures[7] = std::make_shared<GL::Texture>("assets/images/menu/static/20.png");
+    // TODO: this is still messy.
+    this->textures[0] = Core::AssetManager::load<GL::Texture>("bg-0", "assets/images/menu/background/431.png");
+    this->textures[1] = Core::AssetManager::load<GL::Texture>("bg-1", "assets/images/menu/background/440.png");
+    this->textures[2] = Core::AssetManager::load<GL::Texture>("bg-2", "assets/images/menu/background/441.png");
+    this->textures[3] = Core::AssetManager::load<GL::Texture>("bg-3", "assets/images/menu/background/442.png");
+    this->static_textures[0] = Core::AssetManager::load<GL::Texture>("st-0", "assets/images/menu/static/12.png");
+    this->static_textures[1] = Core::AssetManager::load<GL::Texture>("st-1", "assets/images/menu/static/13.png");
+    this->static_textures[2] = Core::AssetManager::load<GL::Texture>("st-2", "assets/images/menu/static/14.png");
+    this->static_textures[3] = Core::AssetManager::load<GL::Texture>("st-3", "assets/images/menu/static/15.png");
+    this->static_textures[4] = Core::AssetManager::load<GL::Texture>("st-4", "assets/images/menu/static/16.png");
+    this->static_textures[5] = Core::AssetManager::load<GL::Texture>("st-5", "assets/images/menu/static/17.png");
+    this->static_textures[6] = Core::AssetManager::load<GL::Texture>("st-6", "assets/images/menu/static/18.png");
+    this->static_textures[7] = Core::AssetManager::load<GL::Texture>("st-7", "assets/images/menu/static/20.png");
 }
 
 Background::~Background()
 {
     glDeleteBuffers(1, &this->vbo);
+    Core::AssetManager::remove_all();
 }
 
 void Background::draw()
