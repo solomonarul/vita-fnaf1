@@ -18,6 +18,8 @@ add_executable(
         "src/gl/window.cpp"
         "src/gl/shader.cpp"
         "src/gl/texture.cpp"
+        "src/gl/mtsdffont.cpp"
+        "src/game/main_loading.cpp"
         "src/game/menu.cpp"
         "src/game/menu/background.cpp"
 )

@@ -52,7 +52,7 @@ namespace Core
         }
 
         template<typename T>
-        static std::shared_ptr<T> get(const std::string& key)
+        static std::shared_ptr<T>& get(const std::string& key)
         {
             std::lock_guard<std::mutex> lock(mutex());
 
@@ -66,6 +66,25 @@ namespace Core
 
         static bool remove(const std::string& key);
         static void remove_all();
+
+        template<typename T>
+        static bool remove_ptr(const std::shared_ptr<T>& ptr)
+        {
+            if (!ptr)
+                return false;
+
+            std::lock_guard<std::mutex> lock(mutex());
+
+            auto& assets = storage();
+
+            for (auto it = assets.begin(); it != assets.end(); ++it)
+                if (std::dynamic_pointer_cast<T>(it->second) == ptr)
+                {
+                    assets.erase(it);
+                    return true;
+                }
+            return false;
+        }
 
     private:
         using Storage = std::unordered_map<std::string, AssetPtr>;

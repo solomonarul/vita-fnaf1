@@ -62,11 +62,16 @@ Background::Background()
 Background::~Background()
 {
     glDeleteBuffers(1, &this->vbo);
-    Core::AssetManager::remove_all();
+    for(size_t index = 0; index < 4; index++)
+        Core::AssetManager::remove_ptr(this->textures[index]);
+
+    for(size_t index = 0; index < 8; index++)
+        Core::AssetManager::remove_ptr(this->static_textures[index]);
 }
 
 void Background::draw()
 {
+    glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
     this->textures[current_texture]->activate(GL_TEXTURE0);
     this->static_textures[current_static_texture]->activate(GL_TEXTURE1);
 

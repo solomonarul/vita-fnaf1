@@ -1,10 +1,8 @@
 #include "core/defines.hpp"
 #include "core/delta.hpp"
 #include "core/state.hpp"
-#include "game/menu.hpp"
+#include "game/main_loading.hpp"
 #include "gl/window.hpp"
-
-#include <SDL3_mixer/SDL_mixer.h>
 
 #ifdef __psp2__
 // PSVita newlib + Sony SDK heap sizes.
@@ -18,11 +16,11 @@ int main(int argc, char *argv[])
     UNUSED(argc); UNUSED(argv);
 
     // Create and use window.
-    GL::Window window(GL::WindowConfig{.title = "Five Nights at Freddy's", .w = 960, .h = 544});
+    GL::Window window({.title = "Five Nights at Freddy's", .w = 960, .h = 544});
     window.use();
 
     Core::StateManager manager;
-    manager.states.push_back(std::make_unique<Game::States::Menu>());
+    manager.states.push_back(std::make_unique<Game::States::MainLoading>());
 
     bool running = true;
     SDL_Event event;

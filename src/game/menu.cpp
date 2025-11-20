@@ -17,7 +17,10 @@ States::Menu::Menu()
 
 States::Menu::~Menu()
 {
-
+    if(this->a_static2)
+        Core::AssetManager::remove_ptr(this->a_static2);
+    Core::AssetManager::remove_ptr(this->a_darkness_music);
+    Core::AssetManager::remove_ptr(this->a_blip3);
 }
 
 void States::Menu::draw(int w, int h)
@@ -36,6 +39,9 @@ void States::Menu::update(double dt)
 {
     if(!MIX_TrackPlaying(this->a_darkness_music->track))
         MIX_PlayTrack(this->a_darkness_music->track, 0);
+
+    if(this->a_static2 && !MIX_TrackPlaying(this->a_static2->track))
+        this->a_static2 = nullptr, Core::AssetManager::remove("a_static2");
 
     this->bkg.update(dt);
 }

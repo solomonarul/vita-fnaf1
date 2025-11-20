@@ -11,9 +11,7 @@ namespace Game::States
         Menu();
         ~Menu();
 
-        std::shared_ptr<Core::Audio> a_static2;
-        std::shared_ptr<Core::Audio> a_darkness_music;
-        std::shared_ptr<Core::Audio> a_blip3;
+        std::shared_ptr<Core::Audio> a_static2, a_darkness_music, a_blip3;
 
         Objects::Menu::Background bkg;
         virtual void draw(int w, int h) override;
