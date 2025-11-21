@@ -45,18 +45,18 @@ Background::Background()
     this->u_static_alpha = glGetUniformLocation(this->shader->id, "u_static_alpha");
 
     // TODO: this is still messy.
-    this->textures[0] = Core::AssetManager::load<GL::Texture>("t_bg_0", "assets/images/menu/background/431.png");
-    this->textures[1] = Core::AssetManager::load<GL::Texture>("t_bg_1", "assets/images/menu/background/440.png");
-    this->textures[2] = Core::AssetManager::load<GL::Texture>("t_bg_2", "assets/images/menu/background/441.png");
-    this->textures[3] = Core::AssetManager::load<GL::Texture>("t_bg_3", "assets/images/menu/background/442.png");
-    this->static_textures[0] = Core::AssetManager::load<GL::Texture>("t_st_0", "assets/images/menu/static/12.png");
-    this->static_textures[1] = Core::AssetManager::load<GL::Texture>("t_st_1", "assets/images/menu/static/13.png");
-    this->static_textures[2] = Core::AssetManager::load<GL::Texture>("t_st_2", "assets/images/menu/static/14.png");
-    this->static_textures[3] = Core::AssetManager::load<GL::Texture>("t_st_3", "assets/images/menu/static/15.png");
-    this->static_textures[4] = Core::AssetManager::load<GL::Texture>("t_st_4", "assets/images/menu/static/16.png");
-    this->static_textures[5] = Core::AssetManager::load<GL::Texture>("t_st_5", "assets/images/menu/static/17.png");
-    this->static_textures[6] = Core::AssetManager::load<GL::Texture>("t_st_6", "assets/images/menu/static/18.png");
-    this->static_textures[7] = Core::AssetManager::load<GL::Texture>("t_st_7", "assets/images/menu/static/20.png");
+    this->textures[0] = Core::AssetManager::load<GL::Texture>("t_bg_0", GL::TextureConfig{"assets/images/menu/background/431.png"});
+    this->textures[1] = Core::AssetManager::load<GL::Texture>("t_bg_1", GL::TextureConfig{"assets/images/menu/background/440.png"});
+    this->textures[2] = Core::AssetManager::load<GL::Texture>("t_bg_2", GL::TextureConfig{"assets/images/menu/background/441.png"});
+    this->textures[3] = Core::AssetManager::load<GL::Texture>("t_bg_3", GL::TextureConfig{"assets/images/menu/background/442.png"});
+    this->static_textures[0] = Core::AssetManager::load<GL::Texture>("t_st_0", GL::TextureConfig{"assets/images/menu/static/12.png"});
+    this->static_textures[1] = Core::AssetManager::load<GL::Texture>("t_st_1", GL::TextureConfig{"assets/images/menu/static/13.png"});
+    this->static_textures[2] = Core::AssetManager::load<GL::Texture>("t_st_2", GL::TextureConfig{"assets/images/menu/static/14.png"});
+    this->static_textures[3] = Core::AssetManager::load<GL::Texture>("t_st_3", GL::TextureConfig{"assets/images/menu/static/15.png"});
+    this->static_textures[4] = Core::AssetManager::load<GL::Texture>("t_st_4", GL::TextureConfig{"assets/images/menu/static/16.png"});
+    this->static_textures[5] = Core::AssetManager::load<GL::Texture>("t_st_5", GL::TextureConfig{"assets/images/menu/static/17.png"});
+    this->static_textures[6] = Core::AssetManager::load<GL::Texture>("t_st_6", GL::TextureConfig{"assets/images/menu/static/18.png"});
+    this->static_textures[7] = Core::AssetManager::load<GL::Texture>("t_st_7", GL::TextureConfig{"assets/images/menu/static/20.png"});
 }
 
 Background::~Background()

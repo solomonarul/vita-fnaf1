@@ -14,7 +14,13 @@ MTSDF::Font::Font(const std::string& path, size_t count_x, size_t count_y, std::
     if(!default_shader)
         default_shader = std::make_unique<GL::Shader>("assets/shaders/mtsdf_default.vert", "assets/shaders/mtsdf_default.frag");
     
-    this->texture = std::make_unique<Texture>(path);
+    this->texture = std::make_unique<Texture>(GL::TextureConfig{
+        .path = path,
+        .min_filter = GL_LINEAR,
+        .mag_filter = GL_LINEAR,
+        .gpu_format = GL_RGBA,
+        .format = GL_RGBA,
+    });
     this->count_x = count_x, this->count_y = count_y;
 
     size_t index = 0;
