@@ -12,7 +12,7 @@ namespace GL
     {
         GLuint id = 0;
 
-        VertexShader(std::ifstream);
+        VertexShader(std::ifstream&);
         VertexShader(std::string);
         ~VertexShader();
     };
@@ -21,7 +21,7 @@ namespace GL
     {
         GLuint id = 0;
 
-        FragmentShader(std::ifstream);
+        FragmentShader(std::ifstream&);
         FragmentShader(std::string);
         ~FragmentShader();
     };
@@ -31,8 +31,8 @@ namespace GL
         GLuint id = 0;
         
         void use();
-        Shader(const VertexShader&, const FragmentShader&);
         Shader(std::string, std::string);
+        Shader(const VertexShader&, const FragmentShader&);
         ~Shader();
     };
 };

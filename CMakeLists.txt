@@ -18,11 +18,19 @@ add_executable(
         "src/gl/window.cpp"
         "src/gl/shader.cpp"
         "src/gl/texture.cpp"
-        "src/gl/mtsdffont.cpp"
+        "src/gl/mtsdf/font.cpp"
+        "src/gl/mtsdf/text.cpp"
         "src/game/main_loading.cpp"
         "src/game/menu.cpp"
         "src/game/menu/background.cpp"
 )
+
+set(CMAKE_POSITION_INDEPENDENT_CODE OFF)
+set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -no-pie")
+
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g3 -O0 -fno-omit-frame-pointer -no-pie")
+set(CMAKE_C_FLAGS_DEBUG   "${CMAKE_C_FLAGS_DEBUG}   -g3 -O0 -fno-omit-frame-pointer -no-pie")
+
 
 find_package(SDL3 REQUIRED)
 find_package(SDL3_mixer REQUIRED)

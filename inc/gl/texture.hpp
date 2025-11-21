@@ -12,7 +12,7 @@ namespace GL
     {
         GLuint id;
         int w, h, ch;
-        uint8_t* data;
+        void* data;
         
         void bind();
         void activate(GLenum);

@@ -4,7 +4,7 @@ using namespace Core;
 
 bool AssetManager::remove(const std::string& key)
 {
-    std::lock_guard<std::mutex> lock(mutex());
+    std::lock_guard<std::recursive_mutex> lock(mutex());
 
     auto& assets = storage();
     auto it = assets.find(key);
@@ -27,8 +27,8 @@ AssetManager::Storage& AssetManager::storage()
     return s;
 }
 
-std::mutex& AssetManager::mutex()
+std::recursive_mutex& AssetManager::mutex()
 {
-    static std::mutex m;
+    static std::recursive_mutex m;
     return m;
 }

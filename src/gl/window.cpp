@@ -1,7 +1,10 @@
 #include "gl/window.hpp"
 
+#include "core/defines.hpp"
+
 #include <cstddef>
 #include <cstdlib>
+#include <iostream>
 
 using namespace GL;
 
@@ -50,10 +53,17 @@ Window::Window(WindowConfig cfg)
         exit(-1);
     }
 
+    SDL_GL_MakeCurrent(this->sdl, this->gl);
+    
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     this->w = cfg.w;
     this->h = cfg.h;
 
     window_count++;
+
+    std::cout << TTY_BLUE << "[INFO]: Created SDL GLES 2.0 window (title: " << cfg.title << ") (w: " << cfg.w << ") (h: " << cfg.h << ")\n" << TTY_RESET;
 }
 
 void Window::use()

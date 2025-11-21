@@ -57,3 +57,6 @@ r:
 
 rv:
 	@vita3k ./out/vpk/${TARGET}.vpk
+
+sv:
+	@curl -T ./out/vpk/${TARGET}.vpk ftp://$(VITA_ADDR)/ux0:/VPK/${TARGET}.vpk

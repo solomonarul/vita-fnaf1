@@ -2,6 +2,7 @@
 #include "core/delta.hpp"
 #include "core/state.hpp"
 #include "game/main_loading.hpp"
+#include "game/menu.hpp"
 #include "gl/window.hpp"
 
 #ifdef __psp2__
@@ -20,7 +21,7 @@ int main(int argc, char *argv[])
     window.use();
 
     Core::StateManager manager;
-    manager.states.push_back(std::make_unique<Game::States::MainLoading>());
+    manager.states.emplace_back(std::make_unique<Game::States::MainLoading>());
 
     bool running = true;
     SDL_Event event;

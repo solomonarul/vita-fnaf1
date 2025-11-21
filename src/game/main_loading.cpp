@@ -7,7 +7,10 @@ using namespace Game;
 
 States::MainLoading::MainLoading()
 {
-    this->f_consolas = Core::AssetManager::load<GL::MTSDFFont>("f_consolas", "assets/images/fonts/consolas.stf.png");
+    this->f_consolas = Core::AssetManager::load<GL::MTSDF::Font>("f_consolas", "assets/images/fonts/consolas.stf.png");
+    this->t_warning = std::make_unique<GL::MTSDF::Text>(f_consolas, "WARNING!");
+    this->t_warning->x = -0.5;
+    this->t_warning->y = -0.5;
 }
 
 States::MainLoading::~MainLoading()
@@ -24,6 +27,11 @@ void States::MainLoading::draw(int w, int h)
 #else
     glViewport(0, 0, w, h);
 #endif
+
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    this->t_warning->draw(GL::MTSDF::Font::default_shader);
 }
 
 void States::MainLoading::update(double dt)

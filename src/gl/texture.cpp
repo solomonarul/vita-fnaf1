@@ -19,7 +19,7 @@ Texture::Texture(std::string path)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
     this->data = stbi_load(path.c_str(), &this->w, &this->h, &this->ch, 0);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, this->w, this->h, 0, GL_RGB, GL_UNSIGNED_BYTE, this->data);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->w, this->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->data);
     std::cout << TTY_BLUE << "[INFO]: Loaded texture (id: " << this->id << ") (path: " << path << ") (w: " << this->w << ") (h: " << this->h << ") (ch: " << this->ch << ")\n" << TTY_RESET;
 
     stbi_image_free(this->data);

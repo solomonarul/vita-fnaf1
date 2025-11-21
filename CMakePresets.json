@@ -6,8 +6,7 @@
         "generator": "Unix Makefiles",
         "binaryDir": "${sourceDir}/build",
         "cacheVariables": {
-          "CMAKE_BUILD_PLATFORM": "WINDOWS",
-          "CMAKE_BUILD_ARCH": "x86_64"
+          "CMAKE_BUILD_PLATFORM": "WINDOWS"
         } 
       },
       {
@@ -37,8 +36,7 @@
         "generator": "Unix Makefiles",
         "binaryDir": "${sourceDir}/build",
         "cacheVariables": {
-          "CMAKE_BUILD_PLATFORM": "UNIX",
-          "CMAKE_BUILD_ARCH": "x86_64"
+          "CMAKE_BUILD_PLATFORM": "UNIX"
         } 
       },
       {
@@ -68,8 +66,7 @@
         "generator": "Unix Makefiles",
         "binaryDir": "${sourceDir}/build",
         "cacheVariables": {
-          "CMAKE_BUILD_PLATFORM": "VITA",
-          "CMAKE_BUILD_ARCH": "armv7"
+          "CMAKE_BUILD_PLATFORM": "VITA"
         } 
       },
       {

@@ -20,7 +20,7 @@ namespace Core
         template<typename T, typename... Args>
         static std::shared_ptr<T> load(const std::string& key, Args&&... args)
         {
-            std::lock_guard<std::mutex> lock(mutex());
+            std::lock_guard<std::recursive_mutex> lock(mutex());
 
             auto& assets = storage();
             auto it = assets.find(key);
@@ -38,7 +38,7 @@ namespace Core
             if (!asset)
                 return false;
 
-            std::lock_guard<std::mutex> lock(mutex());
+            std::lock_guard<std::recursive_mutex> lock(mutex());
 
             auto& assets = storage();
             auto it = assets.find(key);
@@ -54,7 +54,7 @@ namespace Core
         template<typename T>
         static std::shared_ptr<T>& get(const std::string& key)
         {
-            std::lock_guard<std::mutex> lock(mutex());
+            std::lock_guard<std::recursive_mutex> lock(mutex());
 
             auto& assets = storage();
             auto it = assets.find(key);
@@ -73,7 +73,7 @@ namespace Core
             if (!ptr)
                 return false;
 
-            std::lock_guard<std::mutex> lock(mutex());
+            std::lock_guard<std::recursive_mutex> lock(mutex());
 
             auto& assets = storage();
 
@@ -90,6 +90,6 @@ namespace Core
         using Storage = std::unordered_map<std::string, AssetPtr>;
 
         static Storage& storage();
-        static std::mutex& mutex();
+        static std::recursive_mutex& mutex();
     };
 };
