@@ -84,7 +84,7 @@ void GL::MTSDF::Text::draw(std::unique_ptr<GL::Shader>& shader)
 
     shader->use();
 
-    GLint u_color = glGetUniformLocation(shader->id, "u_texture");
+    GLint u_color = glGetUniformLocation(shader->id, "u_color");
     glUniform4f(u_color, color.r / 255.0, color.g / 255.0, color.b / 255.0, color.a / 255.0);
     
     font->texture->activate(GL_TEXTURE0);

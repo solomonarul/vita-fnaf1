@@ -22,7 +22,7 @@ namespace Game::Objects::Menu
         constexpr static double update_rate = 8.0 / 100;
         double update_timer = 0;
 
-        constexpr static double static_image_update_rate = 1.0 / 15;
+        constexpr static double static_image_update_rate = 1.0 / 10;
         double static_image_update_timer = 0;
 
         constexpr static double static_update_rate = 9.0 / 100;

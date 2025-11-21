@@ -20,9 +20,8 @@ namespace GL::MTSDF
         float s_x = 1.0f, s_y = 1.0f;
         SDL_Color color = {255, 255, 255, 255};
 
-        // GLES2 VBO
         GLuint vbo = 0;
-        std::vector<float> vertexData; // x, y, u, v per vertex
+        std::vector<float> vertexData;
 
         Text(std::shared_ptr<Font>, const std::string&);
         ~Text();

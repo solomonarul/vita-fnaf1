@@ -1,6 +1,7 @@
 #include "game/menu/background.hpp"
 
 #include "core/random.hpp"
+#include <iostream>
 
 using namespace Game::Objects::Menu;
 

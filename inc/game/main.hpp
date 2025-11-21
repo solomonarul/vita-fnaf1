@@ -6,13 +6,15 @@
 
 namespace Game::States
 {
-    struct MainLoading : public Core::IState
+    struct Main : public Core::IState
     {
-        MainLoading();
-        ~MainLoading();
+        Main(Core::StateManager&);
+        ~Main();
 
         std::unique_ptr<GL::MTSDF::Text> t_warning[3];
         std::shared_ptr<GL::MTSDF::Font> f_tahoma;
+
+        double timer = 0;
 
         virtual void draw(int w, int h) override;
         virtual void update(double dt) override;

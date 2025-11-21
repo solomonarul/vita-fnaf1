@@ -1,6 +1,7 @@
 precision mediump float;
 
 uniform sampler2D u_texture;
+uniform vec4 u_color;
 
 varying vec2 v_texture_coords;
 
@@ -17,6 +18,6 @@ void main()
     float sd = median(sample.r, sample.g, sample.b);
     float screenPxDistance = pxRange * 960.0 * (sd - 0.5);  // TODO: replace 960.0 with actual canvas width.
     float opacity = smoothstep(-0.5, 0.5, screenPxDistance);
-    vec4 result = mix(vec4(0.0, 0.0, 0.0, 0.0), vec4(1.0, 1.0, 1.0, 1.0), opacity);
+    vec4 result = mix(vec4(0.0, 0.0, 0.0, 0.0), u_color, opacity);
     gl_FragColor = result;
 }

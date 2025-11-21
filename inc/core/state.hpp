@@ -5,8 +5,13 @@
 
 namespace Core
 {
+    struct StateManager;
+    
     struct IState
     {
+        IState(StateManager& sm) : state_manager(sm) { }
+        
+        StateManager& state_manager;
         virtual ~IState() = default;
         virtual void draw(int w, int h) = 0;
         virtual void update(double dt) = 0;

@@ -1,11 +1,14 @@
-#include "game/main_loading.hpp"
+#include "game/main.hpp"
 
-#include "core/assetmanager.hpp"
 #include "core/defines.hpp"
+#include "core/assetmanager.hpp"
+#include "game/menu.hpp"
+
+#include <iostream>
 
 using namespace Game;
 
-States::MainLoading::MainLoading()
+States::Main::Main(Core::StateManager& sm) : IState::IState(sm)
 {
     this->f_tahoma = Core::AssetManager::load<GL::MTSDF::Font>("f_tahoma", "assets/images/fonts/tahoma.stf.png", "assets/images/fonts/tahoma.csv");
 
@@ -33,12 +36,13 @@ States::MainLoading::MainLoading()
     this->t_warning[2]->s_x = 0.66;
 }
 
-States::MainLoading::~MainLoading()
+States::Main::~Main()
 {
-
+    Core::AssetManager::remove("f_tahoma");
+    std::cout << TTY_BLUE <<  "[INFO]: Destroyed Main state.\n" << TTY_RESET; 
 }
 
-void States::MainLoading::draw(int w, int h)
+void States::Main::draw(int w, int h)
 {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -55,7 +59,9 @@ void States::MainLoading::draw(int w, int h)
         this->t_warning[index]->draw(GL::MTSDF::Font::default_shader);
 }
 
-void States::MainLoading::update(double dt)
+void States::Main::update(double dt)
 {
-    UNUSED(dt);
+    this->timer += dt;
+    if(this->timer > 3)
+        this->state_manager.states.emplace_back(std::make_unique<Game::States::Menu>(this->state_manager));
 }

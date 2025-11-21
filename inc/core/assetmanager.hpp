@@ -9,8 +9,6 @@
 
 namespace Core
 {
-    // TODO: check this, looks all right.
-
     using AssetPtr = std::shared_ptr<Asset>;
 
     struct AssetManager

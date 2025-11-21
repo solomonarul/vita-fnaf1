@@ -12,7 +12,6 @@ static size_t window_count = 0;
 
 static bool init_sdl_video()
 {
-    // Init SDL video
     bool status = SDL_Init(SDL_INIT_VIDEO);
 
     // Request GLES2

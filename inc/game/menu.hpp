@@ -8,7 +8,7 @@ namespace Game::States
 {
     struct Menu : public Core::IState
     {
-        Menu();
+        Menu(Core::StateManager&);
         ~Menu();
 
         std::shared_ptr<Core::Audio> a_static2, a_darkness_music, a_blip3;

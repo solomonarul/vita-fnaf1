@@ -1,11 +1,16 @@
 #include "game/menu.hpp"
 
 #include "core/assetmanager.hpp"
+#include "core/defines.hpp"
+
+#include <iostream>
 
 using namespace Game;
 
-States::Menu::Menu()
+States::Menu::Menu(Core::StateManager& sm) : IState::IState(sm)
 {
+    sm.states.erase(sm.states.begin());
+
     this->a_static2 = Core::AssetManager::load<Core::Audio>("a_static2", "assets/audio/static2.mp3", true);
     this->a_darkness_music = Core::AssetManager::load<Core::Audio>("a_darkness_music", "assets/audio/darkness music.mp3", true);
     this->a_blip3 = Core::AssetManager::load<Core::Audio>("a_blip3", "assets/audio/blip3.mp3", true);
@@ -21,6 +26,8 @@ States::Menu::~Menu()
         Core::AssetManager::remove_ptr(this->a_static2);
     Core::AssetManager::remove_ptr(this->a_darkness_music);
     Core::AssetManager::remove_ptr(this->a_blip3);
+
+    std::cout << TTY_BLUE << "[INFO]: Destroyed Menu state.\n" << TTY_RESET; 
 }
 
 void States::Menu::draw(int w, int h)
