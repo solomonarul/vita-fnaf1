@@ -15,8 +15,9 @@ namespace GL::MTSDF
     {
         std::shared_ptr<Font> font;
         std::string text;
-        float x = 0.0f, y = 0.0f, w = 1.0f, h = 1.0f;
-        float s = 1.0f;
+        float x = 9.0f, y = 9.0f, s = 1.0f;
+        float o_x = 0.0f, o_y = 0.0f;
+        float s_x = 1.0f, s_y = 1.0f;
         SDL_Color color = {255, 255, 255, 255};
 
         // GLES2 VBO

@@ -6,10 +6,11 @@ using namespace GL;
 #include "gl/shader.hpp"
 
 #include <iostream>
+#include <sstream>
 
 std::unique_ptr<GL::Shader> MTSDF::Font::default_shader;
 
-MTSDF::Font::Font(const std::string& path, size_t count_x, size_t count_y, std::string charset)
+MTSDF::Font::Font(const std::string& path, const std::string& csv_path)
 {
     if(!default_shader)
         default_shader = std::make_unique<GL::Shader>("assets/shaders/mtsdf_default.vert", "assets/shaders/mtsdf_default.frag");
@@ -21,23 +22,37 @@ MTSDF::Font::Font(const std::string& path, size_t count_x, size_t count_y, std::
         .gpu_format = GL_RGBA,
         .format = GL_RGBA,
     });
-    this->count_x = count_x, this->count_y = count_y;
 
-    size_t index = 0;
-    double char_w = 1.0 / this->count_x, char_h = 1.0 / this->count_y;
-    for(auto& character : charset)
+    std::ifstream file(csv_path);
+    std::string line;
+    while (std::getline(file, line))
     {
-        SDL_FRect& current = rects[character];
-        int x = index % count_x, y = index / count_y;
-        current.x = x * char_w;
-        current.y = y * char_h;
-        current.w = char_w;
-        current.h = char_h;
-        index++;
-    }
-    this->path = path;
+        std::istringstream ss(line);
+        std::string token;
+        int column = 0;
+        GlyphData g{};
+        char c = 0;
 
-    std::cout << TTY_BLUE << "[INFO]: Loaded MTSDF font (path: " << this->path << ") (count_x: " << count_x << ") (count_y: " << count_y << ")\n" << TTY_RESET;
+        while (std::getline(ss, token, ',')) {
+            switch (column) {
+                case 0: c = std::stoi(token); break;
+                case 1: g.advance = std::stof(token); break;
+                case 2: g.quad.x = std::stof(token); break;
+                case 3: g.quad.y = std::stof(token); break;
+                case 4: g.quad.w = std::stof(token); break;
+                case 5: g.quad.h = std::stof(token); break;
+                case 6: g.atlas.x = std::stof(token) / this->texture->w; break;
+                case 7: g.atlas.y = std::stof(token) / this->texture->h; break;
+                case 8: g.atlas.w = std::stof(token) / this->texture->w; break;
+                case 9: g.atlas.h = std::stof(token) / this->texture->h; break;
+            }
+            column++;
+        }
+        glyphs[c] = g;
+    }
+
+    this->path = path;
+    std::cout << TTY_BLUE << "[INFO]: Loaded MTSDF font (path: " << this->path << ") (csv: " << csv_path << ")\n" << TTY_RESET;
 }
 
 MTSDF::Font::~Font()

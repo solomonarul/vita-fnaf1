@@ -11,8 +11,8 @@ namespace Game::States
         MainLoading();
         ~MainLoading();
 
-        std::unique_ptr<GL::MTSDF::Text> t_warning;
-        std::shared_ptr<GL::MTSDF::Font> f_consolas;
+        std::unique_ptr<GL::MTSDF::Text> t_warning[3];
+        std::shared_ptr<GL::MTSDF::Font> f_tahoma;
 
         virtual void draw(int w, int h) override;
         virtual void update(double dt) override;

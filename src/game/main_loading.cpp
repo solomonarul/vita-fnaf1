@@ -7,10 +7,31 @@ using namespace Game;
 
 States::MainLoading::MainLoading()
 {
-    this->f_consolas = Core::AssetManager::load<GL::MTSDF::Font>("f_consolas", "assets/images/fonts/consolas.stf.png");
-    this->t_warning = std::make_unique<GL::MTSDF::Text>(f_consolas, "WARNING!");
-    this->t_warning->x = -0.5;
-    this->t_warning->y = -0.5;
+    this->f_tahoma = Core::AssetManager::load<GL::MTSDF::Font>("f_tahoma", "assets/images/fonts/tahoma.stf.png", "assets/images/fonts/tahoma.csv");
+
+    // TODO: ugly
+
+    this->t_warning[0] = std::make_unique<GL::MTSDF::Text>(f_tahoma, "WARNING!");
+    this->t_warning[0]->o_x = -0.5;
+    this->t_warning[0]->x = 0;
+    this->t_warning[0]->y = 80 / 544.0;
+    this->t_warning[0]->o_x = -0.5;
+    this->t_warning[0]->s = 40 / 544.0;
+    this->t_warning[0]->s_x = 0.66;
+    
+    this->t_warning[1] = std::make_unique<GL::MTSDF::Text>(f_tahoma, "This game contains flashing lights, loud");
+    this->t_warning[1]->o_x = -0.5;
+    this->t_warning[1]->x = 0;
+    this->t_warning[1]->y = 0 / 544.0;
+    this->t_warning[1]->s = 40 / 544.0;
+    this->t_warning[1]->s_x = 0.66;
+
+    this->t_warning[2] = std::make_unique<GL::MTSDF::Text>(f_tahoma, "noises, and lots of jumpscares!");
+    this->t_warning[2]->o_x = -0.5;
+    this->t_warning[2]->x = 0;
+    this->t_warning[2]->y = -40 / 544.0;
+    this->t_warning[2]->s = 40 / 544.0;
+    this->t_warning[2]->s_x = 0.66;
 }
 
 States::MainLoading::~MainLoading()
@@ -31,7 +52,8 @@ void States::MainLoading::draw(int w, int h)
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    this->t_warning->draw(GL::MTSDF::Font::default_shader);
+    for(auto index = 0; index < 3; index++)
+        this->t_warning[index]->draw(GL::MTSDF::Font::default_shader);
 }
 
 void States::MainLoading::update(double dt)

@@ -14,10 +14,10 @@ Background::Background()
     );
 
     static float verts[] = {
-        1.0f, 1.0f, 0.0f, 1.0f,
-        -1.0f, 1.0, 1.0f, 1.0f,
-        1.0f, -1.0f, 0.0f, 0.0f,
-        -1.0f, -1.0f, 1.0f, 0.0f,
+        -1.0f, -1.0f, 0.0f, 1.0f,
+        1.0f, -1.0, 1.0f, 1.0f,
+        -1.0f, 1.0f, 0.0f, 0.0f,
+        1.0f, 1.0f, 1.0f, 0.0f,
     };
 
     glGenBuffers(1, &this->vbo);
