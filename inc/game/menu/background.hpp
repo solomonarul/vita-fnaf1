@@ -14,7 +14,6 @@ namespace Game::Objects::Menu
         GLint u_static_alpha;
 
         uint8_t current_texture = 0;
-        // TODO: offset these to an "asset manager".
         std::shared_ptr<GL::Texture> textures[4];
         uint8_t current_static_texture = 0;
         std::shared_ptr<GL::Texture> static_textures[8];

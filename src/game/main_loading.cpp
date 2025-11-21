@@ -15,7 +15,6 @@ States::MainLoading::MainLoading()
     this->t_warning[0]->o_x = -0.5;
     this->t_warning[0]->x = 0;
     this->t_warning[0]->y = 80 / 544.0;
-    this->t_warning[0]->o_x = -0.5;
     this->t_warning[0]->s = 40 / 544.0;
     this->t_warning[0]->s_x = 0.66;
     
@@ -41,6 +40,9 @@ States::MainLoading::~MainLoading()
 
 void States::MainLoading::draw(int w, int h)
 {
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
 #ifndef __psp2__
     double scale = std::min(w / 960.0, h / 544.0);
     int s_w = (w - 960 * scale) / 2, s_h = (h - 544 * scale) / 2;
@@ -48,9 +50,6 @@ void States::MainLoading::draw(int w, int h)
 #else
     glViewport(0, 0, w, h);
 #endif
-
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
 
     for(auto index = 0; index < 3; index++)
         this->t_warning[index]->draw(GL::MTSDF::Font::default_shader);
