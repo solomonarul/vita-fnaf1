@@ -19,21 +19,21 @@ States::Main::Main(Core::StateManager& sm) : IState::IState(sm)
     this->t_warning[0]->x = 0;
     this->t_warning[0]->y = 80 / 544.0;
     this->t_warning[0]->s = 40 / 544.0;
-    this->t_warning[0]->s_x = 0.66;
+    this->t_warning[0]->s_x = 0.6;
     
     this->t_warning[1] = std::make_unique<GL::MTSDF::Text>(f_tahoma, "This game contains flashing lights, loud");
     this->t_warning[1]->o_x = -0.5;
     this->t_warning[1]->x = 0;
     this->t_warning[1]->y = 0 / 544.0;
     this->t_warning[1]->s = 40 / 544.0;
-    this->t_warning[1]->s_x = 0.66;
+    this->t_warning[1]->s_x = 0.6;
 
     this->t_warning[2] = std::make_unique<GL::MTSDF::Text>(f_tahoma, "noises, and lots of jumpscares!");
     this->t_warning[2]->o_x = -0.5;
     this->t_warning[2]->x = 0;
     this->t_warning[2]->y = -40 / 544.0;
     this->t_warning[2]->s = 40 / 544.0;
-    this->t_warning[2]->s_x = 0.66;
+    this->t_warning[2]->s_x = 0.6;
 }
 
 States::Main::~Main()

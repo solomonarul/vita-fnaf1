@@ -1,7 +1,6 @@
 #include "game/menu/background.hpp"
 
 #include "core/random.hpp"
-#include <iostream>
 
 using namespace Game::Objects::Menu;
 
@@ -84,8 +83,8 @@ void Background::update(double dt)
 {
     this->update_timer += dt;
     this->static_image_update_timer += dt;
-    this->static_update_timer += dt;
 
+    glUniform1f(this->u_static_alpha, 200 / 255.0); // This is wrong in the notes, alpha doesn't change.
     glUniform1f(this->u_alpha, Core::Random::range(0, 249) / 255.0);
 
     if(this->update_timer > update_rate)
@@ -100,12 +99,6 @@ void Background::update(double dt)
     {
         current_static_texture = (current_static_texture + 1) % 7;
         this->static_image_update_timer = std::fmod(this->static_image_update_timer, static_image_update_rate);
-    }
-
-    if(this->static_update_timer > static_update_rate)
-    {
-        glUniform1f(this->u_static_alpha, Core::Random::range(50, 149) / 255.0);
-        this->static_update_timer = std::fmod(this->update_timer, static_update_rate);      
     }
 }
 
