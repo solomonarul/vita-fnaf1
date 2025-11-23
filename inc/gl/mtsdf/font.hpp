@@ -19,7 +19,7 @@ namespace GL::MTSDF
         SDL_FRect atlas;
     };
 
-    struct Font : public Core::Asset
+    struct Font : public Core::IAsset
     {
         std::unique_ptr<Texture> texture;
         std::map<char, GlyphData> glyphs;

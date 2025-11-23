@@ -26,7 +26,7 @@ namespace GL
         ~FragmentShader();
     };
 
-    struct Shader : public Core::Asset
+    struct Shader : public Core::IAsset
     {
         GLuint id = 0;
         

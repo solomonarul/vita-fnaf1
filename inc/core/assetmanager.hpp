@@ -9,14 +9,14 @@
 
 namespace Core
 {
-    using AssetPtr = std::shared_ptr<Asset>;
+    using AssetPtr = std::shared_ptr<IAsset>;
 
     struct AssetManager
     {
         AssetManager() = delete;
 
         template<typename T, typename... Args>
-        static std::shared_ptr<T> load(const std::string& key, Args&&... args)
+        static std::shared_ptr<T> ensure_loaded(const std::string& key, Args&&... args)
         {
             std::lock_guard<std::recursive_mutex> lock(mutex());
 

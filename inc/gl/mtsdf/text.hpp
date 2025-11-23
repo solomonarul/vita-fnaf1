@@ -26,6 +26,6 @@ namespace GL::MTSDF
         Text(std::shared_ptr<Font>, const std::string&);
         ~Text();
 
-        void draw(std::unique_ptr<GL::Shader>&);
+        void draw(std::unique_ptr<GL::Shader>& = GL::MTSDF::Font::default_shader);
     };
 }

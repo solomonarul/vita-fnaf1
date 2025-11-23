@@ -8,7 +8,7 @@
 
 namespace Core
 {
-    struct Audio : public Asset
+    struct Audio : public IAsset
     {
         MIX_Audio* audio = nullptr;
         MIX_Track* track = nullptr;

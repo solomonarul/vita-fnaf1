@@ -8,55 +8,28 @@ using namespace Game::Objects::Menu;
 
 Background::Background()
 {
-    this->shader = Core::AssetManager::load<GL::Shader>("s_menu_bg",
+    this->shader = Core::AssetManager::ensure_loaded<GL::Shader>("s_menu_bg",
         "assets/shaders/menu/background.vert",
         "assets/shaders/menu/background.frag"
     );
 
-    static float verts[] = {
-        -1.0f, -1.0f, 0.0f, 1.0f,
-        1.0f, -1.0, 1.0f, 1.0f,
-        -1.0f, 1.0f, 0.0f, 0.0f,
-        1.0f, 1.0f, 1.0f, 0.0f,
-    };
-
     glGenBuffers(1, &this->vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
-
-    GLint a_position = glGetAttribLocation(this->shader->id, "a_position");
-    GLint a_texture_coords = glGetAttribLocation(this->shader->id, "a_texture_coords");
-
-    glEnableVertexAttribArray(a_position);
-    glVertexAttribPointer(a_position, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
-
-    glEnableVertexAttribArray(a_texture_coords);
-    glVertexAttribPointer(a_texture_coords, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 
     this->shader->use();
 
-    GLint u_texture = glGetUniformLocation(this->shader->id, "u_texture");
-    glUniform1i(u_texture, 0);
-
-    GLint u_static_texture = glGetUniformLocation(this->shader->id, "u_static_texture");
-    glUniform1i(u_static_texture, 1);
-
-    this->u_alpha = glGetUniformLocation(this->shader->id, "u_alpha");
-    this->u_static_alpha = glGetUniformLocation(this->shader->id, "u_static_alpha");
-
     // TODO: this is still messy.
-    this->textures[0] = Core::AssetManager::load<GL::Texture>("t_bg_0", GL::TextureConfig{"assets/images/menu/background/431.png"});
-    this->textures[1] = Core::AssetManager::load<GL::Texture>("t_bg_1", GL::TextureConfig{"assets/images/menu/background/440.png"});
-    this->textures[2] = Core::AssetManager::load<GL::Texture>("t_bg_2", GL::TextureConfig{"assets/images/menu/background/441.png"});
-    this->textures[3] = Core::AssetManager::load<GL::Texture>("t_bg_3", GL::TextureConfig{"assets/images/menu/background/442.png"});
-    this->static_textures[0] = Core::AssetManager::load<GL::Texture>("t_st_0", GL::TextureConfig{"assets/images/menu/static/12.png"});
-    this->static_textures[1] = Core::AssetManager::load<GL::Texture>("t_st_1", GL::TextureConfig{"assets/images/menu/static/13.png"});
-    this->static_textures[2] = Core::AssetManager::load<GL::Texture>("t_st_2", GL::TextureConfig{"assets/images/menu/static/14.png"});
-    this->static_textures[3] = Core::AssetManager::load<GL::Texture>("t_st_3", GL::TextureConfig{"assets/images/menu/static/15.png"});
-    this->static_textures[4] = Core::AssetManager::load<GL::Texture>("t_st_4", GL::TextureConfig{"assets/images/menu/static/16.png"});
-    this->static_textures[5] = Core::AssetManager::load<GL::Texture>("t_st_5", GL::TextureConfig{"assets/images/menu/static/17.png"});
-    this->static_textures[6] = Core::AssetManager::load<GL::Texture>("t_st_6", GL::TextureConfig{"assets/images/menu/static/18.png"});
-    this->static_textures[7] = Core::AssetManager::load<GL::Texture>("t_st_7", GL::TextureConfig{"assets/images/menu/static/20.png"});
+    this->textures[0] = Core::AssetManager::ensure_loaded<GL::Texture>("t_bg_0", GL::TextureConfig{"assets/images/menu/background/431.png"});
+    this->textures[1] = Core::AssetManager::ensure_loaded<GL::Texture>("t_bg_1", GL::TextureConfig{"assets/images/menu/background/440.png"});
+    this->textures[2] = Core::AssetManager::ensure_loaded<GL::Texture>("t_bg_2", GL::TextureConfig{"assets/images/menu/background/441.png"});
+    this->textures[3] = Core::AssetManager::ensure_loaded<GL::Texture>("t_bg_3", GL::TextureConfig{"assets/images/menu/background/442.png"});
+    this->static_textures[0] = Core::AssetManager::ensure_loaded<GL::Texture>("t_st_0", GL::TextureConfig{"assets/images/menu/static/12.png"});
+    this->static_textures[1] = Core::AssetManager::ensure_loaded<GL::Texture>("t_st_1", GL::TextureConfig{"assets/images/menu/static/13.png"});
+    this->static_textures[2] = Core::AssetManager::ensure_loaded<GL::Texture>("t_st_2", GL::TextureConfig{"assets/images/menu/static/14.png"});
+    this->static_textures[3] = Core::AssetManager::ensure_loaded<GL::Texture>("t_st_3", GL::TextureConfig{"assets/images/menu/static/15.png"});
+    this->static_textures[4] = Core::AssetManager::ensure_loaded<GL::Texture>("t_st_4", GL::TextureConfig{"assets/images/menu/static/16.png"});
+    this->static_textures[5] = Core::AssetManager::ensure_loaded<GL::Texture>("t_st_5", GL::TextureConfig{"assets/images/menu/static/17.png"});
+    this->static_textures[6] = Core::AssetManager::ensure_loaded<GL::Texture>("t_st_6", GL::TextureConfig{"assets/images/menu/static/18.png"});
+    this->static_textures[7] = Core::AssetManager::ensure_loaded<GL::Texture>("t_st_7", GL::TextureConfig{"assets/images/menu/static/20.png"});
 }
 
 Background::~Background()
@@ -71,11 +44,49 @@ Background::~Background()
 
 void Background::draw()
 {
-    glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
+    this->shader->use();
+    
+    glUniform1f(
+        glGetUniformLocation(this->shader->id, "u_alpha"),
+        this->u_alpha
+    );
+    glUniform1f(
+        glGetUniformLocation(this->shader->id, "u_static_alpha"),
+        175 / 255.0
+    );
+
+    glUniform1i(glGetUniformLocation(this->shader->id, "u_texture"), 0);
     this->textures[current_texture]->activate(GL_TEXTURE0);
+
+    glUniform1i(glGetUniformLocation(this->shader->id, "u_static_texture"), 1);
     this->static_textures[current_static_texture]->activate(GL_TEXTURE1);
 
-    this->shader->use();
+    static float verts[] = {
+        -1.0f, -1.0f, 0.0f, 1.0f,
+        1.0f, -1.0, 1.0f, 1.0f,
+        -1.0f, 1.0f, 0.0f, 0.0f,
+        1.0f, 1.0f, 1.0f, 0.0f,
+    };
+
+    glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+
+    GLint a_position = glGetAttribLocation(shader->id, "a_position");
+    glEnableVertexAttribArray(a_position);
+    glVertexAttribPointer(
+        a_position, 2, GL_FLOAT, GL_FALSE,
+        4 * sizeof(float),
+        (void*)0
+    );
+
+    GLint a_texcoord = glGetAttribLocation(shader->id, "a_texture_coords");
+    glEnableVertexAttribArray(a_texcoord);
+    glVertexAttribPointer(
+        a_texcoord, 2, GL_FLOAT, GL_FALSE,
+        4 * sizeof(float),
+        (void*)(2 * sizeof(float))
+    );
+
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
@@ -83,15 +94,14 @@ void Background::update(double dt)
 {
     this->update_timer += dt;
     this->static_image_update_timer += dt;
-
-    glUniform1f(this->u_static_alpha, 200 / 255.0); // This is wrong in the notes, alpha doesn't change.
-    glUniform1f(this->u_alpha, Core::Random::range(0, 249) / 255.0);
+    this->static_alpha_update_timer += dt;
 
     if(this->update_timer > update_rate)
     {
         auto current = Core::Random::range(0, 99);
         if(current < 96) current_texture = 0;
         else current_texture = current - 96;
+        this->u_alpha = Core::Random::range(0, 249) / 255.0;
         this->update_timer = std::fmod(this->update_timer, update_rate);
     }
 
@@ -99,6 +109,12 @@ void Background::update(double dt)
     {
         current_static_texture = (current_static_texture + 1) % 7;
         this->static_image_update_timer = std::fmod(this->static_image_update_timer, static_image_update_rate);
+    }
+
+    if(this->static_alpha_update_timer > static_alpha_update_rate)
+    {
+        this->u_static_alpha = Core::Random::range(50, 149) / 255.0;
+        this->static_alpha_update_timer = std::fmod(this->static_alpha_update_timer, static_alpha_update_rate);
     }
 }
 

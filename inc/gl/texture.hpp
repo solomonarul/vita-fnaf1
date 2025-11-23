@@ -19,7 +19,7 @@ namespace GL
         GLint format = GL_RGB;
     };
 
-    struct Texture : public Core::Asset
+    struct Texture : public Core::IAsset
     {
         GLuint id;
         int w, h, ch;

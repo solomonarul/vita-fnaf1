@@ -2,8 +2,8 @@
 
 namespace Core
 {
-    struct Asset
+    struct IAsset
     {
-        virtual ~Asset() = default;
+        virtual ~IAsset() = default;
     };
 };

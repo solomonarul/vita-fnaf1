@@ -1,39 +1,46 @@
 #include "gl/mtsdf/text.hpp"
-#include <iostream>
 
 using namespace GL;
 
 GL::MTSDF::Text::Text(std::shared_ptr<Font> f, const std::string& str) : font(std::move(f)), text(str)
 {
-    glGenBuffers(1, &vbo);
+    glGenBuffers(1, &this->vbo);
 }
 
 GL::MTSDF::Text::~Text()
 {
-    if(vbo)
-        glDeleteBuffers(1, &vbo), vbo = 0;
+    if(this->vbo)
+        glDeleteBuffers(1, &this->vbo), this->vbo = 0;
 }
 
-inline void buildVertices(GL::MTSDF::Text& self)
+inline void gen_and_upload_vertices(GL::MTSDF::Text& self)
 {
-    // TODO: not optimal.
     self.vertexData.clear();
 
     // Calculate maximum sizes.
-    float t_w = 0, t_h = 0;
+    float t_c_w = 0, t_w = 0, t_h = 0, lines = 1;
     for(char c : self.text)
     {
         auto it = self.font->glyphs.find(c);
         if(it == self.font->glyphs.end()) continue;
 
-        t_w += self.s * it->second.advance * self.s_x;
+        t_c_w += self.s * it->second.advance * self.s_x;
+        if(c == '\n') lines++, t_w = (t_c_w > t_w) ? t_c_w : t_w, t_c_w = 0;
     }
+    t_w = (t_c_w > t_w) ? t_c_w : t_w;
+    t_h = self.s * lines * self.s_y;
 
     float pen_x = self.x + t_w * self.o_x;
     float pen_y = self.y + t_h * self.o_y;
 
     for(char c : self.text)
     {
+        if(c == '\n')
+        {
+            pen_x = self.x + t_w * self.o_x, pen_y -= self.s * self.s_y;
+            continue;
+        }
+
         auto it = self.font->glyphs.find(c);
         if(it == self.font->glyphs.end()) continue;
 
@@ -78,25 +85,27 @@ inline void buildVertices(GL::MTSDF::Text& self)
 
 void GL::MTSDF::Text::draw(std::unique_ptr<GL::Shader>& shader)
 {
-    buildVertices(*this);
-
-    if(!font || !font->texture || vertexData.empty()) return;
-
     shader->use();
+    glUniform4f(
+        glGetUniformLocation(shader->id, "u_color"),
+        this->color.r / 255.0, this->color.g / 255.0, this->color.b / 255.0, this->color.a / 255.0
+    );
+    glUniform1i(
+        glGetUniformLocation(shader->id, "u_texture"),
+        0
+    );
 
-    GLint u_color = glGetUniformLocation(shader->id, "u_color");
-    glUniform4f(u_color, color.r / 255.0, color.g / 255.0, color.b / 255.0, color.a / 255.0);
+    this->font->texture->activate(GL_TEXTURE0);
+
+    gen_and_upload_vertices(*this); // TODO: let's not do this every frame.
+
+    auto a_position = glGetAttribLocation(shader->id, "a_position");
+    glEnableVertexAttribArray(a_position);
+    glVertexAttribPointer(a_position, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
     
-    font->texture->activate(GL_TEXTURE0);
-    GLint u_texture = glGetUniformLocation(shader->id, "u_texture");
-    glUniform1i(u_texture, 0);
-
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
-
+    auto a_texture_coords = glGetAttribLocation(shader->id, "a_texture_coords");
+    glEnableVertexAttribArray(a_texture_coords);
+    glVertexAttribPointer(a_texture_coords, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+    
     glDrawArrays(GL_TRIANGLES, 0, vertexData.size() / 4);
 }

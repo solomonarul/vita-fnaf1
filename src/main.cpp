@@ -45,8 +45,8 @@ int main(int argc, char *argv[])
                 break;
             }
         }
-        manager.update(dt.tick());
         manager.draw(window.w, window.h);
+        manager.update(dt.tick());
         window.swap();
     }
 
