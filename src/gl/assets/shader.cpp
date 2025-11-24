@@ -1,4 +1,4 @@
-#include "gl/shader.hpp"
+#include "gl/assets/shader.hpp"
 
 #include "core/defines.hpp"
 #include "core/file.hpp"

@@ -1,8 +1,8 @@
 #pragma once
 
 #include "core/asset.hpp"
-#include "gl/shader.hpp"
-#include "gl/texture.hpp"
+#include "gl/assets/shader.hpp"
+#include "gl/assets/texture.hpp"
 
 #include <SDL3/SDL.h>
 

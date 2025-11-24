@@ -1,7 +1,7 @@
 #pragma once
 
-#include "gl/shader.hpp"
-#include "gl/texture.hpp"
+#include "gl/assets/shader.hpp"
+#include "gl/assets/textureatlas.hpp"
 
 #include <memory>
 
@@ -14,9 +14,9 @@ namespace Game::Objects::Menu
         double u_alpha = 0.5;
         double u_static_alpha = 0.9;
         uint8_t current_texture = 0;
-        std::shared_ptr<GL::Texture> textures[4];
+        std::shared_ptr<GL::TextureAtlas> t_background;
         uint8_t current_static_texture = 0;
-        std::shared_ptr<GL::Texture> static_textures[8];
+        std::shared_ptr<GL::TextureAtlas> t_static;
         std::shared_ptr<GL::Shader> shader;
 
         constexpr static double update_rate = 8.0 / 100;
@@ -30,7 +30,7 @@ namespace Game::Objects::Menu
 
         Background();
         ~Background();
-        void update(double dt);
+        void update(double);
         void draw();
     };
 };

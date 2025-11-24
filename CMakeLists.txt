@@ -13,25 +13,20 @@ add_executable(
         "src/main.cpp"
         "src/core/file.cpp"
         "src/core/state.cpp"
-        "src/core/audio.cpp"
         "src/core/delta.cpp"
         "src/core/assetmanager.cpp"
+        "src/core/assets/audio.cpp"
         "src/gl/window.cpp"
-        "src/gl/shader.cpp"
-        "src/gl/texture.cpp"
         "src/gl/mtsdf/font.cpp"
         "src/gl/mtsdf/text.cpp"
+        "src/gl/assets/shader.cpp"
+        "src/gl/assets/texture.cpp"
+        "src/gl/assets/textureatlas.cpp"
         "src/game/main.cpp"
         "src/game/menu.cpp"
         "src/game/menu/background.cpp"
+        "src/game/menu/manager.cpp"
 )
-
-set(CMAKE_POSITION_INDEPENDENT_CODE OFF)
-set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -no-pie")
-
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g3 -O0 -fno-omit-frame-pointer -no-pie")
-set(CMAKE_C_FLAGS_DEBUG   "${CMAKE_C_FLAGS_DEBUG}   -g3 -O0 -fno-omit-frame-pointer -no-pie")
-
 
 find_package(SDL3 REQUIRED)
 find_package(SDL3_mixer REQUIRED)
@@ -53,6 +48,12 @@ set_target_properties(
         CXX_STANDARD 20
         CXX_STANDARD_REQUIRED ON
         CXX_EXTENSIONS ON
+)
+
+target_compile_definitions(
+    ${PROJECT_NAME}
+    PRIVATE
+        APP_IS_DEMO
 )
 
 target_compile_options(${PROJECT_NAME} PRIVATE

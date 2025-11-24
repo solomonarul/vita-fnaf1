@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../core/asset.hpp"
+#include "core/asset.hpp"
 
 #include <SDL3/SDL_opengles2.h>
 

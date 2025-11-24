@@ -10,6 +10,9 @@ using namespace Game;
 States::Menu::Menu(Core::StateManager& sm) : IState::IState(sm)
 {
     sm.states.erase(sm.states.begin());
+    // TODO: not doing the transition in the follow-up state, if I remove the previous state while still there,
+    // undefined behaviour happens on the Vita. I.E removing a state while executing its' code is not ideal.
+    // Maybe I am stupid or something again, gotta check this out in detail.
 
     this->f_consolas = Core::AssetManager::ensure_loaded<GL::MTSDF::Font>("f_consolas", "assets/images/fonts/consolas.stf.png", "assets/images/fonts/consolas.csv");
     this->a_static2 = Core::AssetManager::ensure_loaded<Core::Audio>("a_static2", "assets/audio/static2.mp3", true);
@@ -18,16 +21,32 @@ States::Menu::Menu(Core::StateManager& sm) : IState::IState(sm)
 
     this->t_texts[0] = std::make_unique<GL::MTSDF::Text>(this->f_consolas, "Five\nNights\nat\nFreddy's");
     this->t_texts[0]->x = -750 / 960.0;
-    this->t_texts[0]->y = 400 / 544.0;
-    this->t_texts[0]->s = 82 / 544.0;
-    this->t_texts[0]->s_x = 0.6;
+    this->t_texts[0]->y = 420 / 544.0;
+    this->t_texts[0]->s = 79 / 544.0;
+    this->t_texts[0]->s_x = 0.5;
 
     this->t_texts[1] = std::make_unique<GL::MTSDF::Text>(this->f_consolas, "v. 1.0");
     this->t_texts[1]->x = -945 / 960.0;
     this->t_texts[1]->y = -1;
-    this->t_texts[1]->s = 41 / 544.0;
+    this->t_texts[1]->s = 40 / 544.0;
     this->t_texts[1]->s_x = 0.6;
     this->t_texts[1]->o_y = 1;
+
+    this->t_texts[2] = std::make_unique<GL::MTSDF::Text>(this->f_consolas, "©2014 Scott Cawthon");
+    this->t_texts[2]->x = 945 / 960.0;
+    this->t_texts[2]->y = -1;
+    this->t_texts[2]->s = 40 / 544.0;
+    this->t_texts[2]->s_x = 0.6;
+    this->t_texts[2]->o_x = -1;
+    this->t_texts[2]->o_y = 1;
+
+#ifdef APP_IS_DEMO
+    this->t_demo = std::make_unique<GL::MTSDF::Text>(this->f_consolas, "Demo");
+    this->t_demo->x = -750 / 960.0;
+    this->t_demo->y = 100 / 544.0;
+    this->t_demo->s = 79 / 544.0;
+    this->t_demo->s_x = 0.5;
+#endif
 
     MIX_PlayTrack(this->a_static2->track, 0);
     MIX_PlayTrack(this->a_blip3->track, 0);
@@ -39,7 +58,6 @@ States::Menu::~Menu()
     if(this->a_static2)
         Core::AssetManager::remove_ptr(this->a_static2);
     Core::AssetManager::remove_ptr(this->a_darkness_music);
-    Core::AssetManager::remove_ptr(this->a_blip3);
 
     std::cout << TTY_BLUE << "[INFO]: Destroyed Menu state.\n" << TTY_RESET; 
 }
@@ -57,8 +75,13 @@ void States::Menu::draw(int w, int h)
     glViewport(0, 0, w, h);
 #endif
     this->bkg.draw();
-    for(auto index = 0; index < 2; index++)
+    for(auto index = 0; index < 3; index++)
         this->t_texts[index]->draw();
+    this->selector.draw();
+
+#ifdef APP_IS_DEMO
+    this->t_demo->draw();
+#endif
 }
 
 void States::Menu::update(double dt)

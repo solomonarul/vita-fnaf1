@@ -3,7 +3,7 @@
 using namespace GL;
 
 #include "core/defines.hpp"
-#include "gl/shader.hpp"
+#include "gl/assets/shader.hpp"
 
 #include <iostream>
 #include <sstream>

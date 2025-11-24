@@ -1,4 +1,4 @@
-#include "gl/texture.hpp"
+#include "gl/assets/texture.hpp"
 
 #include <iostream>
 

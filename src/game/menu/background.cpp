@@ -8,38 +8,36 @@ using namespace Game::Objects::Menu;
 
 Background::Background()
 {
+    glGenBuffers(1, &this->vbo);
+
     this->shader = Core::AssetManager::ensure_loaded<GL::Shader>("s_menu_bg",
         "assets/shaders/menu/background.vert",
         "assets/shaders/menu/background.frag"
     );
 
-    glGenBuffers(1, &this->vbo);
-
-    this->shader->use();
-
-    // TODO: this is still messy.
-    this->textures[0] = Core::AssetManager::ensure_loaded<GL::Texture>("t_bg_0", GL::TextureConfig{"assets/images/menu/background/431.png"});
-    this->textures[1] = Core::AssetManager::ensure_loaded<GL::Texture>("t_bg_1", GL::TextureConfig{"assets/images/menu/background/440.png"});
-    this->textures[2] = Core::AssetManager::ensure_loaded<GL::Texture>("t_bg_2", GL::TextureConfig{"assets/images/menu/background/441.png"});
-    this->textures[3] = Core::AssetManager::ensure_loaded<GL::Texture>("t_bg_3", GL::TextureConfig{"assets/images/menu/background/442.png"});
-    this->static_textures[0] = Core::AssetManager::ensure_loaded<GL::Texture>("t_st_0", GL::TextureConfig{"assets/images/menu/static/12.png"});
-    this->static_textures[1] = Core::AssetManager::ensure_loaded<GL::Texture>("t_st_1", GL::TextureConfig{"assets/images/menu/static/13.png"});
-    this->static_textures[2] = Core::AssetManager::ensure_loaded<GL::Texture>("t_st_2", GL::TextureConfig{"assets/images/menu/static/14.png"});
-    this->static_textures[3] = Core::AssetManager::ensure_loaded<GL::Texture>("t_st_3", GL::TextureConfig{"assets/images/menu/static/15.png"});
-    this->static_textures[4] = Core::AssetManager::ensure_loaded<GL::Texture>("t_st_4", GL::TextureConfig{"assets/images/menu/static/16.png"});
-    this->static_textures[5] = Core::AssetManager::ensure_loaded<GL::Texture>("t_st_5", GL::TextureConfig{"assets/images/menu/static/17.png"});
-    this->static_textures[6] = Core::AssetManager::ensure_loaded<GL::Texture>("t_st_6", GL::TextureConfig{"assets/images/menu/static/18.png"});
-    this->static_textures[7] = Core::AssetManager::ensure_loaded<GL::Texture>("t_st_7", GL::TextureConfig{"assets/images/menu/static/20.png"});
+    this->t_background = Core::AssetManager::ensure_loaded<GL::TextureAtlas>("t_bg", std::vector{
+        GL::TextureConfig{"assets/images/menu/background/431.png"},
+        GL::TextureConfig{"assets/images/menu/background/440.png"},
+        GL::TextureConfig{"assets/images/menu/background/441.png"},
+        GL::TextureConfig{"assets/images/menu/background/442.png"}
+    });
+    
+    this->t_static = Core::AssetManager::ensure_loaded<GL::TextureAtlas>("t_static", std::vector{
+        GL::TextureConfig{"assets/images/menu/static/12.png"},
+        GL::TextureConfig{"assets/images/menu/static/13.png"},
+        GL::TextureConfig{"assets/images/menu/static/14.png"},
+        GL::TextureConfig{"assets/images/menu/static/15.png"},
+        GL::TextureConfig{"assets/images/menu/static/16.png"},
+        GL::TextureConfig{"assets/images/menu/static/17.png"},
+        GL::TextureConfig{"assets/images/menu/static/18.png"},
+        GL::TextureConfig{"assets/images/menu/static/20.png"}
+    });
 }
 
 Background::~Background()
 {
     glDeleteBuffers(1, &this->vbo);
-    for(size_t index = 0; index < 4; index++)
-        Core::AssetManager::remove_ptr(this->textures[index]);
-
-    for(size_t index = 0; index < 8; index++)
-        Core::AssetManager::remove_ptr(this->static_textures[index]);
+    Core::AssetManager::remove("t_bg");
 }
 
 void Background::draw()
@@ -52,14 +50,14 @@ void Background::draw()
     );
     glUniform1f(
         glGetUniformLocation(this->shader->id, "u_static_alpha"),
-        175 / 255.0
+        200 / 255.0
     );
 
     glUniform1i(glGetUniformLocation(this->shader->id, "u_texture"), 0);
-    this->textures[current_texture]->activate(GL_TEXTURE0);
+    this->t_background->textures[current_texture]->activate(GL_TEXTURE0);
 
     glUniform1i(glGetUniformLocation(this->shader->id, "u_static_texture"), 1);
-    this->static_textures[current_static_texture]->activate(GL_TEXTURE1);
+    this->t_static->textures[current_static_texture]->activate(GL_TEXTURE1);
 
     static float verts[] = {
         -1.0f, -1.0f, 0.0f, 1.0f,
@@ -107,7 +105,7 @@ void Background::update(double dt)
 
     if(this->static_image_update_timer > static_image_update_rate)
     {
-        current_static_texture = (current_static_texture + 1) % 7;
+        current_static_texture = (current_static_texture + 1) % this->t_static->textures.size();
         this->static_image_update_timer = std::fmod(this->static_image_update_timer, static_image_update_rate);
     }
 

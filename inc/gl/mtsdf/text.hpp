@@ -1,7 +1,7 @@
 #pragma once
 
 #include "gl/mtsdf/font.hpp"
-#include "gl/shader.hpp"
+#include "gl/assets/shader.hpp"
 
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_opengles2.h>

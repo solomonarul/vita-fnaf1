@@ -48,7 +48,7 @@ Window::Window(WindowConfig cfg)
     {
         SDL_DestroyWindow(this->sdl), this->sdl = nullptr;
         if(window_count == 0) free_sdl_video();
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Could not init SDL3 GLES 2.0 context!", SDL_GetError(), NULL);
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Could not initialize SDL3 GLES 2.0 context!", SDL_GetError(), NULL);
         exit(-1);
     }
 
