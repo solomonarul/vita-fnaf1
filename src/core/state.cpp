@@ -13,3 +13,9 @@ void StateManager::update(double dt)
     for(auto& state : states)
         state->update(dt);
 }
+
+void StateManager::send(SDL_Event& event)
+{
+    for(auto& state : states)
+        state->event(event);
+}

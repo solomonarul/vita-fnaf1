@@ -94,3 +94,8 @@ void States::Menu::update(double dt)
 
     this->bkg.update(dt);
 }
+
+void States::Menu::event(SDL_Event& event)
+{
+    this->selector.event(event);
+}

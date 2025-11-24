@@ -4,8 +4,11 @@ using namespace Game::Objects::Menu;
 
 #include "core/assetmanager.hpp"
 
+#include <SDL3_mixer/SDL_mixer.h>
+
 Manager::Manager()
 {
+    this->a_blip3 = Core::AssetManager::ensure_loaded<Core::Audio>("a_blip3", "assets/audio/blip3.mp3", true);
     this->f_consolas = Core::AssetManager::ensure_loaded<GL::MTSDF::Font>("f_consolas", "assets/images/fonts/consolas.stf.png", "assets/images/fonts/consolas.csv");
     this->f_consolas_bold = Core::AssetManager::ensure_loaded<GL::MTSDF::Font>("f_consolas_bold", "assets/images/fonts/consolas_bold.stf.png", "assets/images/fonts/consolas_bold.csv");
 
@@ -22,8 +25,7 @@ Manager::Manager()
     this->t_texts[1]->s_x = 0.5;
 
     this->t_pointer = std::make_unique<GL::MTSDF::Text>(this->f_consolas, ">>");
-    this->t_pointer->x = -845 / 960.0;
-    this->t_pointer->y = -205 / 544.0;
+    this->t_pointer->x = -845 / 960.0;\
     this->t_pointer->s = 79 / 544.0;
     this->t_pointer->s_x = 0.5;
 
@@ -47,12 +49,46 @@ Manager::~Manager()
 
 void Manager::draw()
 {
-    this->t_pointer->draw();
+    if(this->current > 0)
+    {
+        this->t_pointer->y = this->t_texts[this->current - 1]->y + 5.0 / 544;
+        this->t_pointer->draw();
+    }
 
-    this->t_night->draw();
-    this->t_night_count->draw();
+    if(this->current == 2)
+        this->t_night->draw(), this->t_night_count->draw();
 
     for(auto index = 0; index < 2; index++)
         this->t_texts[index]->draw();
 }
 
+void Manager::event(SDL_Event& event)
+{
+    switch(event.type)
+    {
+#ifndef __psp2__
+    case SDL_EVENT_KEY_DOWN:
+        if(event.key.repeat) break;
+        switch(event.key.key)
+        {
+        case SDLK_W:
+        case SDLK_S:
+            this->current = (this->current) % 2 + 1;
+            MIX_PlayAudio(Core::AudioManager::get_mixer(), this->a_blip3->audio);
+            break;
+        }
+        break;
+#endif
+    case SDL_EVENT_GAMEPAD_BUTTON_DOWN:
+        if(event.gbutton.repeat) break;
+        switch(event.gbutton.button)
+        {
+        case SDL_GAMEPAD_BUTTON_DPAD_DOWN:
+        case SDL_GAMEPAD_BUTTON_DPAD_UP:
+            this->current = (this->current) % 2 + 1;
+            MIX_PlayAudio(Core::AudioManager::get_mixer(), this->a_blip3->audio);
+            break;
+        }
+        break;
+    }
+}

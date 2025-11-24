@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
                 break;
             
             default:
-                // TODO: propagate through state manager.
+                manager.send(event);
                 break;
             }
         }

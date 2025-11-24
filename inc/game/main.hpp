@@ -18,5 +18,6 @@ namespace Game::States
 
         virtual void draw(int w, int h) override;
         virtual void update(double dt) override;
+        virtual void event(SDL_Event&) override;
     };
 };

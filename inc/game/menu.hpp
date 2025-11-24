@@ -13,7 +13,7 @@ namespace Game::States
     {
         Menu(Core::StateManager&);
         ~Menu();
-
+        
         std::unique_ptr<GL::MTSDF::Text> t_texts[3];
         std::shared_ptr<GL::MTSDF::Font> f_consolas;
         std::shared_ptr<Core::Audio> a_static2, a_darkness_music, a_blip3;
@@ -26,5 +26,6 @@ namespace Game::States
         Objects::Menu::Manager selector;
         virtual void draw(int w, int h) override;
         virtual void update(double dt) override;
+        virtual void event(SDL_Event&) override;
     };
 };

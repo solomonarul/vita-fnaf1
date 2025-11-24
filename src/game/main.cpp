@@ -64,3 +64,8 @@ void States::Main::update(double dt)
     if(this->timer > 3) // TODO: 3 secs or all assets loaded if they take more than 3s to load.
         this->state_manager.states.emplace_back(std::make_unique<Game::States::Menu>(this->state_manager));
 }
+
+void States::Main::event(SDL_Event& event)
+{
+    UNUSED(event);
+}
