@@ -26,6 +26,10 @@ int main(int argc, char *argv[])
     bool running = true;
     SDL_Event event;
     Core::Delta dt;
+
+    double timer = 0;
+    constexpr double timer_rate = 1.0 / 60;
+
     while(running)
     {
         while(SDL_PollEvent(&event))
@@ -46,8 +50,16 @@ int main(int argc, char *argv[])
                 break;
             }
         }
+
         manager.draw(window.w, window.h);
-        manager.update(dt.tick());
+
+        timer += dt.tick();
+        while(timer > timer_rate)
+        {
+            manager.update(timer_rate);
+            timer -= timer_rate;    // Fixed rate delta timing.
+        }
+        
         window.swap();
     }
 
