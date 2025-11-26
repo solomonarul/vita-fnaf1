@@ -78,19 +78,23 @@ void States::Newspaper::update(double dt)
     switch(this->state)
     {
     case NEWSPAPER_STATE_FADING_IN:
-        this->alpha += (1.0 / 2) * dt;
+        this->alpha += inverse_timer_duration * dt;
         if(this->alpha > 1)
         {
             this->alpha = 1, this->state = NEWSPAPER_STATE_HOLD;
+
+            // Clean the menu state.
             this->state_manager.states.erase(this->state_manager.states.begin());
         }
         break;
+
     case NEWSPAPER_STATE_HOLD:
         this->hold_timer += dt;
-        if(this->hold_timer > 2) this->state = NEWSPAPER_STATE_FADING_OUT;
+        if(this->hold_timer > timer_duration) this->state = NEWSPAPER_STATE_FADING_OUT;
         break;
+
     case NEWSPAPER_STATE_FADING_OUT:
-        this->alpha -= (1.0 / 2) * dt;
+        this->alpha -= inverse_timer_duration * dt;
         if(this->alpha < 0) this->alpha = 0; // TODO: change state to night 1
         break;
     }

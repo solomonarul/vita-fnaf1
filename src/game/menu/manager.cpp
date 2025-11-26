@@ -70,6 +70,7 @@ void Manager::event(SDL_Event& event, Core::StateManager& sm)
     {
 #ifndef __psp2__
     case SDL_EVENT_KEY_DOWN:
+        // TODO: maybe move this to update and have a global input state manager?
         if(event.key.repeat) break;
         switch(event.key.key)
         {
@@ -92,15 +93,7 @@ void Manager::event(SDL_Event& event, Core::StateManager& sm)
         }
         break;
 #endif
-    case SDL_EVENT_GAMEPAD_BUTTON_DOWN:
-        switch(event.gbutton.button)
-        {
-        case SDL_GAMEPAD_BUTTON_DPAD_DOWN:
-        case SDL_GAMEPAD_BUTTON_DPAD_UP:
-            this->current = (this->current) % 2 + 1;
-            MIX_PlayAudio(Core::AudioManager::get_mixer(), this->a_blip3->audio);
-            break;
-        }
+        // TODO: gamepad input for Vita / PC.
         break;
     }
 }
