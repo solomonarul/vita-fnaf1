@@ -20,7 +20,7 @@ States::Menu::Menu(Core::StateManager& sm) : IState::IState(sm)
     this->a_blip3 = Core::AssetManager::ensure_loaded<Core::Audio>("a_blip3", "assets/audio/blip3.mp3", true);
 
     this->t_texts[0] = std::make_unique<GL::MTSDF::Text>(this->f_consolas, "Five\nNights\nat\nFreddy's");
-    this->t_texts[0]->x = -750 / 960.0;
+    this->t_texts[0]->x = -700 / 960.0;
     this->t_texts[0]->y = 420 / 544.0;
     this->t_texts[0]->s = 79 / 544.0;
     this->t_texts[0]->s_x = 0.5;
@@ -42,7 +42,7 @@ States::Menu::Menu(Core::StateManager& sm) : IState::IState(sm)
 
 #ifdef APP_IS_DEMO
     this->t_demo = std::make_unique<GL::MTSDF::Text>(this->f_consolas, "Demo");
-    this->t_demo->x = -750 / 960.0;
+    this->t_demo->x = -700 / 960.0;
     this->t_demo->y = 100 / 544.0;
     this->t_demo->s = 79 / 544.0;
     this->t_demo->s_x = 0.5;
