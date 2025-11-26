@@ -3,6 +3,7 @@
 #include "core/defines.hpp"
 #include "core/assetmanager.hpp"
 #include "game/menu.hpp"
+#include "gl/defines.hpp"
 
 #include <SDL3/SDL_opengles2.h>
 
@@ -24,9 +25,7 @@ States::Newspaper::Newspaper(Core::StateManager& sm) : IState::IState(sm)
         1.0f, 1.0f, 1.0f, 0.0f,
     };
 
-    glGenBuffers(1, &this->vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+    GEN_AND_SEND_VBO(this->vbo, verts, GL_STATIC_DRAW);
 }
 
 States::Newspaper::~Newspaper()
@@ -37,6 +36,12 @@ States::Newspaper::~Newspaper()
 
 void States::Newspaper::draw(int w, int h)
 {
+    if(this->state != NEWSPAPER_STATE_FADING_IN)
+    {
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+    }
+
     UNUSED(w); UNUSED(h);
     GL::Texture::default_shader->use();
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
@@ -70,8 +75,25 @@ void States::Newspaper::draw(int w, int h)
 
 void States::Newspaper::update(double dt)
 {
-    alpha += (1.0 / 2.5) * dt;
-    alpha = (alpha > 1) ? 1 : alpha;
+    switch(this->state)
+    {
+    case NEWSPAPER_STATE_FADING_IN:
+        this->alpha += (1.0 / 2) * dt;
+        if(this->alpha > 1)
+        {
+            this->alpha = 1, this->state = NEWSPAPER_STATE_HOLD;
+            this->state_manager.states.erase(this->state_manager.states.begin());
+        }
+        break;
+    case NEWSPAPER_STATE_HOLD:
+        this->hold_timer += dt;
+        if(this->hold_timer > 2) this->state = NEWSPAPER_STATE_FADING_OUT;
+        break;
+    case NEWSPAPER_STATE_FADING_OUT:
+        this->alpha -= (1.0 / 2) * dt;
+        if(this->alpha < 0) this->alpha = 0; // TODO: change state to night 1
+        break;
+    }
 }
 
 void States::Newspaper::event(SDL_Event& event)

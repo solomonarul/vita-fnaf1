@@ -26,6 +26,6 @@ namespace Core
         void update(double);
         void send(SDL_Event&);
 
-        std::vector<std::unique_ptr<IState>> states;
+        std::vector<std::shared_ptr<IState>> states;
     };
 };

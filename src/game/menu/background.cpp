@@ -1,15 +1,13 @@
 #include "game/menu/background.hpp"
 
 #include "core/random.hpp"
+#include "core/assetmanager.hpp"
+#include "gl/defines.hpp"
 
 using namespace Game::Objects::Menu;
 
-#include "core/assetmanager.hpp"
-
 Background::Background()
 {
-    glGenBuffers(1, &this->vbo);
-
     static float verts[] = {
         -1.0f, -1.0f, 0.0f, 1.0f,
         1.0f, -1.0, 1.0f, 1.0f,
@@ -17,8 +15,7 @@ Background::Background()
         1.0f, 1.0f, 1.0f, 0.0f,
     };
 
-    glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+    GEN_AND_SEND_VBO(this->vbo, verts, GL_STATIC_DRAW)
 
     this->shader = Core::AssetManager::ensure_loaded<GL::Shader>("s_menu_bg",
         "assets/shaders/menu/background.vert",

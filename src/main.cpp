@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     window.use();
 
     Core::StateManager manager;
-    manager.states.emplace_back(std::make_unique<Game::States::Main>(manager));
+    manager.states.emplace_back(std::make_shared<Game::States::Main>(manager));
 
     bool running = true;
     SDL_Event event;

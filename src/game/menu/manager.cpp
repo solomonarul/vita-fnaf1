@@ -82,7 +82,7 @@ void Manager::event(SDL_Event& event, Core::StateManager& sm)
             switch(this->current)
             {
             case 1:
-                sm.states.emplace_back(std::make_unique<Game::States::Newspaper>(sm));
+                sm.states.emplace_back(std::make_shared<Game::States::Newspaper>(sm));
                 break;
             case 2:
                 // TODO: goto night[nightcount]
