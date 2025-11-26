@@ -17,18 +17,18 @@ Manager::Manager()
     this->t_texts[0]->x = -750 / 960.0;
     this->t_texts[0]->y = -70 / 544.0;
     this->t_texts[0]->s = 79 / 544.0;
-    this->t_texts[0]->s_x = 0.6;
+    this->t_texts[0]->s_x = 0.5;
 
     this->t_texts[1] = std::make_unique<GL::MTSDF::Text>(this->f_consolas, "Continue");
     this->t_texts[1]->x = -750 / 960.0;
     this->t_texts[1]->y = -210 / 544.0;
     this->t_texts[1]->s = 79 / 544.0;
-    this->t_texts[1]->s_x = 0.6;
+    this->t_texts[1]->s_x = 0.5;
 
     this->t_pointer = std::make_unique<GL::MTSDF::Text>(this->f_consolas, ">>");
     this->t_pointer->x = -870 / 960.0;
     this->t_pointer->s = 79 / 544.0;
-    this->t_pointer->s_x = 0.6;
+    this->t_pointer->s_x = 0.5;
 
     this->t_night = std::make_unique<GL::MTSDF::Text>(this->f_consolas, "Night");
     this->t_night->x = -735 / 960.0;

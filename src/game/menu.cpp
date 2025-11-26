@@ -23,9 +23,9 @@ States::Menu::Menu(Core::StateManager& sm) : IState::IState(sm)
     this->t_texts[0]->x = -750 / 960.0;
     this->t_texts[0]->y = 420 / 544.0;
     this->t_texts[0]->s = 79 / 544.0;
-    this->t_texts[0]->s_x = 0.6;
+    this->t_texts[0]->s_x = 0.5;
 
-    this->t_texts[1] = std::make_unique<GL::MTSDF::Text>(this->f_consolas, "v. 1.0");
+    this->t_texts[1] = std::make_unique<GL::MTSDF::Text>(this->f_consolas, "v. 1.00");
     this->t_texts[1]->x = -945 / 960.0;
     this->t_texts[1]->y = -1;
     this->t_texts[1]->s = 40 / 544.0;
@@ -45,7 +45,7 @@ States::Menu::Menu(Core::StateManager& sm) : IState::IState(sm)
     this->t_demo->x = -750 / 960.0;
     this->t_demo->y = 100 / 544.0;
     this->t_demo->s = 79 / 544.0;
-    this->t_demo->s_x = 0.6;
+    this->t_demo->s_x = 0.5;
 #endif
 
     MIX_PlayTrack(this->a_static2->track, 0);
@@ -64,9 +64,6 @@ States::Menu::~Menu()
 
 void States::Menu::draw(int w, int h)
 {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-
 #ifndef __psp2__
     double scale = std::min(w / 960.0, h / 544.0);
     int s_w = (w - 960 * scale) / 2, s_h = (h - 544 * scale) / 2;

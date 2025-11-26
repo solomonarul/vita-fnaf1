@@ -1,7 +1,6 @@
 #include "game/main.hpp"
 
 #include "core/defines.hpp"
-#include "core/assetmanager.hpp"
 #include "game/menu.hpp"
 
 #include <cmath>
@@ -11,7 +10,7 @@ using namespace Game;
 
 States::Main::Main(Core::StateManager& sm) : IState::IState(sm)
 {
-    this->f_tahoma = Core::AssetManager::ensure_loaded<GL::MTSDF::Font>("f_tahoma", "assets/images/fonts/tahoma.stf.png", "assets/images/fonts/tahoma.csv");
+    this->f_tahoma = std::make_shared<GL::MTSDF::Font>("assets/images/fonts/tahoma.stf.png", "assets/images/fonts/tahoma.csv");
 
     this->t_warning[0] = std::make_unique<GL::MTSDF::Text>(f_tahoma, "WARNING!");
     this->t_warning[0]->x = 0;

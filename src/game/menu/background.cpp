@@ -22,7 +22,17 @@ Background::Background()
         "assets/shaders/menu/background.frag"
     );
 
-    this->t_background = Core::AssetManager::ensure_loaded<GL::TextureAtlas>("t_bg", std::vector{
+    this->t_blip = Core::AssetManager::ensure_loaded<GL::TextureAtlas>("t_menu_blip", std::vector{
+        GL::TextureConfig{.path = "assets/images/misc/white_bars/1.png"},
+        GL::TextureConfig{.path = "assets/images/misc/white_bars/2.png"},
+        GL::TextureConfig{.path = "assets/images/misc/white_bars/3.png"},
+        GL::TextureConfig{.path = "assets/images/misc/white_bars/4.png"},
+        GL::TextureConfig{.path = "assets/images/misc/white_bars/5.png"},
+        GL::TextureConfig{.path = "assets/images/misc/white_bars/6.png"},
+        GL::TextureConfig{.path = "assets/images/misc/white_bars/7.png"},
+    });
+
+    this->t_background = Core::AssetManager::ensure_loaded<GL::TextureAtlas>("t_menu_bg", std::vector{
         GL::TextureConfig{"assets/images/menu/background/431.png"},
         GL::TextureConfig{"assets/images/menu/background/440.png"},
         GL::TextureConfig{"assets/images/menu/background/441.png"},
@@ -44,27 +54,30 @@ Background::Background()
 Background::~Background()
 {
     glDeleteBuffers(1, &this->vbo);
-    Core::AssetManager::remove("t_bg");
+    Core::AssetManager::remove("t_menu_bg");
+    Core::AssetManager::remove("t_menu_blip");
 }
 
 void Background::draw()
 {
     this->shader->use();
     
+    glUniform1f(glGetUniformLocation(this->shader->id, "u_alpha"), this->u_alpha);
+    glUniform1f(glGetUniformLocation(this->shader->id, "u_bar_offset"), this->u_bar_offset);
     glUniform1f(
-        glGetUniformLocation(this->shader->id, "u_alpha"),
-        this->u_alpha
+        glGetUniformLocation(this->shader->id, "u_blip_alpha"),
+        this->blip_show ? this->u_blip_alpha : 0
     );
-    glUniform1f(
-        glGetUniformLocation(this->shader->id, "u_static_alpha"),
-        200 / 255.0
-    );
+    glUniform1f(glGetUniformLocation(this->shader->id, "u_bar_width"), this->u_bar_width);
 
     glUniform1i(glGetUniformLocation(this->shader->id, "u_texture"), 0);
     this->t_background->textures[current_texture]->activate(GL_TEXTURE0);
 
     glUniform1i(glGetUniformLocation(this->shader->id, "u_static_texture"), 1);
     this->t_static->textures[current_static_texture]->activate(GL_TEXTURE1);
+
+    glUniform1i(glGetUniformLocation(this->shader->id, "u_blip_texture"), 2);
+    this->t_blip->textures[current_blip_texture]->activate(GL_TEXTURE2);
 
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
 
@@ -92,6 +105,11 @@ void Background::update(double dt)
     this->update_timer += dt;
     this->static_image_update_timer += dt;
     this->static_alpha_update_timer += dt;
+    this->blip_image_update_timer += dt;
+    this->blip_alpha_update_timer += dt;
+    this->blip_show_update_timer += dt;
+    this->u_bar_offset = this->u_bar_offset + dt * bar_speed;
+    this->u_bar_offset = (this->u_bar_offset > 1) ? -u_bar_width : this->u_bar_offset;
 
     if(this->update_timer > update_rate)
     {
@@ -104,7 +122,7 @@ void Background::update(double dt)
 
     if(this->static_image_update_timer > static_image_update_rate)
     {
-        current_static_texture = (current_static_texture + 1) % this->t_static->textures.size();
+        this->current_static_texture = (this->current_static_texture + 1) % this->t_static->textures.size();
         this->static_image_update_timer = std::fmod(this->static_image_update_timer, static_image_update_rate);
     }
 
@@ -112,6 +130,24 @@ void Background::update(double dt)
     {
         this->u_static_alpha = Core::Random::range(50, 149) / 255.0;
         this->static_alpha_update_timer = std::fmod(this->static_alpha_update_timer, static_alpha_update_rate);
+    }
+
+    if(this->blip_image_update_timer > blip_image_update_rate)
+    {
+        this->current_blip_texture = (this->current_blip_texture + 1) % this->t_blip->textures.size();
+        this->blip_image_update_timer = std::fmod(this->blip_image_update_timer, blip_image_update_rate);
+    }
+
+    if(this->blip_alpha_update_timer > blip_alpha_update_rate)
+    {
+        this->u_blip_alpha = Core::Random::range(100, 199) / 255.0 / 2;
+        this->blip_alpha_update_timer = std::fmod(this->blip_alpha_update_timer, blip_alpha_update_rate);
+    }
+
+    if(this->blip_show_update_timer > blip_show_update_rate)
+    {
+        this->blip_show = Core::Random::range(0, 2) == 1;
+        this->blip_show_update_timer = std::fmod(this->blip_show_update_timer, blip_show_update_rate);
     }
 }
 
