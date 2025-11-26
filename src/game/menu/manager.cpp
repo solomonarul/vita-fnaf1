@@ -3,6 +3,7 @@
 using namespace Game::Objects::Menu;
 
 #include "core/assetmanager.hpp"
+#include "game/newspaper.hpp"
 
 #include <SDL3_mixer/SDL_mixer.h>
 
@@ -16,18 +17,18 @@ Manager::Manager()
     this->t_texts[0]->x = -750 / 960.0;
     this->t_texts[0]->y = -70 / 544.0;
     this->t_texts[0]->s = 79 / 544.0;
-    this->t_texts[0]->s_x = 0.5;
+    this->t_texts[0]->s_x = 0.6;
 
     this->t_texts[1] = std::make_unique<GL::MTSDF::Text>(this->f_consolas, "Continue");
     this->t_texts[1]->x = -750 / 960.0;
     this->t_texts[1]->y = -210 / 544.0;
     this->t_texts[1]->s = 79 / 544.0;
-    this->t_texts[1]->s_x = 0.5;
+    this->t_texts[1]->s_x = 0.6;
 
     this->t_pointer = std::make_unique<GL::MTSDF::Text>(this->f_consolas, ">>");
-    this->t_pointer->x = -845 / 960.0;\
+    this->t_pointer->x = -870 / 960.0;
     this->t_pointer->s = 79 / 544.0;
-    this->t_pointer->s_x = 0.5;
+    this->t_pointer->s_x = 0.6;
 
     this->t_night = std::make_unique<GL::MTSDF::Text>(this->f_consolas, "Night");
     this->t_night->x = -735 / 960.0;
@@ -62,8 +63,9 @@ void Manager::draw()
         this->t_texts[index]->draw();
 }
 
-void Manager::event(SDL_Event& event)
+void Manager::event(SDL_Event& event, Core::StateManager& sm)
 {
+    (void)(sm);
     switch(event.type)
     {
 #ifndef __psp2__
@@ -76,11 +78,21 @@ void Manager::event(SDL_Event& event)
             this->current = (this->current) % 2 + 1;
             MIX_PlayAudio(Core::AudioManager::get_mixer(), this->a_blip3->audio);
             break;
+        case SDLK_SPACE:
+            switch(this->current)
+            {
+            case 1:
+                sm.states.emplace_back(std::make_unique<Game::States::Newspaper>(sm));
+                break;
+            case 2:
+                // TODO: goto night[nightcount]
+                break;
+            }
+            break;
         }
         break;
 #endif
     case SDL_EVENT_GAMEPAD_BUTTON_DOWN:
-        if(event.gbutton.repeat) break;
         switch(event.gbutton.button)
         {
         case SDL_GAMEPAD_BUTTON_DPAD_DOWN:

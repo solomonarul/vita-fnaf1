@@ -1,9 +1,11 @@
 #pragma once
 
 #include "core/asset.hpp"
+#include "gl/assets/shader.hpp"
 
 #include <SDL3/SDL_opengles2.h>
 
+#include <memory>
 #include <string>
 
 namespace GL
@@ -24,6 +26,8 @@ namespace GL
         GLuint id;
         int w, h, ch;
         void* data;
+
+        static std::unique_ptr<GL::Shader> default_shader;
         
         void bind();
         void activate(GLenum);

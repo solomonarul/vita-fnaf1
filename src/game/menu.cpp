@@ -23,7 +23,7 @@ States::Menu::Menu(Core::StateManager& sm) : IState::IState(sm)
     this->t_texts[0]->x = -750 / 960.0;
     this->t_texts[0]->y = 420 / 544.0;
     this->t_texts[0]->s = 79 / 544.0;
-    this->t_texts[0]->s_x = 0.5;
+    this->t_texts[0]->s_x = 0.6;
 
     this->t_texts[1] = std::make_unique<GL::MTSDF::Text>(this->f_consolas, "v. 1.0");
     this->t_texts[1]->x = -945 / 960.0;
@@ -45,7 +45,7 @@ States::Menu::Menu(Core::StateManager& sm) : IState::IState(sm)
     this->t_demo->x = -750 / 960.0;
     this->t_demo->y = 100 / 544.0;
     this->t_demo->s = 79 / 544.0;
-    this->t_demo->s_x = 0.5;
+    this->t_demo->s_x = 0.6;
 #endif
 
     MIX_PlayTrack(this->a_static2->track, 0);
@@ -86,6 +86,12 @@ void States::Menu::draw(int w, int h)
 
 void States::Menu::update(double dt)
 {
+    if(updates_disabled)
+    {
+        MIX_StopAllTracks(Core::AudioManager::get_mixer(), 0);
+        return;  
+    }
+
     if(!MIX_TrackPlaying(this->a_darkness_music->track))
         MIX_PlayTrack(this->a_darkness_music->track, 0);
 
@@ -97,5 +103,6 @@ void States::Menu::update(double dt)
 
 void States::Menu::event(SDL_Event& event)
 {
-    this->selector.event(event);
+    if(updates_disabled) return;
+    this->selector.event(event, this->state_manager);
 }

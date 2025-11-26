@@ -24,6 +24,7 @@ namespace Game::States
 
         Objects::Menu::Background bkg;
         Objects::Menu::Manager selector;
+        bool updates_disabled = false;
         virtual void draw(int w, int h) override;
         virtual void update(double dt) override;
         virtual void event(SDL_Event&) override;

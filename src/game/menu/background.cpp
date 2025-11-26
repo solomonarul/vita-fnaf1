@@ -10,6 +10,16 @@ Background::Background()
 {
     glGenBuffers(1, &this->vbo);
 
+    static float verts[] = {
+        -1.0f, -1.0f, 0.0f, 1.0f,
+        1.0f, -1.0, 1.0f, 1.0f,
+        -1.0f, 1.0f, 0.0f, 0.0f,
+        1.0f, 1.0f, 1.0f, 0.0f,
+    };
+
+    glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+
     this->shader = Core::AssetManager::ensure_loaded<GL::Shader>("s_menu_bg",
         "assets/shaders/menu/background.vert",
         "assets/shaders/menu/background.frag"
@@ -59,15 +69,7 @@ void Background::draw()
     glUniform1i(glGetUniformLocation(this->shader->id, "u_static_texture"), 1);
     this->t_static->textures[current_static_texture]->activate(GL_TEXTURE1);
 
-    static float verts[] = {
-        -1.0f, -1.0f, 0.0f, 1.0f,
-        1.0f, -1.0, 1.0f, 1.0f,
-        -1.0f, 1.0f, 0.0f, 0.0f,
-        1.0f, 1.0f, 1.0f, 0.0f,
-    };
-
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
 
     GLint a_position = glGetAttribLocation(shader->id, "a_position");
     glEnableVertexAttribArray(a_position);

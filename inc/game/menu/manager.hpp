@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/assets/audio.hpp"
+#include "core/state.hpp"
 #include "gl/mtsdf/font.hpp"
 #include "gl/mtsdf/text.hpp"
 
@@ -19,6 +20,6 @@ namespace Game::Objects::Menu
         Manager();
         ~Manager();
         void draw();
-        void event(SDL_Event&);
+        void event(SDL_Event&, Core::StateManager&);
     };
 };

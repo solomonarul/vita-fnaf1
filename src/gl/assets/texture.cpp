@@ -9,8 +9,13 @@
 
 using namespace GL;
 
+std::unique_ptr<GL::Shader> Texture::default_shader = nullptr;
+
 Texture::Texture(TextureConfig cfg)
 {
+    if(!default_shader)
+        default_shader = std::make_unique<GL::Shader>("assets/shaders/texture_default.vert", "assets/shaders/texture_default.frag");
+
     this->data = stbi_load(cfg.path.c_str(), &this->w, &this->h, &this->ch, 0);
     if(!this->data)
     {
