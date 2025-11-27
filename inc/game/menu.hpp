@@ -22,6 +22,7 @@ namespace Game::States
         std::unique_ptr<GL::MTSDF::Text> t_demo;
 #endif
 
+        int night = 1;  // TODO: move to a global game state holder which will also handle saving or something like that.
         Objects::Menu::Background bkg;
         Objects::Menu::Manager selector;
         bool updates_disabled = false;

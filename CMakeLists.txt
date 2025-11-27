@@ -27,6 +27,7 @@ add_executable(
         "src/game/menu/background.cpp"
         "src/game/menu/manager.cpp"
         "src/game/newspaper.cpp"
+        "src/game/nightloader.cpp"
 )
 
 find_package(SDL3 REQUIRED)

@@ -4,14 +4,15 @@ using namespace Game::Objects::Menu;
 
 #include "core/assetmanager.hpp"
 #include "game/newspaper.hpp"
+#include "game/nightloader.hpp"
 
 #include <SDL3_mixer/SDL_mixer.h>
 
 Manager::Manager()
 {
     this->a_blip3 = Core::AssetManager::ensure_loaded<Core::Audio>("a_blip3", "assets/audio/blip3.mp3", true);
-    this->f_consolas = Core::AssetManager::ensure_loaded<GL::MTSDF::Font>("f_consolas", "assets/images/fonts/consolas.stf.png", "assets/images/fonts/consolas.csv");
-    this->f_consolas_bold = Core::AssetManager::ensure_loaded<GL::MTSDF::Font>("f_consolas_bold", "assets/images/fonts/consolas_bold.stf.png", "assets/images/fonts/consolas_bold.csv");
+    this->f_consolas = Core::AssetManager::ensure_loaded<GL::MTSDF::Font>("f_consolas", "assets/images/fonts/consolas.sdf.png", "assets/images/fonts/consolas.csv");
+    this->f_consolas_bold = Core::AssetManager::ensure_loaded<GL::MTSDF::Font>("f_consolas_bold", "assets/images/fonts/consolas_bold.sdf.png", "assets/images/fonts/consolas_bold.csv");
 
     this->t_texts[0] = std::make_unique<GL::MTSDF::Text>(this->f_consolas, "New Game");
     this->t_texts[0]->x = -700 / 960.0;
@@ -86,6 +87,7 @@ void Manager::event(SDL_Event& event, Core::StateManager& sm)
                 sm.states.emplace_back(std::make_shared<Game::States::Newspaper>(sm));
                 break;
             case 2:
+                sm.states.emplace_back(std::make_shared<Game::States::NightLoader>(sm, 1));
                 // TODO: goto night[nightcount]
                 break;
             }

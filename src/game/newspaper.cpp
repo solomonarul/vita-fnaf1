@@ -3,9 +3,8 @@
 #include "core/defines.hpp"
 #include "core/assetmanager.hpp"
 #include "game/menu.hpp"
+#include "game/nightloader.hpp"
 #include "gl/defines.hpp"
-
-#include <SDL3/SDL_opengles2.h>
 
 #include <iostream>
 
@@ -31,6 +30,7 @@ States::Newspaper::Newspaper(Core::StateManager& sm) : IState::IState(sm)
 States::Newspaper::~Newspaper()
 {
     glDeleteBuffers(1, &this->vbo);
+    Core::AssetManager::remove("t_newspaper");
     std::cout << TTY_BLUE << "[INFO]: Destroyed Newspaper state.\n" << TTY_RESET; 
 }
 
@@ -95,7 +95,7 @@ void States::Newspaper::update(double dt)
 
     case NEWSPAPER_STATE_FADING_OUT:
         this->alpha -= inverse_timer_duration * dt;
-        if(this->alpha < 0) this->alpha = 0; // TODO: change state to night 1
+        if(this->alpha < 0) this->alpha = 0, this->state_manager.states.push_back(std::make_shared<Game::States::NightLoader>(this->state_manager, 1));
         break;
     }
 }

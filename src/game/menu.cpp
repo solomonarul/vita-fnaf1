@@ -14,7 +14,7 @@ States::Menu::Menu(Core::StateManager& sm) : IState::IState(sm)
     // undefined behaviour happens on the Vita. I.E removing a state while executing its' code is not ideal.
     // Maybe I am stupid or something again, gotta check this out in detail.
 
-    this->f_consolas = Core::AssetManager::ensure_loaded<GL::MTSDF::Font>("f_consolas", "assets/images/fonts/consolas.stf.png", "assets/images/fonts/consolas.csv");
+    this->f_consolas = Core::AssetManager::ensure_loaded<GL::MTSDF::Font>("f_consolas", "assets/images/fonts/consolas.sdf.png", "assets/images/fonts/consolas.csv");
     this->a_static2 = Core::AssetManager::ensure_loaded<Core::Audio>("a_static2", "assets/audio/static2.mp3", true);
     this->a_darkness_music = Core::AssetManager::ensure_loaded<Core::Audio>("a_darkness_music", "assets/audio/darkness music.mp3", true);
     this->a_blip3 = Core::AssetManager::ensure_loaded<Core::Audio>("a_blip3", "assets/audio/blip3.mp3", true);

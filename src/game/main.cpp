@@ -10,22 +10,20 @@ using namespace Game;
 
 States::Main::Main(Core::StateManager& sm) : IState::IState(sm)
 {
-    this->f_tahoma = std::make_shared<GL::MTSDF::Font>("assets/images/fonts/tahoma.stf.png", "assets/images/fonts/tahoma.csv");
+    this->f_tahoma = std::make_shared<GL::MTSDF::Font>("assets/images/fonts/tahoma.sdf.png", "assets/images/fonts/tahoma.csv");
 
     this->t_warning[0] = std::make_unique<GL::MTSDF::Text>(f_tahoma, "WARNING!");
-    this->t_warning[0]->x = 0;
     this->t_warning[0]->y = 90 / 544.0;
     
     this->t_warning[1] = std::make_unique<GL::MTSDF::Text>(f_tahoma, "This game contains flashing lights, loud");
-    this->t_warning[1]->x = 0;
     this->t_warning[1]->y = 0 / 544.0;
 
     this->t_warning[2] = std::make_unique<GL::MTSDF::Text>(f_tahoma, "noises, and lots of jumpscares!");
-    this->t_warning[2]->x = 0;
     this->t_warning[2]->y = -45 / 544.0;
 
     for(auto index = 0; index < 3; index++)
     {
+        this->t_warning[index]->x = 0;
         this->t_warning[index]->o_x = -0.5;
         this->t_warning[index]->s = 45 / 544.0;
         this->t_warning[index]->s_x = 0.6;

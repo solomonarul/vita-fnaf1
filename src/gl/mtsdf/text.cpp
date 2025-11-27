@@ -2,17 +2,6 @@
 
 using namespace GL;
 
-GL::MTSDF::Text::Text(std::shared_ptr<Font> f, const std::string& str) : font(std::move(f)), text(str)
-{
-    glGenBuffers(1, &this->vbo);
-}
-
-GL::MTSDF::Text::~Text()
-{
-    if(this->vbo)
-        glDeleteBuffers(1, &this->vbo), this->vbo = 0;
-}
-
 inline void gen_and_upload_vertices(GL::MTSDF::Text& self)
 {
     self.vertexData.clear();
@@ -81,6 +70,17 @@ inline void gen_and_upload_vertices(GL::MTSDF::Text& self)
 
     glBindBuffer(GL_ARRAY_BUFFER, self.vbo);
     glBufferData(GL_ARRAY_BUFFER, self.vertexData.size() * sizeof(float), self.vertexData.data(), GL_DYNAMIC_DRAW);
+}
+
+GL::MTSDF::Text::Text(std::shared_ptr<Font> f, const std::string& str) : font(std::move(f)), text(str)
+{
+    glGenBuffers(1, &this->vbo);
+}
+
+GL::MTSDF::Text::~Text()
+{
+    if(this->vbo)
+        glDeleteBuffers(1, &this->vbo), this->vbo = 0;
 }
 
 void GL::MTSDF::Text::draw(std::unique_ptr<GL::Shader>& shader)
