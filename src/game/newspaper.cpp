@@ -30,7 +30,6 @@ States::Newspaper::Newspaper(Core::StateManager& sm) : IState::IState(sm)
 States::Newspaper::~Newspaper()
 {
     glDeleteBuffers(1, &this->vbo);
-    Core::AssetManager::remove("t_newspaper");
     std::cout << TTY_BLUE << "[INFO]: Destroyed Newspaper state.\n" << TTY_RESET; 
 }
 

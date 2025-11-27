@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/state.hpp"
+#include "core/timer.hpp"
 #include "gl/mtsdf/text.hpp"
 #include "gl/mtsdf/font.hpp"
 #include "gl/assets/textureatlas.hpp"
@@ -15,8 +16,9 @@ namespace Game::States
         GLuint vbo;
 
         uint16_t blip_frame = 0;
-        constexpr static double blip_timer_update_rate = 1.0 / 75;
-        double blip_timer = 0;
+        Core::Timer ti_blip_update = Core::Timer(1.0 / 75);
+
+        Core::Timer ti_fade_out = Core::Timer(2);
 
         std::shared_ptr<GL::TextureAtlas> t_blip;
         std::shared_ptr<GL::MTSDF::Font> f_lcdsolid;

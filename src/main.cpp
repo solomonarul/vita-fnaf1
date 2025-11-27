@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
         while(timer > timer_rate)
         {
             manager.update(timer_rate);
-            timer -= timer_rate;    // Fixed rate delta timing.
+            timer -= timer_rate;    // All my homies like fixed rate delta timing.
         }
         
         window.swap();

@@ -1,4 +1,4 @@
-#include "core/assets/audio.hpp"
+#include "core/audio.hpp"
 
 #include "core/defines.hpp"
 

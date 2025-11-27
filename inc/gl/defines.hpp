@@ -4,3 +4,4 @@
     glGenBuffers(1, &vbo);    \
     glBindBuffer(GL_ARRAY_BUFFER, vbo);   \
     glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, usage);
+    

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "core/timer.hpp"
 #include "gl/assets/shader.hpp"
 #include "gl/assets/textureatlas.hpp"
 
@@ -23,27 +24,19 @@ namespace Game::Objects::Menu
         std::shared_ptr<GL::Shader> shader;
 
         bool blip_show = false;
-        constexpr static double blip_show_update_rate = 30.0 / 100;
-        double blip_show_update_timer = 0;
 
-        constexpr static double blip_alpha_update_rate = 8.0 / 100;
-        double blip_alpha_update_timer = 0;
+        Core::Timer ti_blip_show = Core::Timer(30.0 / 100);
+        Core::Timer ti_blip_image_update = Core::Timer(1.0 / 7);
+        Core::Timer ti_blip_alpha_update = Core::Timer(8.0 / 100);
 
-        constexpr static double blip_image_update_rate = 1.0 / 7;
-        double blip_image_update_timer = 0;
+        Core::Timer ti_image_update = Core::Timer(8.0 / 100);
+
+        Core::Timer ti_static_image_update = Core::Timer(1.0 / 50);
+        Core::Timer ti_static_alpha_update = Core::Timer(9.0 / 100);
 
         constexpr static double u_bar_width = 1.0 / 544 * 25;
         double u_bar_offset = -u_bar_width;
         constexpr static double bar_speed = 1.0 / 19;
-
-        constexpr static double update_rate = 8.0 / 100;
-        double update_timer = 0;
-
-        constexpr static double static_image_update_rate = 1.0 / 50;
-        double static_image_update_timer = 0;
-
-        constexpr static double static_alpha_update_rate = 9.0 / 100;
-        double static_alpha_update_timer = 0;
 
         Background();
         ~Background();

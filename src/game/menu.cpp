@@ -15,8 +15,8 @@ States::Menu::Menu(Core::StateManager& sm) : IState::IState(sm)
     // Maybe I am stupid or something again, gotta check this out in detail.
 
     this->f_consolas = Core::AssetManager::ensure_loaded<GL::MTSDF::Font>("f_consolas", "assets/images/fonts/consolas.sdf.png", "assets/images/fonts/consolas.csv");
-    this->a_static2 = Core::AssetManager::ensure_loaded<Core::Audio>("a_static2", "assets/audio/static2.mp3", true);
-    this->a_darkness_music = Core::AssetManager::ensure_loaded<Core::Audio>("a_darkness_music", "assets/audio/darkness music.mp3", true);
+    this->a_static2 = Core::AssetManager::ensure_loaded<Core::Audio>("a_static2", "assets/audio/menu/static2.mp3", true);
+    this->a_darkness_music = Core::AssetManager::ensure_loaded<Core::Audio>("a_darkness_music", "assets/audio/menu/darkness music.mp3", true);
     this->a_blip3 = Core::AssetManager::ensure_loaded<Core::Audio>("a_blip3", "assets/audio/blip3.mp3", true);
 
     this->t_texts[0] = std::make_unique<GL::MTSDF::Text>(this->f_consolas, "Five\nNights\nat\nFreddy's");
@@ -55,10 +55,6 @@ States::Menu::Menu(Core::StateManager& sm) : IState::IState(sm)
 
 States::Menu::~Menu()
 {
-    if(this->a_static2)
-        Core::AssetManager::remove_ptr(this->a_static2);
-    Core::AssetManager::remove_ptr(this->a_darkness_music);
-
     std::cout << TTY_BLUE << "[INFO]: Destroyed Menu state.\n" << TTY_RESET; 
 }
 
@@ -71,10 +67,10 @@ void States::Menu::draw(int w, int h)
 #else
     glViewport(0, 0, w, h);
 #endif
-    this->bkg.draw();
+    this->o_background.draw();
     for(auto index = 0; index < 3; index++)
         this->t_texts[index]->draw();
-    this->selector.draw();
+    this->o_selector.draw();
 
 #ifdef APP_IS_DEMO
     this->t_demo->draw();
@@ -92,14 +88,11 @@ void States::Menu::update(double dt)
     if(!MIX_TrackPlaying(this->a_darkness_music->track))
         MIX_PlayTrack(this->a_darkness_music->track, 0);
 
-    if(this->a_static2 && !MIX_TrackPlaying(this->a_static2->track))
-        this->a_static2 = nullptr, Core::AssetManager::remove("a_static2");
-
-    this->bkg.update(dt);
+    this->o_background.update(dt);
 }
 
 void States::Menu::event(SDL_Event& event)
 {
     if(updates_disabled) return;
-    this->selector.event(event, this->state_manager);
+    this->o_selector.event(event, this->state_manager);
 }

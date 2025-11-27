@@ -6,16 +6,19 @@ if(CMAKE_BUILD_PLATFORM MATCHES "VITA")
     include("cmake/vita_pre.cmake")
 endif()
 
+add_subdirectory(lib)
+
 project(app)
 
 add_executable(
     ${PROJECT_NAME}
         "src/main.cpp"
+        "src/core/audio.cpp"
         "src/core/file.cpp"
         "src/core/state.cpp"
         "src/core/delta.cpp"
+        "src/core/timer.cpp"
         "src/core/assetmanager.cpp"
-        "src/core/assets/audio.cpp"
         "src/gl/window.cpp"
         "src/gl/mtsdf/font.cpp"
         "src/gl/mtsdf/text.cpp"
@@ -35,6 +38,7 @@ find_package(SDL3_mixer REQUIRED)
 target_link_libraries(
     ${PROJECT_NAME}
     PUBLIC
+        stb_image
         SDL3
         SDL3_mixer
 )

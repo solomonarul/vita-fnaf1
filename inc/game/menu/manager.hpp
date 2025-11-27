@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/assets/audio.hpp"
+#include "core/audio.hpp"
 #include "core/state.hpp"
 #include "gl/mtsdf/font.hpp"
 #include "gl/mtsdf/text.hpp"

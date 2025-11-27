@@ -3,7 +3,6 @@
 #include "core/defines.hpp"
 #include "game/menu.hpp"
 
-#include <cmath>
 #include <iostream>
 
 using namespace Game;
@@ -50,15 +49,15 @@ void States::Main::draw(int w, int h)
 
     for(auto index = 0; index < 3; index++)
     {
-        this->t_warning[index]->color.a = std::floor(3.0 - this->timer / 3.0 * 255);
+        this->t_warning[index]->color.a = 1.0 - this->ti_transition.value / this->ti_transition.rate * 255;
         this->t_warning[index]->draw(GL::MTSDF::Font::default_shader);
     }
 }
 
 void States::Main::update(double dt)
 {
-    this->timer += dt;
-    if(this->timer > 3) // TODO: 3 secs or all assets loaded if they take more than 3s to load.
+    this->ti_transition.update(dt);
+    if(this->ti_transition.has_ticked())
         this->state_manager.states.emplace_back(std::make_shared<Game::States::Menu>(this->state_manager));
 }
 

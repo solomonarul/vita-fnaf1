@@ -33,8 +33,10 @@ MTSDF::Font::Font(const std::string& path, const std::string& csv_path)
         GlyphData g{};
         char c = 0;
 
-        while (std::getline(ss, token, ',')) {
-            switch (column) {
+        while (std::getline(ss, token, ','))
+        {
+            switch (column)
+            {
                 case 0: c = std::stoi(token); break;
                 case 1: g.advance = std::stof(token); break;
                 case 2: g.quad.x = std::stof(token); break;
@@ -48,6 +50,7 @@ MTSDF::Font::Font(const std::string& path, const std::string& csv_path)
             }
             column++;
         }
+        
         glyphs[c] = g;
     }
 

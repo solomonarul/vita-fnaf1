@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/assets/audio.hpp"
+#include "core/audio.hpp"
 #include "core/state.hpp"
 #include "game/menu/manager.hpp"
 #include "game/menu/background.hpp"
@@ -23,8 +23,8 @@ namespace Game::States
 #endif
 
         int night = 1;  // TODO: move to a global game state holder which will also handle saving or something like that.
-        Objects::Menu::Background bkg;
-        Objects::Menu::Manager selector;
+        Objects::Menu::Background o_background;
+        Objects::Menu::Manager o_selector;
         bool updates_disabled = false;
         virtual void draw(int w, int h) override;
         virtual void update(double dt) override;

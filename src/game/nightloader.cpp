@@ -1,11 +1,10 @@
 #include "game/nightloader.hpp"
 
-#include "core/assets/audio.hpp"
+#include "core/audio.hpp"
 #include "core/defines.hpp"
 #include "core/assetmanager.hpp"
 #include "gl/defines.hpp"
 
-#include <cmath>
 #include <iostream>
 
 using namespace Game;
@@ -44,15 +43,15 @@ States::NightLoader::NightLoader(Core::StateManager& sm, int night) : IState::IS
     MIX_PlayTrack(blip->track, 0);
 
     this->t_blip = Core::AssetManager::ensure_loaded<GL::TextureAtlas>("t_blip", std::vector{
-        GL::TextureConfig{.path = "assets/images/misc/night_blip/4.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
-        GL::TextureConfig{.path = "assets/images/misc/night_blip/6.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
-        GL::TextureConfig{.path = "assets/images/misc/night_blip/8.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
-        GL::TextureConfig{.path = "assets/images/misc/night_blip/9.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
-        GL::TextureConfig{.path = "assets/images/misc/night_blip/10.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
-        GL::TextureConfig{.path = "assets/images/misc/night_blip/21.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
-        GL::TextureConfig{.path = "assets/images/misc/night_blip/22.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
-        GL::TextureConfig{.path = "assets/images/misc/night_blip/23.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
-        GL::TextureConfig{.path = "assets/images/misc/night_blip/25.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
+        GL::TextureConfig{.path = "assets/images/misc/night_bars/4.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
+        GL::TextureConfig{.path = "assets/images/misc/night_bars/6.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
+        GL::TextureConfig{.path = "assets/images/misc/night_bars/8.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
+        GL::TextureConfig{.path = "assets/images/misc/night_bars/9.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
+        GL::TextureConfig{.path = "assets/images/misc/night_bars/10.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
+        GL::TextureConfig{.path = "assets/images/misc/night_bars/21.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
+        GL::TextureConfig{.path = "assets/images/misc/night_bars/22.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
+        GL::TextureConfig{.path = "assets/images/misc/night_bars/23.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
+        GL::TextureConfig{.path = "assets/images/misc/night_bars/25.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
     });
 
     static float verts[] = {
@@ -72,7 +71,6 @@ States::NightLoader::~NightLoader()
 
 void States::NightLoader::draw(int w, int h)
 {
-    UNUSED(w); UNUSED(h);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -85,7 +83,10 @@ void States::NightLoader::draw(int w, int h)
 #endif
 
     for(auto index = 0; index < 2; index++)
+    {
+        this->t_night[index]->color.a = (1.0 - this->ti_fade_out.value / this->ti_fade_out.rate) * 255; 
         this->t_night[index]->draw();
+    }
 
     if(this->blip_frame != (uint16_t)-1)
     {
@@ -124,13 +125,18 @@ void States::NightLoader::update(double dt)
 {
     if(blip_frame != (uint16_t)-1)
     {
-        this->blip_timer += dt;
-        if(this->blip_timer > blip_timer_update_rate)
+        this->ti_blip_update.update(dt);
+        if(this->ti_blip_update.has_ticked())
         {
             blip_frame = blip_frame + 1;
             if(blip_frame == this->t_blip->textures.size()) blip_frame = (uint16_t)-1;
-            this->blip_timer = std::fmod(this->blip_timer, blip_timer_update_rate);
         }
+    }
+    else
+    {
+        this->ti_fade_out.update(dt);
+        if(this->ti_fade_out.has_ticked())
+            exit(0);    // TODO: move on to the actual night.
     }
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core/state.hpp"
+#include "core/timer.hpp"
 #include "gl/mtsdf/text.hpp"
 #include "gl/mtsdf/font.hpp"
 
@@ -14,7 +15,7 @@ namespace Game::States
         std::unique_ptr<GL::MTSDF::Text> t_warning[3];
         std::shared_ptr<GL::MTSDF::Font> f_tahoma;
 
-        double timer = 0;
+        Core::Timer ti_transition = Core::Timer(3.0);
 
         virtual void draw(int w, int h) override;
         virtual void update(double dt) override;

@@ -24,14 +24,6 @@ namespace Core
             return dist(rng);
         }
 
-        static double unit() {
-            return range(0.0, 1.0);
-        }
-
-        static bool boolean() {
-            return range(0, 1) == 1;
-        }
-
         template<class Container>
         static const auto& choice(const Container& c) {
             return c[range<std::size_t>(0, c.size() - 1)];
