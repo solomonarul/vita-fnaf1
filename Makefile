@@ -7,11 +7,13 @@ TARGET = app
 _bruh:
 	@echo "You didn't read the README, did you?"
 
+co:
+	@cmake -E remove_directory out && echo "[INFO]: Removed out directory."
+
 c:
 	@cmake -E remove vgcore.*
 	@cmake -E remove_directory build && echo "[INFO]: Removed build directory."
 	@cmake -E remove_directory .cache && echo "[INFO]: Removed .cache directory."
-	@cmake -E remove_directory out && echo "[INFO]: Removed out directory."
 
 bud:
 	@cmake -B build -S . --preset unix-debug

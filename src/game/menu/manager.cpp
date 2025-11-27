@@ -22,24 +22,24 @@ Manager::Manager()
 
     this->t_texts[1] = std::make_unique<GL::MTSDF::Text>(this->f_consolas, "Continue");
     this->t_texts[1]->x = -700 / 960.0;
-    this->t_texts[1]->y = -210 / 544.0;
+    this->t_texts[1]->y = -175 / 544.0;
     this->t_texts[1]->s = 79 / 544.0;
     this->t_texts[1]->s_x = 0.5;
 
     this->t_pointer = std::make_unique<GL::MTSDF::Text>(this->f_consolas, ">>");
-    this->t_pointer->x = -820 / 960.0;
+    this->t_pointer->x = -810 / 960.0;
     this->t_pointer->s = 79 / 544.0;
     this->t_pointer->s_x = 0.5;
 
     this->t_night = std::make_unique<GL::MTSDF::Text>(this->f_consolas, "Night");
-    this->t_night->x = -685 / 960.0;
-    this->t_night->y = -275 / 544.0;
+    this->t_night->x = -680 / 960.0;
+    this->t_night->y = -240 / 544.0;
     this->t_night->s = 40 / 544.0;
     this->t_night->s_x = 0.6;
 
     this->t_night_count = std::make_unique<GL::MTSDF::Text>(this->f_consolas_bold, "1");
-    this->t_night_count->x = -550 / 960.0;
-    this->t_night_count->y = -275 / 544.0;
+    this->t_night_count->x = -545 / 960.0;
+    this->t_night_count->y = -240 / 544.0;
     this->t_night_count->s = 40 / 544.0;
     this->t_night_count->s_x = 0.6;
 }
