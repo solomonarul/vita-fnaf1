@@ -23,13 +23,7 @@ if(SDL3_VENDORED)
         GIT_TAG main
     )
     FetchContent_MakeAvailable(SDL3)
-
-    # if(EMSCRIPTEN)
-    #     set_target_properties(
-    #         ${PROJECT_NAME} PROPERTIES LINK_FLAGS
-    #         "-s USE_SDL=3 -s MIN_WEBGL_VERSION=1 -s MAX_WEBGL_VERSION=1 -s ALLOW_MEMORY_GROWTH=1"
-    #     )
-    # endif()
+    
     target_link_libraries(
         ${PROJECT_NAME}
         PUBLIC

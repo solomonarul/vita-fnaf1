@@ -21,6 +21,7 @@ bool running = true;
 SDL_Event event;
 Core::StateManager manager;
 GL::Window window({.title = "Five Nights at Freddy's", .w = 960, .h = 544});
+
 double timer = 0;
 constexpr double timer_rate = 1.0 / 60;
 
@@ -73,9 +74,7 @@ int main(int argc, char *argv[])
 #else
     Core::Delta dt;
     while(running)
-    {
         loop_once(dt.tick(), nullptr);
-    }
 #endif
 
     return EXIT_SUCCESS;
