@@ -58,7 +58,7 @@ void States::Main::update(double dt)
 {
     this->ti_transition.update(dt);
     if(this->ti_transition.has_ticked())
-        this->state_manager.states.emplace_back(std::make_shared<Game::States::Menu>(this->state_manager));
+        this->state_manager.states.push_back(std::make_shared<Game::States::Menu>(this->state_manager));
 }
 
 void States::Main::event(SDL_Event& event)

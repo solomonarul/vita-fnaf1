@@ -1,8 +1,8 @@
 #include "core/delta.hpp"
 
-using namespace Core;
+#include "core/defines.hpp"
 
-#include <SDL3/SDL.h>
+using namespace Core;
 
 Delta::Delta() : last(SDL_GetPerformanceCounter()) { }
 

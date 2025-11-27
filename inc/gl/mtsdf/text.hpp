@@ -1,10 +1,9 @@
 #pragma once
 
+#include "gl/defines.hpp"
 #include "gl/mtsdf/font.hpp"
 #include "gl/assets/shader.hpp"
 
-#include <SDL3/SDL.h>
-#include <SDL3/SDL_opengles2.h>
 #include <string>
 #include <memory>
 #include <vector>

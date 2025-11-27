@@ -1,9 +1,8 @@
 #pragma once
 
 #include "core/asset.hpp"
+#include "gl/defines.hpp"
 #include "gl/assets/shader.hpp"
-
-#include <SDL3/SDL_opengles2.h>
 
 #include <memory>
 #include <string>

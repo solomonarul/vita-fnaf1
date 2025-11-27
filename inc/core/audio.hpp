@@ -1,8 +1,7 @@
 #pragma once
 
 #include "asset.hpp"
-
-#include <SDL3_mixer/SDL_mixer.h>
+#include "defines.hpp"
 
 #include <string>
 

@@ -18,7 +18,7 @@ namespace Game::States
         uint16_t blip_frame = 0;
         Core::Timer ti_blip_update = Core::Timer(1.0 / 75);
 
-        Core::Timer ti_fade_out = Core::Timer(2);
+        Core::Timer ti_fade_out = Core::Timer(3);
 
         std::shared_ptr<GL::TextureAtlas> t_blip;
         std::shared_ptr<GL::MTSDF::Font> f_lcdsolid;

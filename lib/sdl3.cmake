@@ -1,0 +1,76 @@
+option(SDL3_VENDORED OFF)
+option(SDL3_MIXER_VENDORED OFF)
+
+if(EMSCRIPTEN)
+    set(SDL3_VENDORED ON)
+    set(SDL3_MIXER_VENDORED ON)
+endif()
+
+if(SDL3_VENDORED)
+    include(FetchContent)
+
+    if(EMSCRIPTEN)
+        set(SDL_EMSCRIPTEN ON CACHE BOOL "" FORCE)
+    endif()
+
+    set(SDL_SHARED OFF CACHE BOOL "" FORCE)
+    set(SDL_STATIC ON CACHE BOOL "" FORCE)
+
+    message("SDL3: Using Github version.")
+    FetchContent_Declare(
+        SDL3
+        GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
+        GIT_TAG main
+    )
+    FetchContent_MakeAvailable(SDL3)
+
+    # if(EMSCRIPTEN)
+    #     set_target_properties(
+    #         ${PROJECT_NAME} PROPERTIES LINK_FLAGS
+    #         "-s USE_SDL=3 -s MIN_WEBGL_VERSION=1 -s MAX_WEBGL_VERSION=1 -s ALLOW_MEMORY_GROWTH=1"
+    #     )
+    # endif()
+    target_link_libraries(
+        ${PROJECT_NAME}
+        PUBLIC
+            SDL3::SDL3
+    )
+else()
+    message(STATUS "SDL3: Using local version.")
+    find_package(SDL3 REQUIRED)
+    target_link_libraries(
+        ${PROJECT_NAME}
+        PUBLIC
+            SDL3
+    )
+endif()
+
+if(SDL3_MIXER_VENDORED)
+    include(FetchContent)
+
+    if(EMSCRIPTEN)
+        set(SDL_EMSCRIPTEN ON CACHE BOOL "" FORCE)
+    endif()
+
+    message("SDL3_mixer: Using Github version.")
+    FetchContent_Declare(
+        SDL3_mixer
+        GIT_REPOSITORY https://github.com/libsdl-org/SDL_mixer
+        GIT_TAG main
+    )
+    FetchContent_MakeAvailable(SDL3_mixer)
+
+    target_link_libraries(
+        ${PROJECT_NAME}
+        PUBLIC
+            SDL3_mixer::SDL3_mixer
+    )
+else()
+    message(STATUS "SDL3_mixer: Using local version.")
+    find_package(SDL3_mixer REQUIRED)
+    target_link_libraries(
+        ${PROJECT_NAME}
+        PUBLIC
+            SDL3_mixer
+    )
+endif()

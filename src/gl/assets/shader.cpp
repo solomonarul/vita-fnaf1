@@ -7,7 +7,7 @@
 
 using namespace GL;
 
-static GLchar log[512];
+static GLchar shader_log[512];
 
 VertexShader::VertexShader(std::ifstream& file) : VertexShader(Core::read_file_contents(file)) {}
 
@@ -23,8 +23,8 @@ VertexShader::VertexShader(std::string code)
 
     if(!success)
     {
-        glGetShaderInfoLog(this->id, sizeof(log), NULL, log);
-        std::cerr << TTY_RED << "[EROR]: Vertex shader compilation error:\n" << TTY_YELLOW << log << "\n" << TTY_RESET;
+        glGetShaderInfoLog(this->id, sizeof(shader_log), NULL, shader_log);
+        std::cerr << TTY_RED << "[EROR]: Vertex shader compilation error:\n" << TTY_YELLOW << shader_log << "\n" << TTY_RESET;
         this->id = 0;
         return;
     }
@@ -54,8 +54,8 @@ FragmentShader::FragmentShader(std::string code)
 
     if(!success)
     {
-        glGetShaderInfoLog(this->id, sizeof(log), NULL, log);
-        std::cerr << TTY_RED << "[EROR]: Fragment shader compilation error:\n" << TTY_YELLOW << log << "\n" << TTY_RESET;
+        glGetShaderInfoLog(this->id, sizeof(shader_log), NULL, shader_log);
+        std::cerr << TTY_RED << "[EROR]: Fragment shader compilation error:\n" << TTY_YELLOW << shader_log << "\n" << TTY_RESET;
         this->id = 0;
         return;
     }
@@ -87,8 +87,8 @@ inline void init_from_shaders(Shader& self, const VertexShader& vert, const Frag
 
     if(!linkStatus)
     {
-        glGetProgramInfoLog(self.id, sizeof(log), NULL, log);
-        std::cerr << TTY_RED << "[EROR]: General shader linking error:\n" << TTY_YELLOW << log << "\n" << TTY_RESET;
+        glGetProgramInfoLog(self.id, sizeof(shader_log), NULL, shader_log);
+        std::cerr << TTY_RED << "[EROR]: General shader linking error:\n" << TTY_YELLOW << shader_log << "\n" << TTY_RESET;
         self.id = 0;
         return;
     }

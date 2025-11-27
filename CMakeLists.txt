@@ -2,14 +2,13 @@ cmake_minimum_required(VERSION 3.16)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 
+message(STATUS "CMAKE_BUILD_PLATFORM = ${CMAKE_BUILD_PLATFORM}")
+
 if(CMAKE_BUILD_PLATFORM MATCHES "VITA")
     include("cmake/vita_pre.cmake")
 endif()
 
-add_subdirectory(lib)
-
 project(app)
-
 add_executable(
     ${PROJECT_NAME}
         "src/main.cpp"
@@ -33,15 +32,14 @@ add_executable(
         "src/game/nightloader.cpp"
 )
 
-find_package(SDL3 REQUIRED)
-find_package(SDL3_mixer REQUIRED)
+add_subdirectory(lib)
+
 target_link_libraries(
     ${PROJECT_NAME}
     PUBLIC
         stb_image
-        SDL3
-        SDL3_mixer
 )
+
 target_include_directories(
     ${PROJECT_NAME}
     PUBLIC
@@ -73,7 +71,9 @@ else()
     include("cmake/other_post.cmake")
 endif()
 
-install(
-    TARGETS
-        ${PROJECT_NAME}
-)
+if(NOT EMSCRIPTEN)
+    install(
+        TARGETS
+            ${PROJECT_NAME}
+    )
+endif()

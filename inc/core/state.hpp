@@ -1,9 +1,9 @@
 #pragma once
 
-#include <SDL3/SDL_events.h>
-
 #include <vector>
 #include <memory>
+
+#include "core/defines.hpp"
 
 namespace Core
 {

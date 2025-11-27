@@ -13,6 +13,8 @@ States::NightLoader::NightLoader(Core::StateManager& sm, int night) : IState::IS
 {
     sm.states.erase(sm.states.begin());
 
+    MIX_StopAllTracks(Core::AudioManager::get_mixer(), 0);
+
     this->f_lcdsolid = Core::AssetManager::ensure_loaded<GL::MTSDF::Font>("f_lcdsolid", "assets/images/fonts/lcdsolid.sdf.png", "assets/images/fonts/lcdsolid.csv");
 
     this->t_night[0] = std::make_unique<GL::MTSDF::Text>(this->f_lcdsolid, "12:00 AM");
