@@ -21,6 +21,25 @@ void AssetManager::remove_all()
     assets.clear();
 }
 
+bool AssetManager::process_enqueued()
+{
+    std::lock_guard<std::recursive_mutex> lock(mutex());
+
+    auto& q = load_queue();
+    if (q.empty()) return false;
+
+    auto task = q.front();
+    q.erase(q.begin());
+
+    storage()[task.key] = task.loader();
+    return true;
+}
+
+size_t AssetManager::enqueued_count()
+{
+    return load_queue().size();
+}
+
 AssetManager::Storage& AssetManager::storage()
 {
     static Storage s;
@@ -31,4 +50,10 @@ std::recursive_mutex& AssetManager::mutex()
 {
     static std::recursive_mutex m;
     return m;
+}
+
+std::vector<AssetManager::AssetLoad>& AssetManager::load_queue()
+{
+    static std::vector<AssetLoad> q;
+    return q;
 }

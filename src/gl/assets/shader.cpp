@@ -29,13 +29,21 @@ VertexShader::VertexShader(std::string code)
         return;
     }
 
+#ifdef ASSET_LOAD_LOG
     std::cout << TTY_BLUE << "[INFO]: Loaded vertex shader (id: " << this->id << ")\n" << TTY_RESET;
+#endif
 }
 
 VertexShader::~VertexShader()
 {
     if(this->id != 0)
-        glDeleteShader(this->id), std::cout << TTY_BLUE << "[INFO]: Destroyed vertex shader (id: " << this->id << ")\n" << TTY_RESET, this->id = 0;
+    {
+        glDeleteShader(this->id);
+#ifdef ASSET_LOAD_LOG
+        std::cout << TTY_BLUE << "[INFO]: Destroyed vertex shader (id: " << this->id << ")\n" << TTY_RESET;
+#endif
+        this->id = 0;
+    }
     else
         std::cerr << TTY_YELLOW << "[WARN]: Tried to destroy inexistent vertex shader.\n" << TTY_RESET; 
 }
@@ -60,13 +68,21 @@ FragmentShader::FragmentShader(std::string code)
         return;
     }
 
+#ifdef ASSET_LOAD_LOG
     std::cout << TTY_BLUE << "[INFO]: Loaded fragment shader (id: " << this->id << ")\n" << TTY_RESET;
+#endif
 }
 
 FragmentShader::~FragmentShader()
 {
     if(this->id != 0)
-        glDeleteShader(this->id), std::cout << TTY_BLUE << "[INFO]: Destroyed fragment shader (id: " << this->id << ")\n" << TTY_RESET, this->id = 0;
+    {
+        glDeleteShader(this->id);
+#ifdef ASSET_LOAD_LOG
+        std::cout << TTY_BLUE << "[INFO]: Destroyed fragment shader (id: " << this->id << ")\n" << TTY_RESET;
+#endif
+        this->id = 0;
+    }
     else
         std::cerr << TTY_YELLOW << "[WARN]: Tried to destroy inexistent fragment shader.\n" << TTY_RESET; 
 }
@@ -93,7 +109,9 @@ inline void init_from_shaders(Shader& self, const VertexShader& vert, const Frag
         return;
     }
 
+#ifdef ASSET_LOAD_LOG
     std::cout << TTY_BLUE << "[INFO]: Loaded full shader (id: " << self.id << ") made out of vertex (id: " << vert.id << ") and fragment (id: " << frag.id << ") shaders.\n" << TTY_RESET;
+#endif
 }
 
 Shader::Shader(const VertexShader& vert, const FragmentShader& frag) { init_from_shaders(*this, vert, frag); }
@@ -119,7 +137,9 @@ Shader::Shader(std::string vertex_path, std::string fragment_path)
 
     init_from_shaders(*this, vs, fs);
 
+#ifdef ASSET_LOAD_LOG
     std::cout << TTY_BLUE << "[INFO]: Shader (id: " << this->id << ") was loaded from vertex shader (path: " << vertex_path << "), fragment shader (path: " << fragment_path << ")\n" << TTY_RESET;
+#endif
 }
 
 void Shader::use()
@@ -130,7 +150,13 @@ void Shader::use()
 Shader::~Shader()
 {
     if(this->id != 0)
-        glDeleteProgram(id), std::cout << TTY_BLUE << "[INFO]: Destroyed full shader (id: " << this->id << ")\n" << TTY_RESET, this->id = 0;
+    {
+        glDeleteProgram(id);
+        this->id = 0;
+#ifdef ASSET_LOAD_LOG
+        std::cout << TTY_BLUE << "[INFO]: Destroyed full shader (id: " << this->id << ")\n" << TTY_RESET;
+#endif
+    }
     else
         std::cerr << TTY_YELLOW << "[WARN]: Tried to destroy inexistent full shader.\n" << TTY_RESET; 
 }

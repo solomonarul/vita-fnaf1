@@ -31,7 +31,9 @@ Texture::Texture(TextureConfig cfg)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, cfg.wrap_s);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, cfg.wrap_t);
 
+#ifdef ASSET_LOAD_LOG
     std::cout << TTY_BLUE << "[INFO]: Loaded texture (id: " << this->id << ") (path: " << cfg.path << ") (w: " << this->w << ") (h: " << this->h << ") (ch: " << this->ch << ")\n" << TTY_RESET;
+#endif
 
     stbi_image_free(this->data);
     this->data = nullptr;
@@ -56,6 +58,9 @@ Texture::~Texture()
             stbi_image_free(this->data);
         
         glDeleteTextures(1, &this->id);
+    
+#ifdef ASSET_LOAD_LOG
         std::cout << TTY_BLUE << "[INFO]: Destroyed texture (id: " << this->id << ")\n" << TTY_RESET;
+#endif
     }
 }

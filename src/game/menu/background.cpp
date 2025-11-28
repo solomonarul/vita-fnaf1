@@ -17,38 +17,10 @@ Background::Background()
 
     GEN_AND_SEND_VBO(this->vbo, verts, GL_STATIC_DRAW)
 
-    this->shader = Core::AssetManager::ensure_loaded<GL::Shader>("s_menu_bg",
-        "assets/shaders/menu/background.vert",
-        "assets/shaders/menu/background.frag"
-    );
-
-    this->t_blip = Core::AssetManager::ensure_loaded<GL::TextureAtlas>("t_menu_blip", std::vector{
-        GL::TextureConfig{.path = "assets/images/misc/white_bars/1.png"},
-        GL::TextureConfig{.path = "assets/images/misc/white_bars/2.png"},
-        GL::TextureConfig{.path = "assets/images/misc/white_bars/3.png"},
-        GL::TextureConfig{.path = "assets/images/misc/white_bars/4.png"},
-        GL::TextureConfig{.path = "assets/images/misc/white_bars/5.png"},
-        GL::TextureConfig{.path = "assets/images/misc/white_bars/6.png"},
-        GL::TextureConfig{.path = "assets/images/misc/white_bars/7.png"},
-    });
-
-    this->t_background = Core::AssetManager::ensure_loaded<GL::TextureAtlas>("t_menu_bg", std::vector{
-        GL::TextureConfig{"assets/images/menu/background/431.png"},
-        GL::TextureConfig{"assets/images/menu/background/440.png"},
-        GL::TextureConfig{"assets/images/menu/background/441.png"},
-        GL::TextureConfig{"assets/images/menu/background/442.png"}
-    });
-    
-    this->t_static = Core::AssetManager::ensure_loaded<GL::TextureAtlas>("t_static", std::vector{
-        GL::TextureConfig{"assets/images/menu/static/12.png"},
-        GL::TextureConfig{"assets/images/menu/static/13.png"},
-        GL::TextureConfig{"assets/images/menu/static/14.png"},
-        GL::TextureConfig{"assets/images/menu/static/15.png"},
-        GL::TextureConfig{"assets/images/menu/static/16.png"},
-        GL::TextureConfig{"assets/images/menu/static/17.png"},
-        GL::TextureConfig{"assets/images/menu/static/18.png"},
-        GL::TextureConfig{"assets/images/menu/static/20.png"}
-    });
+    this->shader = Core::AssetManager::get<GL::Shader>("s_menu_background");
+    this->t_blip = Core::AssetManager::get<GL::TextureAtlas>("t_menu_blip");
+    this->t_background = Core::AssetManager::get<GL::TextureAtlas>("t_menu_background");
+    this->t_static = Core::AssetManager::get<GL::TextureAtlas>("t_static");
 }
 
 Background::~Background()
@@ -103,7 +75,7 @@ void Background::update(double dt)
     this->ti_image_update.update(dt);
     this->ti_static_image_update.update(dt);
     this->ti_static_alpha_update.update(dt);
-    this->ti_blip_alpha_update.update(dt);
+    this->ti_blip_image_update.update(dt);
     this->ti_blip_alpha_update.update(dt);
     this->ti_blip_show.update(dt);
     this->u_bar_offset = this->u_bar_offset + dt * bar_speed;
@@ -123,7 +95,7 @@ void Background::update(double dt)
     if(this->ti_static_alpha_update.has_ticked())
         this->u_static_alpha = Core::Random::range(50, 149) / 255.0;
 
-    if(this->ti_blip_alpha_update.has_ticked())
+    if(this->ti_blip_image_update.has_ticked())
         this->current_blip_texture = (this->current_blip_texture + 1) % this->t_blip->textures.size();
 
     if(this->ti_blip_alpha_update.has_ticked())

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include <memory>
 #include <string>
 #include <mutex>
@@ -50,7 +51,7 @@ namespace Core
         }
 
         template<typename T>
-        static std::shared_ptr<T>& get(const std::string& key)
+        static std::shared_ptr<T> get(const std::string& key)
         {
             std::lock_guard<std::recursive_mutex> lock(mutex());
 
@@ -61,9 +62,6 @@ namespace Core
 
             return std::dynamic_pointer_cast<T>(it->second);
         }
-
-        static bool remove(const std::string& key);
-        static void remove_all();
 
         template<typename T>
         static bool remove_ptr(const std::shared_ptr<T>& ptr)
@@ -84,10 +82,35 @@ namespace Core
             return false;
         }
 
+        template<typename T, typename... Args>
+        static void queue(const std::string& key, Args&&... args)
+        {
+            std::lock_guard<std::recursive_mutex> lock(mutex());
+
+            load_queue().push_back({
+                key,
+                [=]() {
+                    return std::make_shared<T>(args...);
+                }
+            });
+        }
+
+        static bool remove(const std::string& key);
+        static void remove_all();
+        static bool process_enqueued();
+        static size_t enqueued_count();
+
     private:
         using Storage = std::unordered_map<std::string, AssetPtr>;
 
+        struct AssetLoad 
+        {
+            std::string key;
+            std::function<AssetPtr()> loader;
+        };
+
         static Storage& storage();
         static std::recursive_mutex& mutex();
+        static std::vector<AssetLoad>& load_queue();
     };
 };

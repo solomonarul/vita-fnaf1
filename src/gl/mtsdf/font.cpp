@@ -2,11 +2,14 @@
 
 using namespace GL;
 
-#include "core/defines.hpp"
 #include "gl/assets/shader.hpp"
 
-#include <iostream>
 #include <sstream>
+
+#ifdef ASSET_LOAD_LOG
+#include "core/defines.hpp"
+#include <iostream>
+#endif
 
 std::unique_ptr<GL::Shader> MTSDF::Font::default_shader;
 
@@ -55,10 +58,15 @@ MTSDF::Font::Font(const std::string& path, const std::string& csv_path)
     }
 
     this->path = path;
+
+#ifdef ASSET_LOAD_LOG
     std::cout << TTY_BLUE << "[INFO]: Loaded MTSDF font (path: " << this->path << ") (csv: " << csv_path << ")\n" << TTY_RESET;
+#endif
 }
 
 MTSDF::Font::~Font()
 {
+#ifdef ASSET_LOAD_LOG
     std::cout << TTY_BLUE << "[INFO]: Destroyed MTSDF font (path: " << this->path << ")\n" << TTY_RESET;
+#endif
 }

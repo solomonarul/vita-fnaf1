@@ -10,9 +10,9 @@ using namespace Game::Objects::Menu;
 
 Manager::Manager()
 {
-    this->a_blip3 = Core::AssetManager::ensure_loaded<Core::Audio>("a_blip3", "assets/audio/blip3.mp3", true);
-    this->f_consolas = Core::AssetManager::ensure_loaded<GL::MTSDF::Font>("f_consolas", "assets/images/fonts/consolas.sdf.png", "assets/images/fonts/consolas.csv");
-    this->f_consolas_bold = Core::AssetManager::ensure_loaded<GL::MTSDF::Font>("f_consolas_bold", "assets/images/fonts/consolas_bold.sdf.png", "assets/images/fonts/consolas_bold.csv");
+    this->a_blip3 = Core::AssetManager::get<Core::Audio>("a_blip3");
+    this->f_consolas = Core::AssetManager::get<GL::MTSDF::Font>("f_consolas");
+    this->f_consolas_bold = Core::AssetManager::get<GL::MTSDF::Font>("f_consolas_bold");
 
     this->t_texts[0] = std::make_unique<GL::MTSDF::Text>(this->f_consolas, "New Game");
     this->t_texts[0]->x = -700 / 960.0;

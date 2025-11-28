@@ -5,7 +5,9 @@
 #include "core/assetmanager.hpp"
 #include "gl/defines.hpp"
 
+#ifdef SCENE_LOAD_LOG
 #include <iostream>
+#endif
 
 using namespace Game;
 
@@ -15,7 +17,8 @@ States::NightLoader::NightLoader(Core::StateManager& sm, int night) : IState::IS
 
     MIX_StopAllTracks(Core::AudioManager::get_mixer(), 0);
 
-    this->f_lcdsolid = Core::AssetManager::ensure_loaded<GL::MTSDF::Font>("f_lcdsolid", "assets/images/fonts/lcdsolid.sdf.png", "assets/images/fonts/lcdsolid.csv");
+    this->f_lcdsolid = Core::AssetManager::get<GL::MTSDF::Font>("f_lcdsolid");
+    this->t_blip = Core::AssetManager::get<GL::TextureAtlas>("t_blip");
 
     this->t_night[0] = std::make_unique<GL::MTSDF::Text>(this->f_lcdsolid, "12:00 AM");
     this->t_night[0]->x = 0;
@@ -41,20 +44,8 @@ States::NightLoader::NightLoader(Core::StateManager& sm, int night) : IState::IS
     this->t_night[1]->o_x = -0.5;
     this->t_night[1]->s_x = 0.6;
 
-    auto blip = Core::AssetManager::ensure_loaded<Core::Audio>("a_blip3", "assets/audio/blip3.mp3", true);
+    auto blip = Core::AssetManager::get<Core::Audio>("a_blip3");
     MIX_PlayTrack(blip->track, 0);
-
-    this->t_blip = Core::AssetManager::ensure_loaded<GL::TextureAtlas>("t_blip", std::vector{
-        GL::TextureConfig{.path = "assets/images/misc/night_bars/4.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
-        GL::TextureConfig{.path = "assets/images/misc/night_bars/6.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
-        GL::TextureConfig{.path = "assets/images/misc/night_bars/8.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
-        GL::TextureConfig{.path = "assets/images/misc/night_bars/9.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
-        GL::TextureConfig{.path = "assets/images/misc/night_bars/10.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
-        GL::TextureConfig{.path = "assets/images/misc/night_bars/21.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
-        GL::TextureConfig{.path = "assets/images/misc/night_bars/22.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
-        GL::TextureConfig{.path = "assets/images/misc/night_bars/23.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
-        GL::TextureConfig{.path = "assets/images/misc/night_bars/25.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
-    });
 
     static float verts[] = {
         -1.0f, -1.0f, 0.0f, 1.0f,
@@ -64,11 +55,17 @@ States::NightLoader::NightLoader(Core::StateManager& sm, int night) : IState::IS
     };
 
     GEN_AND_SEND_VBO(this->vbo, verts, GL_STATIC_DRAW)
+
+#ifdef SCENE_LOAD_LOG
+    std::cout << TTY_BLUE <<  "[INFO]: Created NightLoader state.\n" << TTY_RESET;
+#endif
 }
 
 States::NightLoader::~NightLoader()
 {
-    std::cout << TTY_BLUE <<  "[INFO]: Destroyed Night state.\n" << TTY_RESET; 
+#ifdef SCENE_LOAD_LOG
+    std::cout << TTY_BLUE <<  "[INFO]: Destroyed NightLoader state.\n" << TTY_RESET;
+#endif
 }
 
 void States::NightLoader::draw(int w, int h)

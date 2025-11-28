@@ -12,6 +12,7 @@ namespace Game::States
         Main(Core::StateManager&);
         ~Main();
 
+        size_t loaded_count = 0;
         std::unique_ptr<GL::MTSDF::Text> t_warning[3];
         std::shared_ptr<GL::MTSDF::Font> f_tahoma;
 

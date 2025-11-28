@@ -6,7 +6,9 @@
 #include "game/nightloader.hpp"
 #include "gl/defines.hpp"
 
+#ifdef SCENE_LOAD_LOG
 #include <iostream>
+#endif
 
 using namespace Game;
 
@@ -15,7 +17,7 @@ States::Newspaper::Newspaper(Core::StateManager& sm) : IState::IState(sm)
     auto menu = (Game::States::Menu*) sm.states.begin()->get();
     menu->updates_disabled = true;
 
-    this->t_newspaper = Core::AssetManager::ensure_loaded<GL::Texture>("t_newspaper", GL::TextureConfig{"assets/images/misc/NEWSPAPER.png"});
+    this->t_newspaper = Core::AssetManager::get<GL::Texture>("t_newspaper");
 
     static float verts[] = {
         -1.0f, -1.0f, 0.0f, 1.0f,
@@ -25,12 +27,19 @@ States::Newspaper::Newspaper(Core::StateManager& sm) : IState::IState(sm)
     };
 
     GEN_AND_SEND_VBO(this->vbo, verts, GL_STATIC_DRAW);
+
+#ifdef SCENE_LOAD_LOG
+    std::cout << TTY_BLUE << "[INFO]: Created Newspaper state.\n" << TTY_RESET;
+#endif
 }
 
 States::Newspaper::~Newspaper()
 {
     glDeleteBuffers(1, &this->vbo);
-    std::cout << TTY_BLUE << "[INFO]: Destroyed Newspaper state.\n" << TTY_RESET; 
+
+#ifdef SCENE_LOAD_LOG
+    std::cout << TTY_BLUE << "[INFO]: Destroyed Newspaper state.\n" << TTY_RESET;
+#endif
 }
 
 void States::Newspaper::draw(int w, int h)
