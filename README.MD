@@ -13,7 +13,7 @@ Homage to my [old project,](https://github.com/ghostnear/VitaFNAF1)
 
 > make bvr
 
-NOTE: make sure you got all the PSP2_PVR modules in the assets/modules folder.
+NOTE: make sure you got all the [PSP2_PVR](https://github.com/GrapheneCt/PVR_PSP2) modules from the release in the assets/modules folder.
 
 ### Unix:
 
