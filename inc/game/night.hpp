@@ -15,6 +15,8 @@ namespace Game::States
         ~Night();
 
         GLuint vbo = 0;
+        double u_view_offset = 0;
+        std::shared_ptr<GL::Shader> s_office;
         std::shared_ptr<GL::TextureArray> t_office;
 
         virtual void draw(int w, int h) override;

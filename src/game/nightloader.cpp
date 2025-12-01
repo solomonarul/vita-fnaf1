@@ -68,7 +68,10 @@ States::NightLoader::NightLoader(Core::StateManager& sm, int night) : IState::IS
         GL::TextureConfig{.path = "assets/images/night/office/3.png"},
         GL::TextureConfig{.path = "assets/images/night/office/4.png"},
         GL::TextureConfig{.path = "assets/images/night/office/5.png"}
-    }); // TODO: figure out why displaying this just makes everything greyscale.
+    });
+
+    this->loaded_count++;
+    Core::AssetManager::queue<GL::Shader>("s_office", "assets/shaders/office/background.vert", "assets/shaders/office/background.frag");
 }
 
 States::NightLoader::~NightLoader()

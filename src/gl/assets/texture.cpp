@@ -25,6 +25,10 @@ Texture::Texture(TextureConfig cfg)
 
     glGenTextures(1, &this->id);
     glBindTexture(GL_TEXTURE_2D, this->id);
+
+    // OpenGL assumes everything is aligned to 4 bytes for some reason, tell it to add padding if not.
+    glPixelStorei(GL_UNPACK_ALIGNMENT, (this->w % 4 != 0));
+
     glTexImage2D(GL_TEXTURE_2D, 0, cfg.gpu_format, this->w, this->h, 0, cfg.format, GL_UNSIGNED_BYTE, this->data);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, cfg.min_filter);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, cfg.mag_filter);

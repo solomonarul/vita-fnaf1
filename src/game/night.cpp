@@ -24,6 +24,7 @@ States::Night::Night(Core::StateManager& sm) : IState::IState(sm)
     GEN_AND_SEND_VBO(this->vbo, verts, GL_STATIC_DRAW);
 
     this->t_office = Core::AssetManager::get<GL::TextureArray>("t_office");
+    this->s_office = Core::AssetManager::get<GL::Shader>("s_office");
 
 #ifdef SCENE_LOAD_LOG
     std::cout << TTY_BLUE <<  "[INFO]: Created Night state.\n" << TTY_RESET;
@@ -50,17 +51,22 @@ void States::Night::draw(int w, int h)
     glViewport(0, 0, w, h);
 #endif
 
-    GL::Texture::default_shader->use();
+    this->s_office->use();
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
 
-    glUniform1i(glGetUniformLocation(GL::Texture::default_shader->id, "u_texture"), 0);
+    glUniform1i(glGetUniformLocation(this->s_office->id, "u_texture"), 0);
 
     glUniform4f(
-        glGetUniformLocation(GL::Texture::default_shader->id, "u_color"),
+        glGetUniformLocation(this->s_office->id, "u_color"),
         1.0, 1.0, 1.0, 1.0
     );
 
-    GLint a_position = glGetAttribLocation(GL::Texture::default_shader->id, "a_position");
+    glUniform1f(
+        glGetUniformLocation(this->s_office->id, "u_view_offset"),
+        this->u_view_offset
+    );
+
+    GLint a_position = glGetAttribLocation(this->s_office->id, "a_position");
     glEnableVertexAttribArray(a_position);
     glVertexAttribPointer(
         a_position, 2, GL_FLOAT, GL_FALSE,
@@ -68,7 +74,7 @@ void States::Night::draw(int w, int h)
         (void*)0
     );
 
-    GLint a_texcoord = glGetAttribLocation(GL::Texture::default_shader->id, "a_texture_coords");
+    GLint a_texcoord = glGetAttribLocation(this->s_office->id, "a_texture_coords");
     glEnableVertexAttribArray(a_texcoord);
     glVertexAttribPointer(
         a_texcoord, 2, GL_FLOAT, GL_FALSE,
@@ -82,7 +88,8 @@ void States::Night::draw(int w, int h)
 
 void States::Night::update(double dt)
 {
-    UNUSED(dt);
+    this->u_view_offset += dt;
+    this->u_view_offset = (this->u_view_offset > 1) ? 0 : this->u_view_offset;
 }
 
 void States::Night::event(SDL_Event& event)

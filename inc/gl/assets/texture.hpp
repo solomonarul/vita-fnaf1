@@ -1,7 +1,6 @@
 #pragma once
 
 #include "core/asset.hpp"
-#include "gl/defines.hpp"
 #include "gl/assets/shader.hpp"
 
 #include <memory>
