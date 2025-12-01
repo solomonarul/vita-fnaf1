@@ -3,6 +3,7 @@
 #include "core/audio.hpp"
 #include "core/defines.hpp"
 #include "core/assetmanager.hpp"
+#include "game/night.hpp"
 #include "gl/defines.hpp"
 
 #ifdef SCENE_LOAD_LOG
@@ -18,7 +19,7 @@ States::NightLoader::NightLoader(Core::StateManager& sm, int night) : IState::IS
     MIX_StopAllTracks(Core::AudioManager::get_mixer(), 0);
 
     this->f_lcdsolid = Core::AssetManager::get<GL::MTSDF::Font>("f_lcdsolid");
-    this->t_blip = Core::AssetManager::get<GL::TextureAtlas>("t_blip");
+    this->t_blip = Core::AssetManager::get<GL::TextureArray>("t_blip");
 
     this->t_night[0] = std::make_unique<GL::MTSDF::Text>(this->f_lcdsolid, "12:00 AM");
     this->t_night[0]->x = 0;
@@ -54,11 +55,20 @@ States::NightLoader::NightLoader(Core::StateManager& sm, int night) : IState::IS
         1.0f, 1.0f, 1.0f, 0.0f,
     };
 
-    GEN_AND_SEND_VBO(this->vbo, verts, GL_STATIC_DRAW)
+    GEN_AND_SEND_VBO(this->vbo, verts, GL_STATIC_DRAW);
 
 #ifdef SCENE_LOAD_LOG
     std::cout << TTY_BLUE <<  "[INFO]: Created NightLoader state.\n" << TTY_RESET;
 #endif
+
+    this->loaded_count++;
+    Core::AssetManager::queue<GL::TextureArray>("t_office", std::vector{
+        GL::TextureConfig{.path = "assets/images/night/office/1.png"},
+        GL::TextureConfig{.path = "assets/images/night/office/2.png"},
+        GL::TextureConfig{.path = "assets/images/night/office/3.png"},
+        GL::TextureConfig{.path = "assets/images/night/office/4.png"},
+        GL::TextureConfig{.path = "assets/images/night/office/5.png"}
+    }); // TODO: figure out why displaying this just makes everything greyscale.
 }
 
 States::NightLoader::~NightLoader()
@@ -133,9 +143,17 @@ void States::NightLoader::update(double dt)
     }
     else
     {
-        this->ti_fade_out.update(dt);
-        if(this->ti_fade_out.has_ticked())
-            exit(0);    // TODO: move on to the actual night.
+        if(Core::AssetManager::enqueued_count() == 0)
+        {
+            this->ti_fade_out.update(dt);
+            if(this->ti_fade_out.has_ticked())
+                this->state_manager.states.push_back(std::make_shared<States::Night>(this->state_manager));
+        }
+        else
+        {
+            // TODO: add a loading bar or smth.
+            Core::AssetManager::process_enqueued();
+        }
     }
 }
 

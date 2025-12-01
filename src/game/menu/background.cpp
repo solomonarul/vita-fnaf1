@@ -18,9 +18,9 @@ Background::Background()
     GEN_AND_SEND_VBO(this->vbo, verts, GL_STATIC_DRAW)
 
     this->shader = Core::AssetManager::get<GL::Shader>("s_menu_background");
-    this->t_blip = Core::AssetManager::get<GL::TextureAtlas>("t_menu_blip");
-    this->t_background = Core::AssetManager::get<GL::TextureAtlas>("t_menu_background");
-    this->t_static = Core::AssetManager::get<GL::TextureAtlas>("t_static");
+    this->t_blip = Core::AssetManager::get<GL::TextureArray>("t_menu_blip");
+    this->t_background = Core::AssetManager::get<GL::TextureArray>("t_menu_background");
+    this->t_static = Core::AssetManager::get<GL::TextureArray>("t_static");
 }
 
 Background::~Background()

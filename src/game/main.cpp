@@ -37,7 +37,7 @@ States::Main::Main(Core::StateManager& sm) : IState::IState(sm)
     );
 
     this->loaded_count++;
-    Core::AssetManager::queue<GL::TextureAtlas>("t_menu_blip", std::vector{
+    Core::AssetManager::queue<GL::TextureArray>("t_menu_blip", std::vector{
         GL::TextureConfig{.path = "assets/images/misc/white_bars/1.png"},
         GL::TextureConfig{.path = "assets/images/misc/white_bars/2.png"},
         GL::TextureConfig{.path = "assets/images/misc/white_bars/3.png"},
@@ -48,7 +48,7 @@ States::Main::Main(Core::StateManager& sm) : IState::IState(sm)
     });
 
     this->loaded_count++;
-    Core::AssetManager::queue<GL::TextureAtlas>("t_menu_background", std::vector{
+    Core::AssetManager::queue<GL::TextureArray>("t_menu_background", std::vector{
         GL::TextureConfig{"assets/images/menu/background/431.png"},
         GL::TextureConfig{"assets/images/menu/background/440.png"},
         GL::TextureConfig{"assets/images/menu/background/441.png"},
@@ -56,7 +56,7 @@ States::Main::Main(Core::StateManager& sm) : IState::IState(sm)
     });
 
     this->loaded_count++;
-    Core::AssetManager::queue<GL::TextureAtlas>("t_static", std::vector{
+    Core::AssetManager::queue<GL::TextureArray>("t_static", std::vector{
         GL::TextureConfig{"assets/images/menu/static/12.png"},
         GL::TextureConfig{"assets/images/menu/static/13.png"},
         GL::TextureConfig{"assets/images/menu/static/14.png"},
@@ -98,7 +98,7 @@ States::Main::Main(Core::StateManager& sm) : IState::IState(sm)
     );
 
     this->loaded_count++;
-    Core::AssetManager::queue<GL::TextureAtlas>("t_blip", std::vector{
+    Core::AssetManager::queue<GL::TextureArray>("t_blip", std::vector{
         GL::TextureConfig{.path = "assets/images/misc/night_bars/4.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
         GL::TextureConfig{.path = "assets/images/misc/night_bars/6.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },
         GL::TextureConfig{.path = "assets/images/misc/night_bars/8.png", .gpu_format = GL_RGBA, .format = GL_RGBA, },

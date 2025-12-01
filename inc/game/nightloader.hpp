@@ -15,12 +15,13 @@ namespace Game::States
 
         GLuint vbo;
 
+        uint8_t loaded_count = 0;
         uint16_t blip_frame = 0;
         Core::Timer ti_blip_update = Core::Timer(1.0 / 75);
 
         Core::Timer ti_fade_out = Core::Timer(3);
 
-        std::shared_ptr<GL::TextureAtlas> t_blip;
+        std::shared_ptr<GL::TextureArray> t_blip;
         std::shared_ptr<GL::MTSDF::Font> f_lcdsolid;
         std::unique_ptr<GL::MTSDF::Text> t_night[2];
 

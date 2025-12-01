@@ -7,9 +7,9 @@
 
 namespace GL
 {
-    struct TextureAtlas : public Core::IAsset
+    struct TextureArray : public Core::IAsset
     {
         std::vector<std::shared_ptr<Texture>> textures;
-        TextureAtlas(std::vector<TextureConfig>);
+        TextureArray(std::vector<TextureConfig>);
     };
 };

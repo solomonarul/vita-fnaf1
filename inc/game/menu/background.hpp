@@ -17,10 +17,10 @@ namespace Game::Objects::Menu
         double u_static_alpha = 0.9;
         uint8_t current_blip_texture = 0;
         uint8_t current_texture = 0;
-        std::shared_ptr<GL::TextureAtlas> t_blip;
-        std::shared_ptr<GL::TextureAtlas> t_background;
+        std::shared_ptr<GL::TextureArray> t_blip;
+        std::shared_ptr<GL::TextureArray> t_background;
         uint8_t current_static_texture = 0;
-        std::shared_ptr<GL::TextureAtlas> t_static;
+        std::shared_ptr<GL::TextureArray> t_static;
         std::shared_ptr<GL::Shader> shader;
 
         bool blip_show = false;

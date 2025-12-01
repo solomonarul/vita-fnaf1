@@ -30,6 +30,7 @@ add_executable(
         "src/game/menu/manager.cpp"
         "src/game/newspaper.cpp"
         "src/game/nightloader.cpp"
+        "src/game/night.cpp"
 )
 
 add_subdirectory(lib)
