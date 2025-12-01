@@ -87,7 +87,7 @@ namespace Core
         {
             std::lock_guard<std::recursive_mutex> lock(mutex());
 
-            load_queue().push_back({
+            get_queue().push_back({
                 key,
                 [=]() {
                     return std::make_shared<T>(args...);
@@ -111,6 +111,6 @@ namespace Core
 
         static Storage& storage();
         static std::recursive_mutex& mutex();
-        static std::vector<AssetLoad>& load_queue();
+        static std::vector<AssetLoad>& get_queue();
     };
 };

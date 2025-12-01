@@ -4,8 +4,6 @@
 #include "core/assetmanager.hpp"
 #include "game/menu.hpp"
 
-#include <iostream>
-
 using namespace Game;
 
 States::Main::Main(Core::StateManager& sm) : IState::IState(sm)
@@ -140,9 +138,9 @@ void States::Main::draw(int w, int h)
     for(auto index = 0; index < 3; index++)
     {
         if(Core::AssetManager::enqueued_count() == 0)
-            this->t_warning[index]->color.a = 1.0 - this->ti_transition.value / this->ti_transition.rate * 255;
+            this->t_warning[index]->color.a = (1.0 - this->ti_transition.value / this->ti_transition.rate) * 255;
         else
-            this->t_warning[index]->color.a = 1;
+            this->t_warning[index]->color.a = 255;
         this->t_warning[index]->draw(GL::MTSDF::Font::default_shader);
     }
 }
@@ -158,10 +156,7 @@ void States::Main::update(double dt)
     else
     {
         // TODO: add a loading bar or smth.
-        std::cout << "[INFO]: Assets loaded: " << this->loaded_count - Core::AssetManager::enqueued_count() << " / " << this->loaded_count << "\n";
         Core::AssetManager::process_enqueued();
-        if(Core::AssetManager::enqueued_count() == 0)
-            std::cout << "[INFO]: Main asset loading complete." << "\n";
     }
 }
 

@@ -25,7 +25,7 @@ bool AssetManager::process_enqueued()
 {
     std::lock_guard<std::recursive_mutex> lock(mutex());
 
-    auto& q = load_queue();
+    auto& q = get_queue();
     if (q.empty()) return false;
 
     auto task = q.front();
@@ -37,7 +37,7 @@ bool AssetManager::process_enqueued()
 
 size_t AssetManager::enqueued_count()
 {
-    return load_queue().size();
+    return get_queue().size();
 }
 
 AssetManager::Storage& AssetManager::storage()
@@ -52,7 +52,7 @@ std::recursive_mutex& AssetManager::mutex()
     return m;
 }
 
-std::vector<AssetManager::AssetLoad>& AssetManager::load_queue()
+std::vector<AssetManager::AssetLoad>& AssetManager::get_queue()
 {
     static std::vector<AssetLoad> q;
     return q;
