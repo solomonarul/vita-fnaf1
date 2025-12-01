@@ -14,8 +14,8 @@
 #ifdef __psp2__
 // PSVita newlib + Sony SDK heap sizes.
 // TODO: Probably I don't actually need this much.
-int _newlib_heap_size_user   = 100 * 1024 * 1024;   // 100MB
-unsigned int sceLibcHeapSize = 100 * 1024 * 1024;   // 100MB
+int _newlib_heap_size_user   = 50 * 1024 * 1024;   // 50MB
+unsigned int sceLibcHeapSize = 50 * 1024 * 1024;   // 50MB
 #endif
 
 // TODO: not a big fan of this but emscripten is being a bitch.
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 {
     UNUSED(argc); UNUSED(argv);
 
-    std::cout << TTY_BLUE << "[INFO]: Initialized app.\n" << TTY_RESET; // TODO: figure out why the Vita crashes unless I do this.
+    std::cout << TTY_BLUE << "[INFO]: App initialization complete.\n" << TTY_RESET; // TODO: figure out why the Vita crashes unless I do this.
 
     window.use();
     SDL_GL_SetSwapInterval(1);

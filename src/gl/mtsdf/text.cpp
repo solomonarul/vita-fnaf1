@@ -45,25 +45,26 @@ inline void gen_and_upload_vertices(GL::MTSDF::Text& self)
         quad.w *= self.s * self.s_x;
         quad.h *= self.s * self.s_y;
 
-        self.vertexData.insert(self.vertexData.end(), {
-            pen_x + quad.x, pen_y + quad.y,    
-            u0, v1,
+        if(!std::isspace(c))    // DO not send whitespaces. They must update the cursor but do not generate triangles for them.
+            self.vertexData.insert(self.vertexData.end(), {
+                pen_x + quad.x, pen_y + quad.y,    
+                u0, v1,
 
-            pen_x + quad.w, pen_y + quad.y,
-            u1, v1,
+                pen_x + quad.w, pen_y + quad.y,
+                u1, v1,
 
-            pen_x + quad.w, pen_y + quad.h,
-            u1, v0,
+                pen_x + quad.w, pen_y + quad.h,
+                u1, v0,
 
-            pen_x + quad.x, pen_y + quad.y,
-            u0, v1,
+                pen_x + quad.x, pen_y + quad.y,
+                u0, v1,
 
-            pen_x + quad.w, pen_y + quad.h,
-            u1, v0,
+                pen_x + quad.w, pen_y + quad.h,
+                u1, v0,
 
-            pen_x + quad.x, pen_y + quad.h,
-            u0, v0,
-        });
+                pen_x + quad.x, pen_y + quad.h,
+                u0, v0,
+            });
 
         pen_x += self.s * it->second.advance * self.s_x;
     }
