@@ -47,7 +47,9 @@ void States::Night::draw(int w, int h)
 #ifndef __psp2__
     double scale = std::min(w / 960.0, h / 544.0);
     int s_w = (w - 960 * scale) / 2, s_h = (h - 544 * scale) / 2;
-    glViewport(s_w, s_h, w - 2 * s_w, h - 2 * s_h);
+    this->r_view = SDL_Rect{s_w, s_h, w - 2 * s_w, h - 2 * s_h};
+    glViewport(this->r_view.x, this->r_view.y, this->r_view.w, this->r_view.h);
+    Core::InputManager::set_letterbox(this->r_view);
 #else
     glViewport(0, 0, w, h);
 #endif
@@ -90,14 +92,14 @@ void States::Night::draw(int w, int h)
 void States::Night::update(double dt)
 {
     auto m_data = Core::InputManager::get_mouse_data();
-    if(m_data.x / 960.0 < 0.25)
+    if(m_data.x / this->r_view.w < 0.25)
     {
-        u_view_offset -= 3 * dt * ((0.25 - m_data.x / 960.0) / 0.25);
+        u_view_offset -= 4 * dt * ((0.25 - m_data.x / this->r_view.w) / 0.25);
         if(u_view_offset < 0) u_view_offset = 0;
     }
-    else if(m_data.x / 960.0 > 0.75)    // TODO: take glViewport into consideration
+    else if(m_data.x / this->r_view.w > 0.75)
     {
-        u_view_offset += 3 * dt * ((m_data.x / 960.0 - 0.75) / 0.25);
+        u_view_offset += 4 * dt * ((m_data.x / this->r_view.w - 0.75) / 0.25);
         if(u_view_offset > 1) u_view_offset = 1;           
     }
 }

@@ -90,8 +90,6 @@ void States::Newspaper::update(double dt)
         if(this->alpha > 1)
         {
             this->alpha = 1, this->state = NEWSPAPER_STATE_HOLD;
-
-            // Clean the menu state.
             this->state_manager.states.erase(this->state_manager.states.begin());
         }
         break;

@@ -11,7 +11,10 @@ namespace Core
             float x, y;
         };
 
-        static void handle_event(SDL_Event& event);
+        SDL_Rect r_letterbox = {0, 0, 0, 0};
+
+        static void set_letterbox(SDL_Rect);
+        static void handle_event(SDL_Event&);
         static MouseData get_mouse_data();
 
     private:
