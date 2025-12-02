@@ -9,6 +9,8 @@
 #include <iostream>
 #endif
 
+#include <SDL3_mixer/SDL_mixer.h>
+
 using namespace Game;
 
 States::Night::Night(Core::StateManager& sm) : IState::IState(sm)
@@ -26,6 +28,9 @@ States::Night::Night(Core::StateManager& sm) : IState::IState(sm)
 
     this->t_office = Core::AssetManager::get<GL::TextureArray>("t_office");
     this->s_office = Core::AssetManager::get<GL::Shader>("s_office");
+    this->a_office_buzz = Core::AssetManager::get<Core::Audio>("a_office_buzz");
+    MIX_PlayTrack(this->a_office_buzz->track, 0);
+    MIX_SetTrackGain(this->a_office_buzz->track, 0.2);
 
 #ifdef SCENE_LOAD_LOG
     std::cout << TTY_BLUE <<  "[INFO]: Created Night state.\n" << TTY_RESET;
@@ -102,6 +107,9 @@ void States::Night::update(double dt)
         u_view_offset += 4 * dt * ((m_data.x / this->r_view.w - 0.75) / 0.25);
         if(u_view_offset > 1) u_view_offset = 1;           
     }
+
+    if(!MIX_TrackPlaying(this->a_office_buzz->track))
+        MIX_PlayTrack(this->a_office_buzz->track, 0);
 }
 
 void States::Night::event(SDL_Event& event)
