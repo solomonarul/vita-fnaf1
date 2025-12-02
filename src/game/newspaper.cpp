@@ -101,7 +101,7 @@ void States::Newspaper::update(double dt)
 
     case NEWSPAPER_STATE_FADING_OUT:
         this->alpha -= inverse_timer_duration * dt;
-        if(this->alpha < 0) this->alpha = 0, this->state_manager.states.push_back(std::make_shared<Game::States::NightLoader>(this->state_manager, 1));
+        if(this->alpha < 0) this->alpha = 0, PUSH_STATE(this->state_manager, Game::States::NightLoader, 1);
         break;
     }
 }

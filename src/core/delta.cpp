@@ -4,9 +4,9 @@
 
 using namespace Core;
 
-Delta::Delta() : last(SDL_GetPerformanceCounter()) { }
+DeltaTimer::DeltaTimer() : last(SDL_GetPerformanceCounter()) { }
 
-double Delta::tick()
+double DeltaTimer::tick()
 {
     uint64_t now = SDL_GetPerformanceCounter();
     double dt = double(now - last) / float(SDL_GetPerformanceFrequency());

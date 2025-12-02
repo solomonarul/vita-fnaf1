@@ -71,7 +71,15 @@ States::NightLoader::NightLoader(Core::StateManager& sm, int night) : IState::IS
     });
 
     this->loaded_count++;
-    Core::AssetManager::queue<GL::Shader>("s_office", "assets/shaders/office/background.vert", "assets/shaders/office/background.frag");
+    Core::AssetManager::queue<GL::Shader>(
+        "s_office",
+        "assets/shaders/office/background.vert", "assets/shaders/office/background.frag"
+    );
+
+    this->loaded_count++;
+    Core::AssetManager::queue<Core::Audio>(
+        "a_office_buzz", "assets/audio/night/Buzz_Fan_Florescent2.mp3", true
+    );
 }
 
 States::NightLoader::~NightLoader()
@@ -150,7 +158,7 @@ void States::NightLoader::update(double dt)
         {
             this->ti_fade_out.update(dt);
             if(this->ti_fade_out.has_ticked())
-                this->state_manager.states.push_back(std::make_shared<States::Night>(this->state_manager));
+                PUSH_STATE(this->state_manager, States::Night);
         }
         else
         {

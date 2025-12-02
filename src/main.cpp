@@ -73,17 +73,18 @@ int main(int argc, char *argv[])
 {
     UNUSED(argc); UNUSED(argv);
 
-    std::cout << TTY_BLUE << "[INFO]: App initialization complete.\n" << TTY_RESET; // TODO: figure out why the Vita crashes unless I do this.
+    std::cout << TTY_BLUE << "[INFO]: App initialization complete.\n" << TTY_RESET;
+    // TODO: figure out why the Vita doesn't allocate the heaps unless I do this.
 
     window.use();
-    SDL_GL_SetSwapInterval(1);
+    window.vsync(true);
 
-    manager.states.push_back(std::make_shared<Game::States::Main>(manager));
+    PUSH_STATE(manager, Game::States::Main);
 
 #ifdef __EMSCRIPTEN__
     emscripten_request_animation_frame_loop(loop_once, 0);
 #else
-    Core::Delta dt;
+    Core::DeltaTimer dt;
     while(running)
         loop_once(dt.tick(), nullptr);
 #endif

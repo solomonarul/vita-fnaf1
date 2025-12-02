@@ -4,10 +4,10 @@
 
 namespace Core
 {
-    class Delta
+    class DeltaTimer
     {
     public:
-        Delta();
+        DeltaTimer();
         double tick();
 
     private:

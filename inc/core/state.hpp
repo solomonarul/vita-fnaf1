@@ -29,3 +29,5 @@ namespace Core
         std::vector<std::shared_ptr<IState>> states;
     };
 };
+
+#define PUSH_STATE(sm, state, ...)  sm.states.push_back(std::make_shared<state>(sm, ##__VA_ARGS__))

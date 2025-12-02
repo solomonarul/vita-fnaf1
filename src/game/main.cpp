@@ -151,7 +151,7 @@ void States::Main::update(double dt)
     {
         this->ti_transition.update(dt);
         if(this->ti_transition.has_ticked())
-            this->state_manager.states.push_back(std::make_shared<Game::States::Menu>(this->state_manager));
+            PUSH_STATE(this->state_manager, Game::States::Menu);
     }
     else
     {

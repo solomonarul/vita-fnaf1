@@ -70,6 +70,11 @@ void Window::use()
     SDL_GL_MakeCurrent(this->sdl, this->gl);
 }
 
+void Window::vsync(bool enable)
+{
+    SDL_GL_SetSwapInterval(enable ? 1 : 0);
+}
+
 void Window::swap()
 {
     SDL_GL_SwapWindow(this->sdl);

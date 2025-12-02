@@ -19,6 +19,7 @@ namespace GL
 
         void use();
         void swap();
+        void vsync(bool);
         Window(WindowConfig);
         ~Window();
     };
