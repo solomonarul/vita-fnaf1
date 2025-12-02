@@ -2,6 +2,7 @@
 
 #include "core/defines.hpp"
 #include "core/assetmanager.hpp"
+#include "core/inputmanager.hpp"
 #include "gl/defines.hpp"
 
 #ifdef SCENE_LOAD_LOG
@@ -88,8 +89,17 @@ void States::Night::draw(int w, int h)
 
 void States::Night::update(double dt)
 {
-    this->u_view_offset += dt;
-    this->u_view_offset = (this->u_view_offset > 1) ? 0 : this->u_view_offset;
+    auto m_data = Core::InputManager::get_mouse_data();
+    if(m_data.x / 960.0 < 0.25)
+    {
+        u_view_offset -= 3 * dt * ((0.25 - m_data.x / 960.0) / 0.25);
+        if(u_view_offset < 0) u_view_offset = 0;
+    }
+    else if(m_data.x / 960.0 > 0.75)    // TODO: take glViewport into consideration
+    {
+        u_view_offset += 3 * dt * ((m_data.x / 960.0 - 0.75) / 0.25);
+        if(u_view_offset > 1) u_view_offset = 1;           
+    }
 }
 
 void States::Night::event(SDL_Event& event)

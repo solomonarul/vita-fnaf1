@@ -3,7 +3,7 @@
 #pragma once
 
 #include "core/state.hpp"
-#include "gl/assets/textureatlas.hpp"
+#include "gl/assets/texturearray.hpp"
 
 #include <SDL3/SDL_opengles2.h>
 
@@ -15,7 +15,7 @@ namespace Game::States
         ~Night();
 
         GLuint vbo = 0;
-        double u_view_offset = 0;
+        double u_view_offset = 0.5;
         std::shared_ptr<GL::Shader> s_office;
         std::shared_ptr<GL::TextureArray> t_office;
 

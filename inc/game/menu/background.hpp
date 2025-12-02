@@ -2,7 +2,7 @@
 
 #include "core/timer.hpp"
 #include "gl/assets/shader.hpp"
-#include "gl/assets/textureatlas.hpp"
+#include "gl/assets/texturearray.hpp"
 
 #include <memory>
 

@@ -4,7 +4,7 @@
 #include "core/timer.hpp"
 #include "gl/mtsdf/text.hpp"
 #include "gl/mtsdf/font.hpp"
-#include "gl/assets/textureatlas.hpp"
+#include "gl/assets/texturearray.hpp"
 
 namespace Game::States
 {

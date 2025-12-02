@@ -1,4 +1,4 @@
-#include "gl/assets/textureatlas.hpp"
+#include "gl/assets/texturearray.hpp"
 
 using namespace GL;
 

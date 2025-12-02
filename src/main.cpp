@@ -1,6 +1,7 @@
 #include "core/defines.hpp"
 #include "core/delta.hpp"
 #include "core/state.hpp"
+#include "core/inputmanager.hpp"
 #include "game/main.hpp"
 #include "gl/window.hpp"
 
@@ -31,8 +32,23 @@ constexpr double delta_time_limit = 1.0 / 2;    // If less than 2 fps, ignore th
 bool loop_once(double time, void* userData)
 {
     UNUSED(userData);
+
+    manager.draw(window.w, window.h);
+    window.swap();
+
+    if(time < delta_time_limit)
+        timer += time;
+
+    while(timer > timer_rate)
+    {
+        manager.update(timer_rate);
+        timer -= timer_rate;    // All my homies like fixed rate delta timing.
+    }
+
     while(SDL_PollEvent(&event))
     {
+        Core::InputManager::handle_event(event);
+        
         switch(event.type)
         {
         case SDL_EVENT_WINDOW_RESIZED:
@@ -48,18 +64,6 @@ bool loop_once(double time, void* userData)
             manager.send(event);
             break;
         }
-    }
-
-    manager.draw(window.w, window.h);
-    window.swap();
-
-    if(time < delta_time_limit)
-        timer += time;
-
-    while(timer > timer_rate)
-    {
-        manager.update(timer_rate);
-        timer -= timer_rate;    // All my homies like fixed rate delta timing.
     }
 
     return true;
