@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
 {
     UNUSED(argc); UNUSED(argv);
 
-    std::cout << TTY_BLUE << "[INFO]: App initialization complete.\n" << TTY_RESET;
+    std::cout << TTY_BLUE << "[INFO] App initialization complete.\n" << TTY_RESET;
     // TODO: figure out why the Vita doesn't allocate the heaps unless I do this.
 
     window.use();

@@ -19,7 +19,7 @@ Audio::Audio(const std::string& path, bool predecode)
     this->path = path;
 
 #ifdef ASSET_LOAD_LOG
-    std::cout << TTY_BLUE << "[INFO]: Loaded sound (path: " << path << ")\n" << TTY_RESET;
+    std::cout << TTY_BLUE << "[INFO] Loaded sound (path: " << path << ")\n" << TTY_RESET;
 #endif
 }
 
@@ -35,7 +35,7 @@ Audio::~Audio()
         MIX_DestroyAudio(this->audio), this->audio = nullptr;
 
 #ifdef ASSET_LOAD_LOG
-    std::cout << TTY_BLUE << "[INFO]: Destroyed sound (path: " << this->path << ")\n" << TTY_RESET;
+    std::cout << TTY_BLUE << "[INFO] Destroyed sound (path: " << this->path << ")\n" << TTY_RESET;
 #endif
 }
 

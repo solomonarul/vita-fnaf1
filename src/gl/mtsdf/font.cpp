@@ -60,13 +60,13 @@ MTSDF::Font::Font(const std::string& path, const std::string& csv_path)
     this->path = path;
 
 #ifdef ASSET_LOAD_LOG
-    std::cout << TTY_BLUE << "[INFO]: Loaded MTSDF font (path: " << this->path << ") (csv: " << csv_path << ")\n" << TTY_RESET;
+    std::cout << TTY_BLUE << "[INFO] Loaded MTSDF font (path: " << this->path << ") (csv: " << csv_path << ")\n" << TTY_RESET;
 #endif
 }
 
 MTSDF::Font::~Font()
 {
 #ifdef ASSET_LOAD_LOG
-    std::cout << TTY_BLUE << "[INFO]: Destroyed MTSDF font (path: " << this->path << ")\n" << TTY_RESET;
+    std::cout << TTY_BLUE << "[INFO] Destroyed MTSDF font (path: " << this->path << ")\n" << TTY_RESET;
 #endif
 }

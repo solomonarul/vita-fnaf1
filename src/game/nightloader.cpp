@@ -58,7 +58,7 @@ States::NightLoader::NightLoader(Core::StateManager& sm, int night) : IState::IS
     GEN_AND_SEND_VBO(this->vbo, verts, GL_STATIC_DRAW);
 
 #ifdef SCENE_LOAD_LOG
-    std::cout << TTY_BLUE <<  "[INFO]: Created NightLoader state.\n" << TTY_RESET;
+    std::cout << TTY_BLUE <<  "[INFO] Created NightLoader state.\n" << TTY_RESET;
 #endif
 
     this->loaded_count++;
@@ -90,7 +90,7 @@ States::NightLoader::NightLoader(Core::StateManager& sm, int night) : IState::IS
 States::NightLoader::~NightLoader()
 {
 #ifdef SCENE_LOAD_LOG
-    std::cout << TTY_BLUE <<  "[INFO]: Destroyed NightLoader state.\n" << TTY_RESET;
+    std::cout << TTY_BLUE <<  "[INFO] Destroyed NightLoader state.\n" << TTY_RESET;
 #endif
 }
 

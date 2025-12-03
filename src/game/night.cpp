@@ -35,14 +35,14 @@ States::Night::Night(Core::StateManager& sm) : IState::IState(sm)
     MIX_PlayTrack(this->a_call->track, 0);
 
 #ifdef SCENE_LOAD_LOG
-    std::cout << TTY_BLUE <<  "[INFO]: Created Night state.\n" << TTY_RESET;
+    std::cout << TTY_BLUE <<  "[INFO] Created Night state.\n" << TTY_RESET;
 #endif
 }
 
 States::Night::~Night()
 {
 #ifdef SCENE_LOAD_LOG
-    std::cout << TTY_BLUE <<  "[INFO]: Destroyed Night state.\n" << TTY_RESET;
+    std::cout << TTY_BLUE <<  "[INFO] Destroyed Night state.\n" << TTY_RESET;
 #endif
 }
 

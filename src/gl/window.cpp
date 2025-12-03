@@ -62,7 +62,7 @@ Window::Window(WindowConfig cfg)
 
     window_count++;
 
-    std::cout << TTY_BLUE << "[INFO]: Created SDL GLES 2.0 window (title: " << cfg.title << ") (w: " << cfg.w << ") (h: " << cfg.h << ")\n" << TTY_RESET;
+    std::cout << TTY_BLUE << "[INFO] Created SDL GLES 2.0 window (title: " << cfg.title << ") (w: " << cfg.w << ") (h: " << cfg.h << ")\n" << TTY_RESET;
 }
 
 void Window::use()
