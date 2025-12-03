@@ -12,34 +12,12 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Install build dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install build-essential git make \
-            pkg-config cmake ninja-build gnome-desktop-testing libasound2-dev libpulse-dev \
-            libaudio-dev libfribidi-dev libjack-dev libsndio-dev libx11-dev libxext-dev \
-            libxrandr-dev libxcursor-dev libxfixes-dev libxi-dev libxss-dev libxtst-dev \
-            libxkbcommon-dev libdrm-dev libgbm-dev libgl1-mesa-dev libgles2-mesa-dev \
-            libegl1-mesa-dev libdbus-1-dev libibus-1.0-dev libudev-dev libthai-dev \
-            libpipewire-0.3-dev libwayland-dev libdecor-0-dev liburing-dev
-
-      - name: Build SDL3
-        run: |
-          git clone https://github.com/libsdl-org/SDL.git
-          cd SDL
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-          cmake --build build -j${nproc}
-          sudo cmake --install build
-          cd ../..
-
-      - name: Build SDL3_mixer
-        run: |
-          git clone https://github.com/libsdl-org/SDL_mixer.git
-          cd SDL_mixer
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-          cmake --build build -j${nproc}
-          sudo cmake --install build
-          cd ../..
+      - uses: libsdl-org/setup-sdl@main
+        id: sdl
+        with:
+          install-linux-dependencies: true
+          version: 3-latest
+          version-sdl-mixer: 3-latest
 
       - name: Build Debug
         run: make bud
