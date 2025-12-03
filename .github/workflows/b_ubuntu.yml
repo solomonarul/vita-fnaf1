@@ -28,8 +28,8 @@ jobs:
           git clone https://github.com/libsdl-org/SDL.git
           cd SDL
           cmake -S . -B . -DCMAKE_BUILD_TYPE=Release
-          make -j$(nproc)
-          sudo make install
+          cmake --build build -j${nproc}
+          sudo cmake --install build
           cd ../..
 
       - name: Build SDL3_mixer
@@ -37,8 +37,8 @@ jobs:
           git clone https://github.com/libsdl-org/SDL_mixer.git
           cd SDL_mixer
           cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-          make -j$(nproc)
-          sudo make install
+          cmake --build build -j${nproc}
+          sudo cmake --install build
           cd ../..
 
       - name: Build Debug
