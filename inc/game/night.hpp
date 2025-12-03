@@ -19,7 +19,7 @@ namespace Game::States
         SDL_Rect r_view;
         double u_view_offset = 0.5;
         std::shared_ptr<GL::Shader> s_office;
-        std::shared_ptr<Core::Audio> a_office_buzz;
+        std::shared_ptr<Core::Audio> a_office_buzz, a_call;
         std::shared_ptr<GL::TextureArray> t_office;
 
         virtual void draw(int w, int h) override;

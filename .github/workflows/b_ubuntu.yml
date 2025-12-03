@@ -1,0 +1,29 @@
+name: Build on Latest Ubuntu
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      
+      - name: Add SDL APT repository
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y software-properties-common
+          sudo add-apt-repository ppa:libsdl-org/SDL
+          sudo apt-get update
+
+      - name: Install SDL3 packages
+        run: sudo apt-get install -y libsdl3-dev libsdl3-mixer-dev
+
+      - name: Build Debug
+        run: make bud
+
+      - name: Build Release
+        run: make bur

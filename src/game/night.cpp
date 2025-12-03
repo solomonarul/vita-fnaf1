@@ -29,8 +29,10 @@ States::Night::Night(Core::StateManager& sm) : IState::IState(sm)
     this->t_office = Core::AssetManager::get<GL::TextureArray>("t_office");
     this->s_office = Core::AssetManager::get<GL::Shader>("s_office");
     this->a_office_buzz = Core::AssetManager::get<Core::Audio>("a_office_buzz");
+    this->a_call = Core::AssetManager::get<Core::Audio>("a_night_1");
     MIX_PlayTrack(this->a_office_buzz->track, 0);
     MIX_SetTrackGain(this->a_office_buzz->track, 0.2);
+    MIX_PlayTrack(this->a_call->track, 0);
 
 #ifdef SCENE_LOAD_LOG
     std::cout << TTY_BLUE <<  "[INFO]: Created Night state.\n" << TTY_RESET;

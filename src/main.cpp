@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
     PUSH_STATE(manager, Game::States::Main);
 
 #ifdef __EMSCRIPTEN__
-    emscripten_request_animation_frame_loop(loop_once, 0);
+    emscripten_request_animation_frame_loop(loop_once, nullptr);
 #else
     Core::DeltaTimer dt;
     while(running)

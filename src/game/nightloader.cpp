@@ -80,6 +80,11 @@ States::NightLoader::NightLoader(Core::StateManager& sm, int night) : IState::IS
     Core::AssetManager::queue<Core::Audio>(
         "a_office_buzz", "assets/audio/night/Buzz_Fan_Florescent2.mp3", true
     );
+
+    this->loaded_count++;
+    Core::AssetManager::queue<Core::Audio>(
+        "a_night_1", "assets/audio/night/calls/voiceover1c.mp3", true
+    );
 }
 
 States::NightLoader::~NightLoader()
