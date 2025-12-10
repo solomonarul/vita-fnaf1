@@ -22,7 +22,7 @@ namespace GL
     struct Texture : public Core::IAsset
     {
         GLuint id;
-        int w, h, ch;
+        int w, h;
         void* data;
 
         static std::unique_ptr<GL::Shader> default_shader;

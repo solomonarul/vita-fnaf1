@@ -25,6 +25,7 @@ add_executable(
         "src/gl/assets/shader.cpp"
         "src/gl/assets/texture.cpp"
         "src/gl/assets/texturearray.cpp"
+        "src/gl/rendertexture.cpp"
         "src/game/main.cpp"
         "src/game/menu.cpp"
         "src/game/menu/background.cpp"

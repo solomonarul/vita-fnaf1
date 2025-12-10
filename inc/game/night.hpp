@@ -4,6 +4,7 @@
 #pragma once
 
 #include "core/state.hpp"
+#include "gl/rendertexture.hpp"
 #include "gl/assets/texturearray.hpp"
 
 #include <SDL3/SDL_opengles2.h>
@@ -21,6 +22,7 @@ namespace Game::States
         std::shared_ptr<GL::Shader> s_office;
         std::shared_ptr<Core::Audio> a_office_buzz, a_call;
         std::shared_ptr<GL::TextureArray> t_office;
+        std::shared_ptr<GL::RenderTexture> tr_office_view;
 
         virtual void draw(int w, int h) override;
         virtual void update(double dt) override;

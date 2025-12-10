@@ -55,6 +55,7 @@ Window::Window(WindowConfig cfg)
     SDL_GL_MakeCurrent(this->sdl, this->gl);
     
     glEnable(GL_BLEND);
+    glDisable(GL_DEPTH_TEST);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     this->w = cfg.w;
