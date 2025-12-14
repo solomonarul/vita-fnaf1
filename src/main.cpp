@@ -1,9 +1,6 @@
-#include "core/defines.hpp"
-#include "core/delta.hpp"
-#include "core/state.hpp"
-#include "core/inputmanager.hpp"
+#include "gl/all.hpp"
+#include "core/all.hpp"
 #include "game/main.hpp"
-#include "gl/window.hpp"
 
 #include <iostream>
 
