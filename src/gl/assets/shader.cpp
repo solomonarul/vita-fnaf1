@@ -45,7 +45,7 @@ VertexShader::~VertexShader()
         this->id = 0;
     }
     else
-        std::cerr << TTY_YELLOW << "[WARN] Tried to destroy inexistent vertex shader.\n" << TTY_RESET; 
+        std::cerr << TTY_YELLOW << "[WARN] Tried to destroy inexistent vertex shader.\n" << TTY_RESET;
 }
 
 FragmentShader::FragmentShader(std::ifstream& file) : FragmentShader(Core::read_file_contents(file)) {}
@@ -84,7 +84,7 @@ FragmentShader::~FragmentShader()
         this->id = 0;
     }
     else
-        std::cerr << TTY_YELLOW << "[WARN] Tried to destroy inexistent fragment shader.\n" << TTY_RESET; 
+        std::cerr << TTY_YELLOW << "[WARN] Tried to destroy inexistent fragment shader.\n" << TTY_RESET;
 }
 
 inline void init_from_shaders(Shader& self, const VertexShader& vert, const FragmentShader& frag)
@@ -129,7 +129,7 @@ Shader::Shader(std::string vertex_path, std::string fragment_path)
     if (!ffile.is_open())
     {
         std::cerr << TTY_YELLOW << "[WARN] Could not open fragment shader (path: " << vertex_path << "), aborting compilation...\n" << TTY_RESET;
-        return;        
+        return;
     }
 
     GL::VertexShader vs(vfile);
@@ -147,6 +147,16 @@ void Shader::use()
     glUseProgram(this->id);
 }
 
+void Shader::setUniform(std::string const name, int value)
+{
+	glUniform1i(glGetUniformLocation(this->id, name.c_str()), value);
+}
+
+void Shader::setUniform(std::string const name, float value)
+{
+	glUniform1f(glGetUniformLocation(this->id, name.c_str()), value);
+}
+
 Shader::~Shader()
 {
     if(this->id != 0)
@@ -158,5 +168,5 @@ Shader::~Shader()
 #endif
     }
     else
-        std::cerr << TTY_YELLOW << "[WARN] Tried to destroy inexistent full shader.\n" << TTY_RESET; 
+        std::cerr << TTY_YELLOW << "[WARN] Tried to destroy inexistent full shader.\n" << TTY_RESET;
 }

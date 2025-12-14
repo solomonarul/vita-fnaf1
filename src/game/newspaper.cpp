@@ -52,9 +52,8 @@ void States::Newspaper::draw(int w, int h)
 
     UNUSED(w); UNUSED(h);
     GL::Texture::default_shader->use();
+    GL::Texture::default_shader->setUniform("u_texture", 0);
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
-
-    glUniform1i(glGetUniformLocation(GL::Texture::default_shader->id, "u_texture"), 0);
 
     glUniform4f(
         glGetUniformLocation(GL::Texture::default_shader->id, "u_color"),
@@ -77,7 +76,7 @@ void States::Newspaper::draw(int w, int h)
         (void*)(2 * sizeof(float))
     );
     this->t_newspaper->activate(GL_TEXTURE0);
-    
+
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 

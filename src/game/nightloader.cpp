@@ -109,17 +109,15 @@ void States::NightLoader::draw(int w, int h)
 
     for(auto index = 0; index < 2; index++)
     {
-        this->t_night[index]->color.a = (1.0 - this->ti_fade_out.value / this->ti_fade_out.rate) * 255; 
+        this->t_night[index]->color.a = (1.0 - this->ti_fade_out.value / this->ti_fade_out.rate) * 255;
         this->t_night[index]->draw();
     }
 
     if(this->blip_frame != (uint16_t)-1)
     {
         GL::Texture::default_shader->use();
+        GL::Texture::default_shader->setUniform("u_texture", 0);
         glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
-
-        glUniform1i(glGetUniformLocation(GL::Texture::default_shader->id, "u_texture"), 0);
-
         glUniform4f(
             glGetUniformLocation(GL::Texture::default_shader->id, "u_color"),
             1.0, 1.0, 1.0, 1.0
@@ -141,7 +139,7 @@ void States::NightLoader::draw(int w, int h)
             (void*)(2 * sizeof(float))
         );
         this->t_blip->textures[blip_frame]->activate(GL_TEXTURE0);
-        
+
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     }
 }

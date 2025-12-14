@@ -31,22 +31,18 @@ Background::~Background()
 void Background::draw()
 {
     this->shader->use();
-    
-    glUniform1f(glGetUniformLocation(this->shader->id, "u_alpha"), this->u_alpha);
-    glUniform1f(glGetUniformLocation(this->shader->id, "u_bar_offset"), this->u_bar_offset);
-    glUniform1f(
-        glGetUniformLocation(this->shader->id, "u_blip_alpha"),
-        this->blip_show ? this->u_blip_alpha : 0
-    );
-    glUniform1f(glGetUniformLocation(this->shader->id, "u_bar_width"), this->u_bar_width);
+    this->shader->setUniform("u_alpha", this->u_alpha);
+    this->shader->setUniform("u_bar_offset", this->u_bar_offset);
+    this->shader->setUniform("u_blip_alpha", this->blip_show ? this->u_blip_alpha : 0);
+    this->shader->setUniform("u_bar_width", this->u_bar_width);
 
-    glUniform1i(glGetUniformLocation(this->shader->id, "u_texture"), 0);
+    this->shader->setUniform("u_texture", 0);
     this->t_background->textures[current_texture]->activate(GL_TEXTURE0);
 
-    glUniform1i(glGetUniformLocation(this->shader->id, "u_static_texture"), 1);
+    this->shader->setUniform("u_static_texture", 1);
     this->t_static->textures[current_static_texture]->activate(GL_TEXTURE1);
 
-    glUniform1i(glGetUniformLocation(this->shader->id, "u_blip_texture"), 2);
+    this->shader->setUniform("u_blip_texture", 2);
     this->t_blip->textures[current_blip_texture]->activate(GL_TEXTURE2);
 
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
@@ -104,4 +100,3 @@ void Background::update(double dt)
     if(this->ti_blip_show.has_ticked())
         this->blip_show = Core::Random::range(0, 2) == 1;
 }
-

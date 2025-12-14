@@ -58,8 +58,7 @@ void States::Night::draw(int w, int h)
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
 
     GL::Texture::default_shader->use();
-
-    glUniform1i(glGetUniformLocation(GL::Texture::default_shader->id, "u_texture"), 0);
+    GL::Texture::default_shader->setUniform("u_texture", 0);
 
     glUniform4f(
         glGetUniformLocation(GL::Texture::default_shader->id, "u_color"),
@@ -96,18 +95,13 @@ void States::Night::draw(int w, int h)
 #endif
 
     this->s_office->use();
+    this->s_office->setUniform("u_texture", 0);
+    this->s_office->setUniform("u_view_offset", this->u_view_offset);
+
     glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
-
-    glUniform1i(glGetUniformLocation(this->s_office->id, "u_texture"), 0);
-
     glUniform4f(
         glGetUniformLocation(this->s_office->id, "u_color"),
         1.0, 1.0, 1.0, 1.0
-    );
-
-    glUniform1f(
-        glGetUniformLocation(this->s_office->id, "u_view_offset"),
-        this->u_view_offset
     );
 
     a_position = glGetAttribLocation(this->s_office->id, "a_position");
@@ -126,7 +120,7 @@ void States::Night::draw(int w, int h)
         (void*)(2 * sizeof(float))
     );
     this->tr_office_view->activate(GL_TEXTURE0);
-    
+
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
     // TODO: I need to clean the shit out of this.
@@ -143,7 +137,7 @@ void States::Night::update(double dt)
     else if(m_data.x / this->r_view.w > 0.75)
     {
         u_view_offset += 4 * dt * ((m_data.x / this->r_view.w - 0.75) / 0.25);
-        if(u_view_offset > 1) u_view_offset = 1;           
+        if(u_view_offset > 1) u_view_offset = 1;
     }
 
     if(!MIX_TrackPlaying(this->a_office_buzz->track))

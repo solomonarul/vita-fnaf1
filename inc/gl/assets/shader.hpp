@@ -28,10 +28,14 @@ namespace GL
     struct Shader : public Core::IAsset
     {
         GLuint id = 0;
-        
+
         void use();
         Shader(std::string, std::string);
         Shader(const VertexShader&, const FragmentShader&);
+
+        void setUniform(std::string const name, int value);
+        void setUniform(std::string const name, float value);
+        void setUniform(std::string const name, double value) { setUniform(name, (float)value); }
         ~Shader();
     };
 };
