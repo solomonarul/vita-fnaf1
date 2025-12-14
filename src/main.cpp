@@ -5,11 +5,6 @@
 #include "game/main.hpp"
 #include "gl/window.hpp"
 
-#ifdef __EMSCRIPTEN__
-#include <emscripten.h>
-#include <emscripten/html5.h>
-#endif
-
 #include <iostream>
 
 #ifdef __psp2__
@@ -19,49 +14,48 @@ int _newlib_heap_size_user   = 50 * 1024 * 1024;   // 50MB
 unsigned int sceLibcHeapSize = 50 * 1024 * 1024;   // 50MB
 #endif
 
-// TODO: not a big fan of this but emscripten is being a bitch.
-bool running = true;
-SDL_Event event;
-Core::StateManager manager;
-GL::Window window({.title = "Five Nights at Freddy's", .w = 960, .h = 544});
+struct AppState : public Core::IAppState {
+	double timer = 0;
+	Core::StateManager states;
+	GL::Window window = GL::Window({.title = "Five Nights at Freddy's", .w = 960, .h = 544});
+};
 
-double timer = 0;
-constexpr double timer_rate = 1.0 / 60;
-constexpr double delta_time_limit = 1.0 / 2;    // If less than 2 fps, ignore the update.
-
-bool loop_once(double time, void* userData)
+bool main_loop(double time, void* userData)
 {
-    UNUSED(userData);
+	constexpr double timer_rate = 1.0 / 60;
+	constexpr double delta_time_limit = 1.0 / 2;    // If less than 2 fps, ignore the update.
 
-    manager.draw(window.w, window.h);
-    window.swap();
+	AppState* const status = static_cast<AppState*>(userData);
+    status->states.draw(status->window.w, status->window.h);
+    status->window.swap();
 
     if(time < delta_time_limit)
-        timer += time;
+        status->timer += time;
 
-    while(timer > timer_rate)
+    while(status->timer > timer_rate)
     {
-        manager.update(timer_rate);
-        timer -= timer_rate;    // All my homies like fixed rate delta timing.
+        status->states.update(timer_rate);
+        status->timer -= timer_rate;    // All my homies like fixed rate delta timing.
     }
 
+    SDL_Event event;
     while(SDL_PollEvent(&event))
     {
         Core::InputManager::handle_event(event);
-        
+
         switch(event.type)
         {
         case SDL_EVENT_WINDOW_RESIZED:
-            window.w = event.window.data1;
-            window.h = event.window.data2;
+           	status->window.w = event.window.data1;
+            status->window.h = event.window.data2;
             break;
 
         case SDL_EVENT_QUIT:
-            running = false;
+            status->running = false;
             break;
-        
+
         default:
-            manager.send(event);
+            status->states.send(event);
             break;
         }
     }
@@ -76,18 +70,10 @@ int main(int argc, char *argv[])
     std::cout << TTY_BLUE << "[INFO] App initialization complete.\n" << TTY_RESET;
     // TODO: figure out why the Vita doesn't allocate the heaps unless I do this.
 
-    window.use();
-    window.vsync(true);
-
-    PUSH_STATE(manager, Game::States::Main);
-
-#ifdef __EMSCRIPTEN__
-    emscripten_request_animation_frame_loop(loop_once, nullptr);
-#else
-    Core::DeltaTimer dt;
-    while(running)
-        loop_once(dt.tick(), nullptr);
-#endif
-
+    AppState status;
+    status.window.use();
+    status.window.vsync(true);
+    PUSH_STATE(status.states, Game::States::Main);
+    RUN_MAIN_LOOP(main_loop, &status);
     return EXIT_SUCCESS;
 }

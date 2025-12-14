@@ -128,6 +128,8 @@ void States::Night::draw(int w, int h)
     this->tr_office_view->activate(GL_TEXTURE0);
     
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+    // TODO: I need to clean the shit out of this.
 }
 
 void States::Night::update(double dt)
