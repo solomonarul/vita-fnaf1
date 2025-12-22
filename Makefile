@@ -25,6 +25,16 @@ bur:
 	@cmake --build build -j${nproc}
 	@cmake --install build --prefix out
 
+buwd:
+	@cmake -B build -S . --preset unix-workflow-debug
+	@cmake --build build -j${nproc}
+	@cmake --install build --prefix out
+
+buwr:
+	@cmake -B build -S . --preset unix-workflow-release
+	@cmake --build build -j${nproc}
+	@cmake --install build --prefix out
+
 bwd:
 	@cmake -B build -S . --preset windows-debug
 	@cmake --build build

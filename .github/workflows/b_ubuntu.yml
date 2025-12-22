@@ -23,35 +23,8 @@ jobs:
             libegl1-mesa-dev libdbus-1-dev libibus-1.0-dev libudev-dev libthai-dev \
             libpipewire-0.3-dev libwayland-dev libdecor-0-dev liburing-dev
 
-      - name: Build SDL3
-        run: |
-          git clone https://github.com/libsdl-org/SDL.git
-          cd SDL
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-          cmake --build build -j${nproc}
-          sudo cmake --install build
-          cd ../..
-
-      - name: Build SDL3_mixer
-        run: |
-          git clone https://github.com/libsdl-org/SDL_mixer.git
-          cd SDL_mixer
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-          cmake --build build -j${nproc}
-          sudo cmake --install build
-          cd ../..
-
-      - name: Build TOML++
-        run: |
-          git clone https://github.com/marzer/tomlplusplus.git
-          cd tomlplusplus
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DTOML_EXCEPTIONS=0 -DTOML_HEADER_ONLY=0 -DTOML_ENABLE_FORMATTERS=0 -DTOML_ENABLE_UNRELEASED_FEATURES=0
-          cmake --build build -j${nproc}
-          sudo cmake --install build
-          cd ../..
-
       - name: Build Debug
-        run: make bud
+        run: make buwd
 
       - name: Build Release
-        run: make bur
+        run: make buwr
