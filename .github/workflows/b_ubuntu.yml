@@ -41,6 +41,15 @@ jobs:
           sudo cmake --install build
           cd ../..
 
+      - name: Build TOML++
+        run: |
+          git clone https://github.com/marzer/tomlplusplus.git
+          cd tomlplusplus
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DTOML_EXCEPTIONS=0 -DTOML_HEADER_ONLY=0 -DTOML_ENABLE_FORMATTERS=0 -DTOML_ENABLE_UNRELEASED_FEATURES=0
+          cmake --build build -j${nproc}
+          sudo cmake --install build
+          cd ../..
+
       - name: Build Debug
         run: make bud
 
