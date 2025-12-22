@@ -16,3 +16,8 @@ endif()
 
 add_library(stb_image INTERFACE)
 target_include_directories(stb_image INTERFACE ${EXTERNAL_DIR})
+target_link_libraries(
+    ${PROJECT_NAME}
+    PUBLIC
+        stb_image
+)

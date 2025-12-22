@@ -37,16 +37,19 @@ add_executable(
 
 add_subdirectory(lib)
 
-target_link_libraries(
-    ${PROJECT_NAME}
-    PUBLIC
-        stb_image
+target_compile_definitions(
+	${PROJECT_NAME}
+	PRIVATE
+		TOML_EXCEPTIONS=0
+		TOML_HEADER_ONLY=0
+	 	TOML_ENABLE_FORMATTERS=0
+		TOML_ENABLE_UNRELEASED_FEATURES=0
 )
 
 target_include_directories(
     ${PROJECT_NAME}
     PUBLIC
-        "inc"   
+        "inc"
 )
 
 set_target_properties(

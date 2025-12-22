@@ -7,7 +7,7 @@
         "binaryDir": "${sourceDir}/build",
         "cacheVariables": {
           "CMAKE_BUILD_PLATFORM": "WINDOWS"
-        } 
+        }
       },
       {
         "name": "windows-debug",
@@ -29,7 +29,7 @@
         "binaryDir": "${sourceDir}/build",
         "cacheVariables": {
           "CMAKE_BUILD_PLATFORM": "UNIX"
-        } 
+        }
       },
       {
         "name": "unix-debug",
@@ -51,7 +51,7 @@
         "binaryDir": "${sourceDir}/build",
         "cacheVariables": {
           "CMAKE_BUILD_PLATFORM": "VITA"
-        } 
+        }
       },
       {
         "name": "vita-debug",
@@ -64,7 +64,8 @@
         "name": "vita-release",
         "inherits": "vita-base",
         "cacheVariables": {
-          "CMAKE_BUILD_TYPE": "Release"
+          "CMAKE_BUILD_TYPE": "Release",
+          "TOMLPLUSPLUS_VENDORED": "ON"
         }
       },
       {
@@ -72,8 +73,11 @@
         "generator": "Unix Makefiles",
         "binaryDir": "${sourceDir}/build",
         "cacheVariables": {
-          "CMAKE_BUILD_PLATFORM": "WEB"
-        } 
+          "CMAKE_BUILD_PLATFORM": "WEB",
+          "SDL3_VENDORED": "ON",
+          "SDL3_MIXER_VENDORED": "ON",
+          "TOMLPLUSPLUS_VENDORED": "ON"
+        }
       },
       {
         "name": "web-debug",

@@ -24,7 +24,7 @@ VertexShader::VertexShader(std::string code)
     if(!success)
     {
         glGetShaderInfoLog(this->id, sizeof(shader_log), NULL, shader_log);
-        std::cerr << TTY_RED << "[EROR Vertex shader compilation error:\n" << TTY_YELLOW << shader_log << "\n" << TTY_RESET;
+        std::cerr << TTY_RED << "[EROR] Vertex shader compilation error:\n" << TTY_YELLOW << shader_log << "\n" << TTY_RESET;
         this->id = 0;
         return;
     }

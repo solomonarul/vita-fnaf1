@@ -95,6 +95,8 @@ namespace Core
             });
         }
 
+        static size_t queue_from_toml(const std::string& path);
+
         static bool remove(const std::string& key);
         static void remove_all();
         static bool process_enqueued();
@@ -103,7 +105,7 @@ namespace Core
     private:
         using Storage = std::unordered_map<std::string, AssetPtr>;
 
-        struct AssetLoad 
+        struct AssetLoad
         {
             std::string key;
             std::function<AssetPtr()> loader;

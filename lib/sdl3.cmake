@@ -1,11 +1,6 @@
 option(SDL3_VENDORED OFF)
 option(SDL3_MIXER_VENDORED OFF)
 
-if(EMSCRIPTEN)
-    set(SDL3_VENDORED ON)
-    set(SDL3_MIXER_VENDORED ON)
-endif()
-
 if(SDL3_VENDORED)
     include(FetchContent)
 
@@ -23,7 +18,7 @@ if(SDL3_VENDORED)
         GIT_TAG main
     )
     FetchContent_MakeAvailable(SDL3)
-    
+
     target_link_libraries(
         ${PROJECT_NAME}
         PUBLIC

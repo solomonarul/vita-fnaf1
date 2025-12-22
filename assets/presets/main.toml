@@ -1,0 +1,34 @@
+[[shader]]
+id = "s_menu_background"
+vertex = "assets/shaders/menu/background.vert"
+fragment = "assets/shaders/menu/background.frag"
+
+[[font_mtsdf]]
+id = "f_consolas"
+image = "assets/images/fonts/consolas.sdf.png"
+data = "assets/images/fonts/consolas.csv"
+
+[[font_mtsdf]]
+id = "f_lcdsolid"
+image = "assets/images/fonts/lcdsolid.sdf.png"
+data = "assets/images/fonts/lcdsolid.csv"
+
+[[font_mtsdf]]
+id = "f_consolas_bold"
+image = "assets/images/fonts/consolas_bold.sdf.png"
+data = "assets/images/fonts/consolas_bold.csv"
+
+[[audio]]
+id = "a_blip3"
+path = "assets/audio/blip3.mp3"
+predecode = true
+
+[[audio]]
+id = "a_darkness_music"
+path = "assets/audio/menu/darkness music.mp3"
+predecode = true
+
+[[audio]]
+id = "a_static2"
+path = "assets/audio/menu/static2.mp3"
+predecode = true

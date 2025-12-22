@@ -8,11 +8,12 @@ using namespace Game;
 
 States::Main::Main(Core::StateManager& sm) : IState::IState(sm)
 {
+	// TODO: check later if this is needed elsewhere and cache it in the asset manager if needed.
     this->f_tahoma = std::make_shared<GL::MTSDF::Font>("assets/images/fonts/tahoma.sdf.png", "assets/images/fonts/tahoma.csv");
 
     this->t_warning[0] = std::make_unique<GL::MTSDF::Text>(f_tahoma, "WARNING!");
     this->t_warning[0]->y = 90 / 544.0;
-    
+
     this->t_warning[1] = std::make_unique<GL::MTSDF::Text>(f_tahoma, "This game contains flashing lights, loud");
     this->t_warning[1]->y = 0 / 544.0;
 
@@ -27,14 +28,8 @@ States::Main::Main(Core::StateManager& sm) : IState::IState(sm)
         this->t_warning[index]->s_x = 0.6;
     }
 
-    // Preload a shitton of stuff.
-    // TODO: move to a better system or smth. Just inlining everything here feels bad. ALso I will probably have 2 loading screens.
-
-    this->loaded_count++;
-    Core::AssetManager::queue<GL::Shader>("s_menu_background",
-        "assets/shaders/menu/background.vert",
-        "assets/shaders/menu/background.frag"
-    );
+    // TODO: finish the enqueue-ing
+    this->loaded_count += Core::AssetManager::queue_from_toml("assets/presets/main.toml");
 
     this->loaded_count++;
     Core::AssetManager::queue<GL::TextureArray>("t_menu_blip", std::vector{
@@ -68,34 +63,7 @@ States::Main::Main(Core::StateManager& sm) : IState::IState(sm)
     });
 
     this->loaded_count++;
-    Core::AssetManager::queue<GL::MTSDF::Font>(
-        "f_consolas",
-        "assets/images/fonts/consolas.sdf.png", "assets/images/fonts/consolas.csv"
-    );
-
-    this->loaded_count++;
-    Core::AssetManager::queue<Core::Audio>("a_static2", "assets/audio/menu/static2.mp3", true);
-
-    this->loaded_count++;
-    Core::AssetManager::queue<Core::Audio>("a_darkness_music", "assets/audio/menu/darkness music.mp3", true);
-
-    this->loaded_count++;
-    Core::AssetManager::queue<Core::Audio>("a_blip3", "assets/audio/blip3.mp3", true);
-
-    this->loaded_count++;
     Core::AssetManager::queue<GL::Texture>("t_newspaper", GL::TextureConfig{"assets/images/misc/NEWSPAPER.png"});
-
-    this->loaded_count++;
-    Core::AssetManager::queue<GL::MTSDF::Font>(
-        "f_consolas_bold",
-        "assets/images/fonts/consolas_bold.sdf.png", "assets/images/fonts/consolas_bold.csv"
-    );
-
-    this->loaded_count++;
-    Core::AssetManager::queue<GL::MTSDF::Font>(
-        "f_lcdsolid",
-        "assets/images/fonts/lcdsolid.sdf.png", "assets/images/fonts/lcdsolid.csv"
-    );
 
     this->loaded_count++;
     Core::AssetManager::queue<GL::TextureArray>("t_blip", std::vector{

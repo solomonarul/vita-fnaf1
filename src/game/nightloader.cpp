@@ -36,7 +36,7 @@ States::NightLoader::NightLoader(Core::StateManager& sm, int night) : IState::IS
     else if(night == 3)
         result = "3rd" + result;
     else
-        result = std::to_string(night) + "th";
+        result = std::to_string(night) + "th " + result;
 
     this->t_night[1] = std::make_unique<GL::MTSDF::Text>(this->f_lcdsolid, result);
     this->t_night[1]->x = 0;
