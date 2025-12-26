@@ -1,25 +1,25 @@
 #pragma once
 
-#include "core/state.hpp"
-#include "core/timer.hpp"
-#include "gl/mtsdf/text.hpp"
-#include "gl/mtsdf/font.hpp"
+#include <nex.hpp>
+
+using namespace NEX::Core;
+using namespace NEX::GL;
 
 namespace Game::States
 {
-    struct Main : public Core::IState
+    struct Main : public IState
     {
-        Main(Core::StateManager&);
+        Main(StateManager &);
         ~Main();
 
         size_t loaded_count = 0;
-        std::unique_ptr<GL::MTSDF::Text> t_warning[3];
-        std::shared_ptr<GL::MTSDF::Font> f_tahoma;
+        std::unique_ptr<MTSDF::Text> t_warning[3];
+        std::shared_ptr<MTSDF::Font> f_tahoma;
 
-        Core::Timer ti_transition = Core::Timer(3.0);
+        Timer ti_transition = Timer(3.0);
 
         virtual void draw(int w, int h) override;
         virtual void update(double dt) override;
-        virtual void event(SDL_Event&) override;
+        virtual void event(SDL_Event &) override;
     };
-};
+}; // namespace Game::States

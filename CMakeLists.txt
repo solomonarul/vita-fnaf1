@@ -2,30 +2,20 @@ cmake_minimum_required(VERSION 3.16)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 
-message(STATUS "CMAKE_BUILD_PLATFORM = ${CMAKE_BUILD_PLATFORM}")
+set(NEX_APP_EXECUTABLE app)
+set(VITA_APP_NAME "Five Nights at Freddy's")
+set(VITA_TITLEID "FNAF1SLMN")
+set(VITA_VERSION "01.00")
+set(VITA_MKSFOEX_FLAGS "${VITA_MKSFOEX_FLAGS} -d PARENTAL_LEVEL=1")
+# set(VITA_MKSFOEX_FLAGS "${VITA_MKSFOEX_FLAGS} -d ATTRIBUTE2=12")  # Uncomment to download more RAM.
 
-if(CMAKE_BUILD_PLATFORM MATCHES "VITA")
-    include("cmake/vita_pre.cmake")
-endif()
+# NOTE: Important that Nex is compiled before anything else because of the cmake toolchain for Vita for example.
+add_subdirectory(lib)
 
-project(app)
+project(${NEX_APP_EXECUTABLE})
 add_executable(
     ${PROJECT_NAME}
         "src/main.cpp"
-        "src/core/audio.cpp"
-        "src/core/file.cpp"
-        "src/core/state.cpp"
-        "src/core/delta.cpp"
-        "src/core/timer.cpp"
-        "src/core/assetmanager.cpp"
-        "src/core/inputmanager.cpp"
-        "src/gl/window.cpp"
-        "src/gl/mtsdf/font.cpp"
-        "src/gl/mtsdf/text.cpp"
-        "src/gl/assets/shader.cpp"
-        "src/gl/assets/texture.cpp"
-        "src/gl/assets/texturearray.cpp"
-        "src/gl/rendertexture.cpp"
         "src/game/main.cpp"
         "src/game/menu.cpp"
         "src/game/menu/background.cpp"
@@ -33,17 +23,6 @@ add_executable(
         "src/game/newspaper.cpp"
         "src/game/nightloader.cpp"
         "src/game/night.cpp"
-)
-
-add_subdirectory(lib)
-
-target_compile_definitions(
-	${PROJECT_NAME}
-	PRIVATE
-		TOML_EXCEPTIONS=0
-		TOML_HEADER_ONLY=0
-	 	TOML_ENABLE_FORMATTERS=0
-		TOML_ENABLE_UNRELEASED_FEATURES=0
 )
 
 target_include_directories(
@@ -73,15 +52,9 @@ target_compile_options(${PROJECT_NAME} PRIVATE
     $<$<CXX_COMPILER_ID:Clang>:-Wall -Wextra -Werror -fno-exceptions>
 )
 
-if(CMAKE_BUILD_PLATFORM MATCHES "VITA")
-    include("cmake/vita_post.cmake")
-else()
-    include("cmake/other_post.cmake")
-endif()
-
-if(NOT EMSCRIPTEN)
-    install(
-        TARGETS
-            ${PROJECT_NAME}
-    )
-endif()
+target_link_libraries(
+	${PROJECT_NAME}
+	PUBLIC
+		nex
+)
+include("lib/nexgl/cmake/app_post.cmake")

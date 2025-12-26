@@ -1,0 +1,3 @@
+[submodule "lib/nexgl"]
+	path = lib/nexgl
+	url = https://github.com/solomonarul/nexgl.git

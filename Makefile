@@ -78,3 +78,8 @@ sv:
 
 du:
 	@renderdoccmd capture ./out/bin/${TARGET}
+
+f:
+	@echo "[INFO] Starting formatting..."
+	@find . -path ./build -prune -o \( -name "*.cpp" -o -name "*.hpp" -o -name "*.h" \) -print0 | xargs -0 -I{} sh -c 'echo "{}"; clang-format -i --style=file "{}"'
+	@echo "[INFO] Ended formatting."

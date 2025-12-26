@@ -6,7 +6,7 @@
         "generator": "Unix Makefiles",
         "binaryDir": "${sourceDir}/build",
         "cacheVariables": {
-          "CMAKE_BUILD_PLATFORM": "WINDOWS"
+          "NEX_BUILD_PLATFORM": "WINDOWS"
         }
       },
       {
@@ -28,7 +28,7 @@
         "generator": "Unix Makefiles",
         "binaryDir": "${sourceDir}/build",
         "cacheVariables": {
-          "CMAKE_BUILD_PLATFORM": "UNIX"
+          "NEX_BUILD_PLATFORM": "UNIX"
         }
       },
       {
@@ -70,7 +70,7 @@
         "generator": "Unix Makefiles",
         "binaryDir": "${sourceDir}/build",
         "cacheVariables": {
-          "CMAKE_BUILD_PLATFORM": "VITA"
+          "NEX_BUILD_PLATFORM": "VITA"
         }
       },
       {
@@ -93,7 +93,7 @@
         "generator": "Unix Makefiles",
         "binaryDir": "${sourceDir}/build",
         "cacheVariables": {
-          "CMAKE_BUILD_PLATFORM": "WEB",
+          "NEX_BUILD_PLATFORM": "WEB",
           "SDL3_VENDORED": "ON",
           "SDL3_MIXER_VENDORED": "ON",
           "TOMLPLUSPLUS_VENDORED": "ON"
