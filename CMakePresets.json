@@ -50,8 +50,6 @@
         "inherits": "unix-base",
         "cacheVariables": {
           "CMAKE_BUILD_TYPE": "Debug",
-          "SDL3_VENDORED": "ON",
-          "SDL3_MIXER_VENDORED": "ON",
           "TOMLPLUSPLUS_VENDORED": "ON"
         }
       },
@@ -60,8 +58,6 @@
         "inherits": "unix-base",
         "cacheVariables": {
           "CMAKE_BUILD_TYPE": "Release",
-          "SDL3_VENDORED": "ON",
-          "SDL3_MIXER_VENDORED": "ON",
           "TOMLPLUSPLUS_VENDORED": "ON"
         }
       },

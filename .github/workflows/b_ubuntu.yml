@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          submodules: recursive  # correct key
 
       - name: Install build dependencies
         run: |
@@ -22,6 +24,24 @@ jobs:
             libxkbcommon-dev libdrm-dev libgbm-dev libgl1-mesa-dev libgles2-mesa-dev \
             libegl1-mesa-dev libdbus-1-dev libibus-1.0-dev libudev-dev libthai-dev \
             libpipewire-0.3-dev libwayland-dev libdecor-0-dev liburing-dev
+
+      - name: Build SDL3
+        run: |
+          git clone https://github.com/libsdl-org/SDL.git
+          cd SDL
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build -j${nproc}
+          sudo cmake --install build
+          cd ../..
+
+      - name: Build SDL3_mixer
+        run: |
+          git clone https://github.com/libsdl-org/SDL_mixer.git
+          cd SDL_mixer
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build -j${nproc}
+          sudo cmake --install build
+          cd ../..
 
       - name: Build Debug
         run: make buwd
