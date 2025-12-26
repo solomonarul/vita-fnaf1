@@ -1,4 +1,4 @@
-#include "game/menu.hpp"
+#include "menu.hpp"
 
 #ifdef SCENE_LOAD_LOG
 #include <iostream>

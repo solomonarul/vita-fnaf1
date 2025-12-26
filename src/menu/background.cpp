@@ -1,4 +1,4 @@
-#include "game/menu/background.hpp"
+#include "menu/background.hpp"
 
 using namespace Game::Objects::Menu;
 

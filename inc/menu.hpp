@@ -1,8 +1,8 @@
 #pragma once
 
 #include <nex.hpp>
-#include "game/menu/background.hpp"
-#include "game/menu/manager.hpp"
+#include "menu/background.hpp"
+#include "menu/manager.hpp"
 
 using namespace NEX::Core;
 using namespace NEX::GL;

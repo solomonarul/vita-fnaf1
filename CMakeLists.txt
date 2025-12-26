@@ -15,14 +15,14 @@ add_subdirectory(lib)
 project(${NEX_APP_EXECUTABLE})
 add_executable(
     ${PROJECT_NAME}
+        "src/entry.cpp"
         "src/main.cpp"
-        "src/game/main.cpp"
-        "src/game/menu.cpp"
-        "src/game/menu/background.cpp"
-        "src/game/menu/manager.cpp"
-        "src/game/newspaper.cpp"
-        "src/game/nightloader.cpp"
-        "src/game/night.cpp"
+        "src/menu.cpp"
+        "src/menu/background.cpp"
+        "src/menu/manager.cpp"
+        "src/newspaper.cpp"
+        "src/nightloader.cpp"
+        "src/night.cpp"
 )
 
 target_include_directories(

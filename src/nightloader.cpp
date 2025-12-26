@@ -1,10 +1,10 @@
-#include "game/nightloader.hpp"
+#include "nightloader.hpp"
 
 #ifdef SCENE_LOAD_LOG
 #include <iostream>
 #endif
 
-#include "game/night.hpp"
+#include "night.hpp"
 
 using namespace Game;
 

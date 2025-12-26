@@ -1,7 +1,7 @@
-#include "game/menu/manager.hpp"
+#include "menu/manager.hpp"
 
-#include "game/newspaper.hpp"
-#include "game/nightloader.hpp"
+#include "newspaper.hpp"
+#include "nightloader.hpp"
 
 #include <SDL3_mixer/SDL_mixer.h>
 

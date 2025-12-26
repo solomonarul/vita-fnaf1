@@ -1,11 +1,11 @@
-#include "game/newspaper.hpp"
+#include "newspaper.hpp"
 
 #ifdef SCENE_LOAD_LOG
 #include <iostream>
 #endif
 
-#include "game/menu.hpp"
-#include "game/nightloader.hpp"
+#include "menu.hpp"
+#include "nightloader.hpp"
 
 using namespace Game;
 

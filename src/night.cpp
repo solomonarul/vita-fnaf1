@@ -1,4 +1,4 @@
-#include "game/night.hpp"
+#include "night.hpp"
 
 #ifdef SCENE_LOAD_LOG
 #include <iostream>
