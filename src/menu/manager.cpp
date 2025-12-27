@@ -3,8 +3,6 @@
 #include "newspaper.hpp"
 #include "nightloader.hpp"
 
-#include <SDL3_mixer/SDL_mixer.h>
-
 using namespace Game::Objects::Menu;
 
 Manager::Manager()

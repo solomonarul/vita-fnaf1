@@ -11,16 +11,12 @@ using namespace Game;
 
 States::Newspaper::Newspaper(StateManager& sm) : IState::IState(sm)
 {
-    auto menu = (Game::States::Menu*)sm.states.begin()->get();
+    auto menu = (States::Menu*)sm.states.begin()->get();
     menu->updates_disabled = true;
 
     this->t_newspaper = AssetManager::get<Texture>("t_newspaper");
 
-    static float verts[] = {
-        -1.0f, -1.0f, 0.0f, 1.0f, 1.0f, -1.0, 1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
-    };
-
-    GEN_AND_SEND_VBO(this->vbo, verts, GL_STATIC_DRAW);
+    GEN_AND_SEND_VBO(this->vbo, NEX::GL::FULLSCREEN_RECT2D, GL_STATIC_DRAW);
 
 #ifdef SCENE_LOAD_LOG
     std::cout << TTY_BLUE << "[INFO] Created Newspaper state.\n" << TTY_RESET;

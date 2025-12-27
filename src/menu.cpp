@@ -9,9 +9,6 @@ using namespace Game;
 States::Menu::Menu(StateManager& sm) : IState::IState(sm)
 {
     sm.states.erase(sm.states.begin());
-    // TODO: not doing the transition in the follow-up state, if I remove the previous state while
-    // still there, undefined behaviour happens on the Vita. I.E removing a state while executing
-    // its' code is not ideal. Maybe I am stupid or something again, gotta check this out in detail.
 
     this->f_consolas = AssetManager::get<MTSDF::Font>("f_consolas");
     this->a_static2 = AssetManager::get<Audio>("a_static2");

@@ -3,7 +3,6 @@
 #ifdef SCENE_LOAD_LOG
 #include <iostream>
 #endif
-#include <SDL3_mixer/SDL_mixer.h>
 
 using namespace Game;
 
@@ -11,11 +10,7 @@ States::Night::Night(StateManager& sm) : IState::IState(sm)
 {
     sm.states.erase(sm.states.begin());
 
-    static float verts[] = {
-        -1.0f, -1.0f, 0.0f, 1.0f, 1.0f, -1.0, 1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
-    };
-
-    GEN_AND_SEND_VBO(this->vbo, verts, GL_STATIC_DRAW);
+    GEN_AND_SEND_VBO(this->vbo, NEX::GL::FULLSCREEN_RECT2D, GL_STATIC_DRAW);
 
     this->t_office = AssetManager::get<TextureArray>("t_office");
     this->s_office = AssetManager::get<Shader>("s_office");

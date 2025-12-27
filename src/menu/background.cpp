@@ -4,11 +4,7 @@ using namespace Game::Objects::Menu;
 
 Background::Background()
 {
-    static float verts[] = {
-        -1.0f, -1.0f, 0.0f, 1.0f, 1.0f, -1.0, 1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
-    };
-
-    GEN_AND_SEND_VBO(this->vbo, verts, GL_STATIC_DRAW)
+    GEN_AND_SEND_VBO(this->vbo, NEX::GL::FULLSCREEN_RECT2D, GL_STATIC_DRAW);
 
     this->shader = AssetManager::get<Shader>("s_menu_background");
     this->t_blip = AssetManager::get<TextureArray>("t_menu_blip");
@@ -53,16 +49,12 @@ void Background::draw()
 
 void Background::update(double dt)
 {
-    this->ti_image_update.update(dt);
-    this->ti_static_image_update.update(dt);
-    this->ti_static_alpha_update.update(dt);
-    this->ti_blip_image_update.update(dt);
-    this->ti_blip_alpha_update.update(dt);
-    this->ti_blip_show.update(dt);
+    for (auto index = 0; index < TIMER_COUNT; index++) this->timers[index].update(dt);
+
     this->u_bar_offset = this->u_bar_offset + dt * bar_speed;
     this->u_bar_offset = (this->u_bar_offset > 1) ? -u_bar_width : this->u_bar_offset;
 
-    if (this->ti_image_update.has_ticked())
+    if (this->timers[TIMER_IMAGE_UPDATE].has_ticked())
     {
         auto current = Random::range(0, 99);
         if (current < 96)
@@ -72,18 +64,18 @@ void Background::update(double dt)
         this->u_alpha = Random::range(0, 249) / 255.0;
     }
 
-    if (this->ti_static_image_update.has_ticked())
+    if (this->timers[TIMER_STATIC_IMAGE_UPDATE].has_ticked())
         this->current_static_texture = (this->current_static_texture + 1) % this->t_static->textures.size();
 
-    if (this->ti_static_alpha_update.has_ticked())
+    if (this->timers[TIMER_STATIC_ALPHA_UPDATE].has_ticked())
         this->u_static_alpha = Random::range(50, 149) / 255.0;
 
-    if (this->ti_blip_image_update.has_ticked())
+    if (this->timers[TIMER_BLIP_SHOW].has_ticked())
+        this->blip_show = Random::range(0, 2) == 1;
+
+    if (this->timers[TIMER_BLIP_IMAGE_UPDATE].has_ticked())
         this->current_blip_texture = (this->current_blip_texture + 1) % this->t_blip->textures.size();
 
-    if (this->ti_blip_alpha_update.has_ticked())
+    if (this->timers[TIMER_BLIP_ALPHA_UPDATE].has_ticked())
         this->u_blip_alpha = Random::range(50, 100) / 255.0;
-
-    if (this->ti_blip_show.has_ticked())
-        this->blip_show = Random::range(0, 2) == 1;
 }

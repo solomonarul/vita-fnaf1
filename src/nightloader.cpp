@@ -32,7 +32,7 @@ States::NightLoader::NightLoader(StateManager& sm, int night) : IState::IState(s
     else if (night == 3)
         result = "3rd" + result;
     else
-        result = std::to_string(night) + "th " + result;
+        result = std::to_string(night) + "th" + result;
 
     this->t_night[1] = std::make_unique<MTSDF::Text>(this->f_lcdsolid, result);
     this->t_night[1]->x = 0;
@@ -44,11 +44,7 @@ States::NightLoader::NightLoader(StateManager& sm, int night) : IState::IState(s
     auto blip = AssetManager::get<Audio>("a_blip3");
     MIX_PlayTrack(blip->track, 0);
 
-    static float verts[] = {
-        -1.0f, -1.0f, 0.0f, 1.0f, 1.0f, -1.0, 1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f,
-    };
-
-    GEN_AND_SEND_VBO(this->vbo, verts, GL_STATIC_DRAW);
+    GEN_AND_SEND_VBO(this->vbo, NEX::GL::FULLSCREEN_RECT2D, GL_STATIC_DRAW);
 
 #ifdef SCENE_LOAD_LOG
     std::cout << TTY_BLUE << "[INFO] Created NightLoader state.\n" << TTY_RESET;

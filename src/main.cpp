@@ -6,7 +6,6 @@ using namespace Game;
 
 States::Main::Main(StateManager& sm) : IState::IState(sm)
 {
-    // TODO: check later if this is needed elsewhere and cache it in the asset manager if needed.
     this->f_tahoma = std::make_shared<MTSDF::Font>("assets/images/fonts/tahoma.sdf.png", "assets/images/fonts/tahoma.csv");
 
     this->t_warning[0] = std::make_unique<MTSDF::Text>(f_tahoma, "WARNING!");
