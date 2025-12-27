@@ -19,6 +19,6 @@ namespace Game::Objects::Menu
         Manager();
         ~Manager();
         void draw();
-        void event(SDL_Event &, StateManager &);
+        void event(SDL_Event&, StateManager&);
     };
 }; // namespace Game::Objects::Menu

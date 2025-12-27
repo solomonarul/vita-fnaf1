@@ -9,7 +9,7 @@ namespace Game::States
 {
     struct Main : public IState
     {
-        Main(StateManager &);
+        Main(StateManager&);
         ~Main();
 
         size_t loaded_count = 0;
@@ -20,6 +20,6 @@ namespace Game::States
 
         virtual void draw(int w, int h) override;
         virtual void update(double dt) override;
-        virtual void event(SDL_Event &) override;
+        virtual void event(SDL_Event&) override;
     };
 }; // namespace Game::States

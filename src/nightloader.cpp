@@ -1,14 +1,14 @@
 #include "nightloader.hpp"
 
+#include "night.hpp"
+
 #ifdef SCENE_LOAD_LOG
 #include <iostream>
 #endif
 
-#include "night.hpp"
-
 using namespace Game;
 
-States::NightLoader::NightLoader(StateManager &sm, int night) : IState::IState(sm)
+States::NightLoader::NightLoader(StateManager& sm, int night) : IState::IState(sm)
 {
     sm.states.erase(sm.states.begin());
 
@@ -54,7 +54,7 @@ States::NightLoader::NightLoader(StateManager &sm, int night) : IState::IState(s
     std::cout << TTY_BLUE << "[INFO] Created NightLoader state.\n" << TTY_RESET;
 #endif
 
-	this->loaded_count += AssetManager::queue_from_toml("assets/presets/night.toml");
+    this->loaded_count += AssetManager::queue_from_toml("assets/presets/night.toml");
 }
 
 States::NightLoader::~NightLoader()
@@ -92,11 +92,11 @@ void States::NightLoader::draw(int w, int h)
 
         GLint a_position = glGetAttribLocation(Texture::default_shader->id, "a_position");
         glEnableVertexAttribArray(a_position);
-        glVertexAttribPointer(a_position, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)0);
+        glVertexAttribPointer(a_position, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
 
         GLint a_texcoord = glGetAttribLocation(Texture::default_shader->id, "a_texture_coords");
         glEnableVertexAttribArray(a_texcoord);
-        glVertexAttribPointer(a_texcoord, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(2 * sizeof(float)));
+        glVertexAttribPointer(a_texcoord, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
         this->t_blip->textures[blip_frame]->activate(GL_TEXTURE0);
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -131,7 +131,7 @@ void States::NightLoader::update(double dt)
     }
 }
 
-void States::NightLoader::event(SDL_Event &event)
+void States::NightLoader::event(SDL_Event& event)
 {
     UNUSED(event);
 }

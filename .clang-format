@@ -41,3 +41,6 @@ NamespaceIndentation: All
 IndentPPDirectives: None
 MacroBlockBegin: ""
 MacroBlockEnd: ""
+
+# Others
+PointerAlignment: Left

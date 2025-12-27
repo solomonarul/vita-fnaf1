@@ -9,7 +9,7 @@ namespace Game::States
 {
     struct NightLoader : public IState
     {
-        NightLoader(StateManager &, int);
+        NightLoader(StateManager&, int);
         ~NightLoader();
 
         GLuint vbo;
@@ -26,6 +26,6 @@ namespace Game::States
 
         virtual void draw(int w, int h) override;
         virtual void update(double dt) override;
-        virtual void event(SDL_Event &) override;
+        virtual void event(SDL_Event&) override;
     };
 }; // namespace Game::States

@@ -6,7 +6,7 @@
 
 using namespace Game;
 
-States::Menu::Menu(StateManager &sm) : IState::IState(sm)
+States::Menu::Menu(StateManager& sm) : IState::IState(sm)
 {
     sm.states.erase(sm.states.begin());
     // TODO: not doing the transition in the follow-up state, if I remove the previous state while
@@ -31,7 +31,7 @@ States::Menu::Menu(StateManager &sm) : IState::IState(sm)
     this->t_texts[1]->s_x = 0.6;
     this->t_texts[1]->o_y = 1;
 
-    this->t_texts[2] = std::make_unique<MTSDF::Text>(this->f_consolas, (char *)u8"\u00A92014 Scott Cawthon");
+    this->t_texts[2] = std::make_unique<MTSDF::Text>(this->f_consolas, (char*)u8"\u00A92014 Scott Cawthon");
     this->t_texts[2]->x = 945 / 960.0;
     this->t_texts[2]->y = -1;
     this->t_texts[2]->s = 40 / 544.0;
@@ -95,7 +95,7 @@ void States::Menu::update(double dt)
     this->o_background.update(dt);
 }
 
-void States::Menu::event(SDL_Event &event)
+void States::Menu::event(SDL_Event& event)
 {
     if (updates_disabled)
         return;

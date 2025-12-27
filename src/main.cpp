@@ -4,7 +4,7 @@
 
 using namespace Game;
 
-States::Main::Main(StateManager &sm) : IState::IState(sm)
+States::Main::Main(StateManager& sm) : IState::IState(sm)
 {
     // TODO: check later if this is needed elsewhere and cache it in the asset manager if needed.
     this->f_tahoma = std::make_shared<MTSDF::Font>("assets/images/fonts/tahoma.sdf.png", "assets/images/fonts/tahoma.csv");
@@ -78,7 +78,7 @@ void States::Main::update(double dt)
     }
 }
 
-void States::Main::event(SDL_Event &event)
+void States::Main::event(SDL_Event& event)
 {
     UNUSED(event);
 }

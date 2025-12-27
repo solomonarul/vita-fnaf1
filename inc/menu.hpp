@@ -11,7 +11,7 @@ namespace Game::States
 {
     struct Menu : public IState
     {
-        Menu(StateManager &);
+        Menu(StateManager&);
         ~Menu();
 
         std::unique_ptr<MTSDF::Text> t_texts[3];
@@ -29,6 +29,6 @@ namespace Game::States
         bool updates_disabled = false;
         virtual void draw(int w, int h) override;
         virtual void update(double dt) override;
-        virtual void event(SDL_Event &) override;
+        virtual void event(SDL_Event&) override;
     };
 }; // namespace Game::States

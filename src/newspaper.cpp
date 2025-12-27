@@ -9,9 +9,9 @@
 
 using namespace Game;
 
-States::Newspaper::Newspaper(StateManager &sm) : IState::IState(sm)
+States::Newspaper::Newspaper(StateManager& sm) : IState::IState(sm)
 {
-    auto menu = (Game::States::Menu *)sm.states.begin()->get();
+    auto menu = (Game::States::Menu*)sm.states.begin()->get();
     menu->updates_disabled = true;
 
     this->t_newspaper = AssetManager::get<Texture>("t_newspaper");
@@ -54,11 +54,11 @@ void States::Newspaper::draw(int w, int h)
 
     GLint a_position = glGetAttribLocation(Texture::default_shader->id, "a_position");
     glEnableVertexAttribArray(a_position);
-    glVertexAttribPointer(a_position, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)0);
+    glVertexAttribPointer(a_position, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
 
     GLint a_texcoord = glGetAttribLocation(Texture::default_shader->id, "a_texture_coords");
     glEnableVertexAttribArray(a_texcoord);
-    glVertexAttribPointer(a_texcoord, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(2 * sizeof(float)));
+    glVertexAttribPointer(a_texcoord, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
     this->t_newspaper->activate(GL_TEXTURE0);
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -91,7 +91,7 @@ void States::Newspaper::update(double dt)
     }
 }
 
-void States::Newspaper::event(SDL_Event &event)
+void States::Newspaper::event(SDL_Event& event)
 {
     UNUSED(event);
 }

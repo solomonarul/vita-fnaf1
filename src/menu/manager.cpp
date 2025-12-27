@@ -61,9 +61,9 @@ void Manager::draw()
     for (auto index = 0; index < 2; index++) this->t_texts[index]->draw();
 }
 
-void Manager::event(SDL_Event &event, StateManager &sm)
+void Manager::event(SDL_Event& event, StateManager& sm)
 {
-    (void)(sm);
+    UNUSED(sm);
     switch (event.type)
     {
 #ifndef __psp2__

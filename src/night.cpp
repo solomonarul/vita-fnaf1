@@ -7,7 +7,7 @@
 
 using namespace Game;
 
-States::Night::Night(StateManager &sm) : IState::IState(sm)
+States::Night::Night(StateManager& sm) : IState::IState(sm)
 {
     sm.states.erase(sm.states.begin());
 
@@ -55,11 +55,11 @@ void States::Night::draw(int w, int h)
 
     GLint a_position = glGetAttribLocation(Texture::default_shader->id, "a_position");
     glEnableVertexAttribArray(a_position);
-    glVertexAttribPointer(a_position, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)0);
+    glVertexAttribPointer(a_position, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
 
     GLint a_texcoord = glGetAttribLocation(Texture::default_shader->id, "a_texture_coords");
     glEnableVertexAttribArray(a_texcoord);
-    glVertexAttribPointer(a_texcoord, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(2 * sizeof(float)));
+    glVertexAttribPointer(a_texcoord, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 
     this->t_office->textures[0]->activate(GL_TEXTURE0);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -83,11 +83,11 @@ void States::Night::draw(int w, int h)
 
     a_position = glGetAttribLocation(this->s_office->id, "a_position");
     glEnableVertexAttribArray(a_position);
-    glVertexAttribPointer(a_position, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)0);
+    glVertexAttribPointer(a_position, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
 
     a_texcoord = glGetAttribLocation(this->s_office->id, "a_texture_coords");
     glEnableVertexAttribArray(a_texcoord);
-    glVertexAttribPointer(a_texcoord, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(2 * sizeof(float)));
+    glVertexAttribPointer(a_texcoord, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
     this->tr_office_view->activate(GL_TEXTURE0);
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -115,7 +115,7 @@ void States::Night::update(double dt)
         MIX_PlayTrack(this->a_office_buzz->track, 0);
 }
 
-void States::Night::event(SDL_Event &event)
+void States::Night::event(SDL_Event& event)
 {
     UNUSED(event);
 }

@@ -42,11 +42,11 @@ void Background::draw()
 
     GLint a_position = glGetAttribLocation(shader->id, "a_position");
     glEnableVertexAttribArray(a_position);
-    glVertexAttribPointer(a_position, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)0);
+    glVertexAttribPointer(a_position, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
 
     GLint a_texcoord = glGetAttribLocation(shader->id, "a_texture_coords");
     glEnableVertexAttribArray(a_texcoord);
-    glVertexAttribPointer(a_texcoord, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(2 * sizeof(float)));
+    glVertexAttribPointer(a_texcoord, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }

@@ -20,12 +20,12 @@ struct AppState : public IAppState
     Window window = Window({.title = "Five Nights at Freddy's", .w = 960, .h = 544});
 };
 
-bool main_loop(double time, void *userData)
+bool main_loop(double time, void* userData)
 {
     constexpr double timer_rate = 1.0 / 60;
     constexpr double delta_time_limit = 1.0 / 2; // If less than 2 fps, ignore the update.
 
-    AppState *const status = static_cast<AppState *>(userData);
+    AppState* const status = static_cast<AppState*>(userData);
     status->states.draw(status->window.w, status->window.h);
     status->window.swap();
 
@@ -63,7 +63,7 @@ bool main_loop(double time, void *userData)
     return true;
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     UNUSED(argc);
     UNUSED(argv);
