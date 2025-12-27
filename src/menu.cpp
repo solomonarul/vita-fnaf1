@@ -1,9 +1,5 @@
 #include "menu.hpp"
 
-#ifdef SCENE_LOAD_LOG
-#include <iostream>
-#endif
-
 using namespace Game;
 
 States::Menu::Menu(StateManager& sm) : IState::IState(sm)
@@ -47,18 +43,9 @@ States::Menu::Menu(StateManager& sm) : IState::IState(sm)
     MIX_PlayTrack(this->a_static2->track, 0);
     MIX_PlayTrack(this->a_blip3->track, 0);
     MIX_PlayTrack(this->a_darkness_music->track, 0);
-
-#ifdef SCENE_LOAD_LOG
-    std::cout << TTY_BLUE << "[INFO] Created Menu state.\n" << TTY_RESET;
-#endif
 }
 
-States::Menu::~Menu()
-{
-#ifdef SCENE_LOAD_LOG
-    std::cout << TTY_BLUE << "[INFO] Destroyed Menu state.\n" << TTY_RESET;
-#endif
-}
+States::Menu::~Menu() {}
 
 void States::Menu::draw(int w, int h)
 {

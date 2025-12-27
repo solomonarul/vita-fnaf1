@@ -26,18 +26,9 @@ States::Main::Main(StateManager& sm) : IState::IState(sm)
     }
 
     this->loaded_count += AssetManager::queue_from_toml("assets/presets/main.toml");
-
-#ifdef SCENE_LOAD_LOG
-    std::cout << TTY_BLUE << "[INFO] Created Main state.\n" << TTY_RESET;
-#endif
 }
 
-States::Main::~Main()
-{
-#ifdef SCENE_LOAD_LOG
-    std::cout << TTY_BLUE << "[INFO] Destroyed Main state.\n" << TTY_RESET;
-#endif
-}
+States::Main::~Main() {}
 
 void States::Main::draw(int w, int h)
 {

@@ -1,9 +1,5 @@
 #include "night.hpp"
 
-#ifdef SCENE_LOAD_LOG
-#include <iostream>
-#endif
-
 using namespace Game;
 
 States::Night::Night(StateManager& sm) : IState::IState(sm)
@@ -21,18 +17,9 @@ States::Night::Night(StateManager& sm) : IState::IState(sm)
     MIX_PlayTrack(this->a_call->track, 0);
 
     this->tr_office_view = std::make_shared<RenderTexture>(this->t_office->textures[0]->w, this->t_office->textures[0]->h);
-
-#ifdef SCENE_LOAD_LOG
-    std::cout << TTY_BLUE << "[INFO] Created Night state.\n" << TTY_RESET;
-#endif
 }
 
-States::Night::~Night()
-{
-#ifdef SCENE_LOAD_LOG
-    std::cout << TTY_BLUE << "[INFO] Destroyed Night state.\n" << TTY_RESET;
-#endif
-}
+States::Night::~Night() {}
 
 void States::Night::draw(int w, int h)
 {

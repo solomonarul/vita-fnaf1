@@ -1,9 +1,5 @@
 #include "newspaper.hpp"
 
-#ifdef SCENE_LOAD_LOG
-#include <iostream>
-#endif
-
 #include "menu.hpp"
 #include "nightloader.hpp"
 
@@ -17,19 +13,11 @@ States::Newspaper::Newspaper(StateManager& sm) : IState::IState(sm)
     this->t_newspaper = AssetManager::get<Texture>("t_newspaper");
 
     GEN_AND_SEND_VBO(this->vbo, NEX::GL::FULLSCREEN_RECT2D, GL_STATIC_DRAW);
-
-#ifdef SCENE_LOAD_LOG
-    std::cout << TTY_BLUE << "[INFO] Created Newspaper state.\n" << TTY_RESET;
-#endif
 }
 
 States::Newspaper::~Newspaper()
 {
     glDeleteBuffers(1, &this->vbo);
-
-#ifdef SCENE_LOAD_LOG
-    std::cout << TTY_BLUE << "[INFO] Destroyed Newspaper state.\n" << TTY_RESET;
-#endif
 }
 
 void States::Newspaper::draw(int w, int h)

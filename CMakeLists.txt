@@ -43,8 +43,6 @@ target_compile_definitions(
     ${PROJECT_NAME}
     PRIVATE
         APP_IS_DEMO
-        NASSET_LOAD_LOG
-        NSCENE_LOAD_LOG
 )
 
 target_compile_options(${PROJECT_NAME} PRIVATE

@@ -41,9 +41,7 @@ Manager::Manager()
     this->t_night_count->s_x = 0.6;
 }
 
-Manager::~Manager()
-{
-}
+Manager::~Manager() {}
 
 void Manager::draw()
 {
