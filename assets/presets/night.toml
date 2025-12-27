@@ -1,0 +1,24 @@
+[[texture_array]]
+id = "t_office"
+textures = [
+    { path = "assets/images/night/office/1.png" },
+    { path = "assets/images/night/office/2.png" },
+    { path = "assets/images/night/office/3.png" },
+    { path = "assets/images/night/office/4.png" },
+    { path = "assets/images/night/office/5.png" }
+]
+
+[[shader]]
+id = "s_office"
+vertex = "assets/shaders/office/background.vert"
+fragment = "assets/shaders/office/background.frag"
+
+[[audio]]
+id = "a_office_buzz"
+path = "assets/audio/night/Buzz_Fan_Florescent2.mp3"
+predecode = true
+
+[[audio]]
+id = "a_night_1"
+path = "assets/audio/night/calls/voiceover1c.mp3"
+predecode = true

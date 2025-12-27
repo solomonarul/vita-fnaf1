@@ -54,20 +54,7 @@ States::NightLoader::NightLoader(StateManager &sm, int night) : IState::IState(s
     std::cout << TTY_BLUE << "[INFO] Created NightLoader state.\n" << TTY_RESET;
 #endif
 
-    this->loaded_count++;
-    AssetManager::queue<TextureArray>(
-        "t_office", std::vector{TextureConfig{.path = "assets/images/night/office/1.png"}, TextureConfig{.path = "assets/images/night/office/2.png"},
-                                TextureConfig{.path = "assets/images/night/office/3.png"}, TextureConfig{.path = "assets/images/night/office/4.png"},
-                                TextureConfig{.path = "assets/images/night/office/5.png"}});
-
-    this->loaded_count++;
-    AssetManager::queue<Shader>("s_office", "assets/shaders/office/background.vert", "assets/shaders/office/background.frag");
-
-    this->loaded_count++;
-    AssetManager::queue<Audio>("a_office_buzz", "assets/audio/night/Buzz_Fan_Florescent2.mp3", true);
-
-    this->loaded_count++;
-    AssetManager::queue<Audio>("a_night_1", "assets/audio/night/calls/voiceover1c.mp3", true);
+	this->loaded_count += AssetManager::queue_from_toml("assets/presets/night.toml");
 }
 
 States::NightLoader::~NightLoader()
