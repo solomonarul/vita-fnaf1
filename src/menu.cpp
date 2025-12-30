@@ -58,7 +58,7 @@ void States::Menu::draw(int w, int h)
 #endif
     this->o_background.draw();
     for (auto index = 0; index < 3; index++) this->t_texts[index]->draw();
-    this->o_selector.draw();
+    this->o_selector.draw(w, h);
 
 #ifdef APP_IS_DEMO
     this->t_demo->draw();

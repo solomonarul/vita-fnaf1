@@ -8,9 +8,17 @@ using namespace NEX::GL;
 
 namespace Game::Objects::Menu
 {
+    enum Texts
+    {
+        TEXT_CONTINUE = 0,
+        TEXT_NEW_GAME,
+        TEXT_COUNT
+    };
+
     struct Manager
     {
         size_t current = 0;
+        int last_w = 1, last_h = 1;
         std::unique_ptr<MTSDF::Text> t_texts[2];
         std::shared_ptr<Audio> a_blip3;
         std::shared_ptr<MTSDF::Font> f_consolas, f_consolas_bold;
@@ -18,7 +26,7 @@ namespace Game::Objects::Menu
 
         Manager();
         ~Manager();
-        void draw();
+        void draw(int, int);
         void event(SDL_Event&, StateManager&);
     };
 }; // namespace Game::Objects::Menu
