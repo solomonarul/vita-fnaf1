@@ -1,4 +1,5 @@
 #include "menu/manager.hpp"
+#include <SDL3/SDL_events.h>
 
 #include "newspaper.hpp"
 #include "nightloader.hpp"
@@ -13,17 +14,17 @@ Manager::Manager()
     this->f_consolas = AssetManager::get<MTSDF::Font>("f_consolas");
     this->f_consolas_bold = AssetManager::get<MTSDF::Font>("f_consolas_bold");
 
-    this->t_texts[TEXT_CONTINUE] = std::make_unique<MTSDF::Text>(this->f_consolas, "New Game");
-    this->t_texts[TEXT_CONTINUE]->x = -700 / 960.0;
-    this->t_texts[TEXT_CONTINUE]->y = -70 / 544.0;
-    this->t_texts[TEXT_CONTINUE]->s = 79 / 544.0;
-    this->t_texts[TEXT_CONTINUE]->s_x = 0.5;
-
-    this->t_texts[TEXT_NEW_GAME] = std::make_unique<MTSDF::Text>(this->f_consolas, "Continue");
+    this->t_texts[TEXT_NEW_GAME] = std::make_unique<MTSDF::Text>(this->f_consolas, "New Game");
     this->t_texts[TEXT_NEW_GAME]->x = -700 / 960.0;
-    this->t_texts[TEXT_NEW_GAME]->y = -175 / 544.0;
+    this->t_texts[TEXT_NEW_GAME]->y = -70 / 544.0;
     this->t_texts[TEXT_NEW_GAME]->s = 79 / 544.0;
     this->t_texts[TEXT_NEW_GAME]->s_x = 0.5;
+
+    this->t_texts[TEXT_CONTINUE] = std::make_unique<MTSDF::Text>(this->f_consolas, "Continue");
+    this->t_texts[TEXT_CONTINUE]->x = -700 / 960.0;
+    this->t_texts[TEXT_CONTINUE]->y = -175 / 544.0;
+    this->t_texts[TEXT_CONTINUE]->s = 79 / 544.0;
+    this->t_texts[TEXT_CONTINUE]->s_x = 0.5;
 
     this->t_pointer = std::make_unique<MTSDF::Text>(this->f_consolas, ">>");
     this->t_pointer->x = -810 / 960.0;
@@ -56,7 +57,7 @@ void Manager::draw(int w, int h)
         this->t_pointer->draw();
     }
 
-    if (this->current == TEXT_NEW_GAME + 1)
+    if (this->current == TEXT_CONTINUE + 1)
         this->t_night->draw(), this->t_night_count->draw();
 
     for (auto index = 0; index < TEXT_COUNT; index++) this->t_texts[index]->draw();
@@ -80,12 +81,12 @@ void Manager::event(SDL_Event& event, StateManager& sm)
                     MIX_PlayAudio(AudioManager::get_mixer(), this->a_blip3->audio);
                     break;
                 case SDLK_SPACE:
-                    switch (this->current)
+                    switch (this->current - 1)
                     {
-                        case 1:
+                        case TEXT_NEW_GAME:
                             PUSH_STATE(sm, Game::States::Newspaper);
                             break;
-                        case 2:
+                        case TEXT_CONTINUE:
                             PUSH_STATE(sm, Game::States::NightLoader, 1);
                             // TODO: goto night[nightcount]
                             break;
@@ -96,14 +97,15 @@ void Manager::event(SDL_Event& event, StateManager& sm)
 #endif
         case SDL_EVENT_MOUSE_MOTION:
         {
-            const SDL_FPoint mouse_pos = {.x = (event.motion.x / this->last_w - 0.5f) * 2, .y = -(event.motion.y / this->last_h - 0.5f) * 2 };
+            const SDL_FPoint mouse_pos = {.x = (event.motion.x / this->last_w - 0.5f) * 2, .y = -(event.motion.y / this->last_h - 0.5f) * 2};
 
             for (size_t index = 0; index < TEXT_COUNT; index++)
             {
                 const SDL_FRect text_box = this->t_texts[index]->get_bounding_box();
-                if(mouse_pos.x >= text_box.x && mouse_pos.x <= text_box.x + text_box.w && mouse_pos.y >= text_box.y && mouse_pos.y <= text_box.y + text_box.h)
+                if (mouse_pos.x >= text_box.x && mouse_pos.x <= text_box.x + text_box.w && mouse_pos.y >= text_box.y &&
+                    mouse_pos.y <= text_box.y + text_box.h)
                 {
-                    if(this->current != index + 1)
+                    if (this->current != index + 1)
                         MIX_PlayAudio(AudioManager::get_mixer(), this->a_blip3->audio);
 
                     this->current = index + 1;
@@ -111,6 +113,30 @@ void Manager::event(SDL_Event& event, StateManager& sm)
                 }
             }
             break;
+        }
+
+        case SDL_EVENT_MOUSE_BUTTON_UP:
+        {
+            const SDL_FPoint mouse_pos = {.x = (event.button.x / this->last_w - 0.5f) * 2, .y = -(event.button.y / this->last_h - 0.5f) * 2};
+
+            if(this->current == 0) break;
+
+            const SDL_FRect text_box = this->t_texts[this->current - 1]->get_bounding_box();
+            if (mouse_pos.x >= text_box.x && mouse_pos.x <= text_box.x + text_box.w && mouse_pos.y >= text_box.y &&
+                mouse_pos.y <= text_box.y + text_box.h)
+            {
+                switch (this->current - 1)
+                {
+                    case TEXT_NEW_GAME:
+                        PUSH_STATE(sm, Game::States::Newspaper);
+                        break;
+                    case TEXT_CONTINUE:
+                        PUSH_STATE(sm, Game::States::NightLoader, 1);
+                        // TODO: goto night[nightcount]
+                        break;
+                }
+                break;
+            }
         }
             // TODO: gamepad input for Vita / PC.
     }

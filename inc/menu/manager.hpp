@@ -10,8 +10,8 @@ namespace Game::Objects::Menu
 {
     enum Texts
     {
-        TEXT_CONTINUE = 0,
-        TEXT_NEW_GAME,
+        TEXT_NEW_GAME = 0,
+        TEXT_CONTINUE,
         TEXT_COUNT
     };
 
