@@ -119,14 +119,14 @@ void States::NightLoader::draw(int w, int h)
 
 void States::NightLoader::update(double dt)
 {
-    if (blip_frame != (uint16_t)-1)
+    if (this->blip_frame != (uint16_t)-1)
     {
         this->ti_blip_update.update(dt);
         if (this->ti_blip_update.has_ticked())
         {
-            blip_frame = blip_frame + 1;
-            if (blip_frame == this->t_blip->textures.size())
-                blip_frame = (uint16_t)-1;
+            this->blip_frame = this->blip_frame + 1;
+            if (this->blip_frame == this->t_blip->textures.size())
+                this->blip_frame = (uint16_t)-1;
         }
     }
     else
@@ -147,5 +147,16 @@ void States::NightLoader::update(double dt)
 
 void States::NightLoader::event(SDL_Event& event)
 {
-    UNUSED(event);
+    if(this->blip_frame != (uint16_t)-1) return;
+
+    switch (event.type)
+    {
+#ifndef __psp2__
+        case SDL_EVENT_KEY_DOWN:
+#endif
+        case SDL_EVENT_MOUSE_BUTTON_UP:
+            if(AssetManager::enqueued_count() == 0)
+                this->ti_fade_out.update(this->ti_fade_out.rate);
+            break;
+    }
 }

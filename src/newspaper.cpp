@@ -48,6 +48,13 @@ void States::Newspaper::draw(int w, int h)
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
+void States::Newspaper::load_night()
+{
+    if(this->state == NEWSPAPER_STATE_FADING_IN && this->alpha < 1)
+        this->state_manager.states.erase(this->state_manager.states.begin());
+    PUSH_STATE(this->state_manager, Game::States::NightLoader, 1);
+}
+
 void States::Newspaper::update(double dt)
 {
     switch (this->state)
@@ -70,12 +77,20 @@ void States::Newspaper::update(double dt)
         case NEWSPAPER_STATE_FADING_OUT:
             this->alpha -= inverse_timer_duration * dt;
             if (this->alpha < 0)
-                this->alpha = 0, PUSH_STATE(this->state_manager, Game::States::NightLoader, 1);
+                this->alpha = 0, load_night();
             break;
     }
 }
 
 void States::Newspaper::event(SDL_Event& event)
 {
-    UNUSED(event);
+    switch (event.type)
+    {
+#ifndef __psp2__
+        case SDL_EVENT_KEY_DOWN:
+#endif
+        case SDL_EVENT_MOUSE_BUTTON_UP:
+            load_night();
+            break;
+    }
 }

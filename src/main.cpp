@@ -70,5 +70,13 @@ void States::Main::update(double dt)
 
 void States::Main::event(SDL_Event& event)
 {
-    UNUSED(event);
+    switch (event.type)
+    {
+#ifndef __psp2__
+        case SDL_EVENT_KEY_DOWN:
+#endif
+        case SDL_EVENT_MOUSE_BUTTON_UP:
+            this->ti_transition.update(this->ti_transition.rate);
+            break;
+    }
 }

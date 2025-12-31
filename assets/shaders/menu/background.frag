@@ -17,7 +17,7 @@ void main()
     vec3 background_color = (texture2D(u_texture, v_texture_coords) * u_alpha).rgb;
     vec3 static_color = texture2D(u_static_texture, v_texture_coords).rgb;
 
-    gl_FragColor = vec4(background_color + static_color, 1.0);
+    gl_FragColor = vec4(background_color + static_color * 0.66, 1.0);
 
     if(v_texture_coords.y > u_bar_offset && v_texture_coords.y < u_bar_offset + u_bar_width)
         gl_FragColor = mix(gl_FragColor, vec4(1.0, 1.0, 1.0, 1.0), 0.2);

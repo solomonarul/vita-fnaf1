@@ -9,7 +9,7 @@ set(VITA_VERSION "01.00")
 set(VITA_MKSFOEX_FLAGS "${VITA_MKSFOEX_FLAGS} -d PARENTAL_LEVEL=1")
 # set(VITA_MKSFOEX_FLAGS "${VITA_MKSFOEX_FLAGS} -d ATTRIBUTE2=12")  # Uncomment to download more RAM.
 
-# NOTE: Important that Nex is compiled before anything else because of the cmake toolchain for Vita for example.
+# NOTE: Important that Nex is compiled before anything else because of the cmake toolchain for Vita and / or Windows.
 add_subdirectory(lib)
 
 project(${NEX_APP_EXECUTABLE})
@@ -23,6 +23,7 @@ add_executable(
         "src/newspaper.cpp"
         "src/nightloader.cpp"
         "src/night.cpp"
+        "src/night/call.cpp"
 )
 
 target_include_directories(

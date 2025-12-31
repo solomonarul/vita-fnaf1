@@ -29,6 +29,8 @@ namespace Game::States
         static constexpr double timer_duration = 2;
         static constexpr double inverse_timer_duration = 1.0 / timer_duration;
 
+        void load_night(void);
+
         virtual void draw(int w, int h) override;
         virtual void update(double dt) override;
         virtual void event(SDL_Event&) override;
