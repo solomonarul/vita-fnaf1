@@ -11,7 +11,7 @@ States::Night::Night(StateManager& sm) : IState::IState(sm)
     this->t_office = AssetManager::get<TextureArray>("t_office");
     this->s_office = AssetManager::get<Shader>("s_office");
     this->a_office_buzz = AssetManager::get<Audio>("a_office_buzz");
-    this->a_call = AssetManager::get<Audio>("a_night_1");
+    this->a_call = AssetManager::get<Audio>("a_night_call");
     MIX_PlayTrack(this->a_office_buzz->track, 0);
     MIX_SetTrackGain(this->a_office_buzz->track, 0.2);
     MIX_PlayTrack(this->a_call->track, 0);

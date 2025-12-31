@@ -1,5 +1,6 @@
 #include "nightloader.hpp"
 
+#include "nex/core/assetmanager.hpp"
 #include "night.hpp"
 
 using namespace Game;
@@ -43,6 +44,36 @@ States::NightLoader::NightLoader(StateManager& sm, int night) : IState::IState(s
     GEN_AND_SEND_VBO(this->vbo, NEX::GL::FULLSCREEN_RECT2D, GL_STATIC_DRAW);
 
     this->loaded_count += AssetManager::queue_from_toml("assets/presets/night.toml");
+
+    AssetManager::remove("a_night_call"); // Unload previously loaded night call.
+
+    this->loaded_count++;
+    switch (night)
+    {
+        case 1:
+            AssetManager::queue<Audio>("a_night_call", "assets/audio/night/calls/voiceover1c.mp3", true);
+            break;
+
+        case 2:
+            AssetManager::queue<Audio>("a_night_call", "assets/audio/night/calls/voiceover2a.mp3", true);
+            break;
+
+        case 3:
+            AssetManager::queue<Audio>("a_night_call", "assets/audio/night/calls/voiceover3.mp3", true);
+            break;
+
+        case 4:
+            AssetManager::queue<Audio>("a_night_call", "assets/audio/night/calls/voiceover4.mp3", true);
+            break;
+
+        case 5:
+            AssetManager::queue<Audio>("a_night_call", "assets/audio/night/calls/voiceover5.mp3", true);
+            break;
+
+        default:
+            this->loaded_count--;
+            break;
+    }
 }
 
 States::NightLoader::~NightLoader() {}

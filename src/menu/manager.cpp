@@ -69,6 +69,7 @@ void Manager::event(SDL_Event& event, StateManager& sm)
             case TEXT_NEW_GAME:
                 PUSH_STATE(sm, Game::States::Newspaper);
                 break;
+
             case TEXT_CONTINUE:
                 PUSH_STATE(sm, Game::States::NightLoader, 1);
                 // TODO: goto night[nightcount]
@@ -87,15 +88,25 @@ void Manager::event(SDL_Event& event, StateManager& sm)
     {
 #ifndef __psp2__
         case SDL_EVENT_KEY_DOWN:
-            // TODO: maybe move this to update and have a global input state manager?
             if (event.key.repeat)
                 break;
+
             switch (event.key.key)
             {
                 case SDLK_W:
-                case SDLK_S:
-                    set_index((this->current) % 2 + 1);
+                    if (this->current == 0)
+                        set_index(TEXT_COUNT);
+                    else
+                        set_index((this->current == TEXT_NEW_GAME + 1) ? (size_t)TEXT_COUNT : this->current - 1);
                     break;
+
+                case SDLK_S:
+                    if (this->current == 0)
+                        set_index(1);
+                    else
+                        set_index((this->current == TEXT_COUNT) ? 1 : this->current + 1);
+                    break;
+
                 case SDLK_SPACE:
                     switch_night();
                     break;

@@ -17,8 +17,3 @@ fragment = "assets/shaders/office/background.frag"
 id = "a_office_buzz"
 path = "assets/audio/night/Buzz_Fan_Florescent2.mp3"
 predecode = true
-
-[[audio]]
-id = "a_night_1"
-path = "assets/audio/night/calls/voiceover1c.mp3"
-predecode = true
