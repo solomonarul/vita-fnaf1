@@ -17,22 +17,22 @@ c:
 
 bud:
 	@cmake -B build -S . --preset unix-debug
-	@cmake --build build -j${nproc}
+	@cmake --build build -j$${nproc}
 	@cmake --install build --prefix out
 
 bur:
 	@cmake -B build -S . --preset unix-release
-	@cmake --build build -j${nproc}
+	@cmake --build build -j$${nproc}
 	@cmake --install build --prefix out
 
 buwd:
 	@cmake -B build -S . --preset unix-workflow-debug
-	@cmake --build build -j${nproc}
+	@cmake --build build -j$${nproc}
 	@cmake --install build --prefix out
 
 buwr:
 	@cmake -B build -S . --preset unix-workflow-release
-	@cmake --build build -j${nproc}
+	@cmake --build build -j$${nproc}
 	@cmake --install build --prefix out
 
 bwd:
@@ -46,34 +46,22 @@ bwr:
 
 bvd:
 	@cmake -B build -S . --preset vita-debug
-	@cmake --build build -j${nproc}
+	@cmake --build build -j$${nproc}
 	@cmake -E copy ./build/app.vpk ./out/vpk/app.vpk
 
 bvr:
 	@cmake -B build -S . --preset vita-release
-	@cmake --build build -j${nproc}
+	@cmake --build build -j$${nproc}
 	@cmake -E copy ./build/app.vpk ./out/vpk/app.vpk
 
-bbwd:
-	@emcmake cmake -B build -S . --preset web-debug
-	@cmake --build build -j${nproc}
-	@cmake --install build --prefix out
-
 bbd:
-	@source /etc/profile.d/emscripten.sh
 	@emcmake cmake -B build -S . --preset web-debug
-	@cmake --build build -j${nproc}
-	@cmake --install build --prefix out
-
-bbwr:
-	@emcmake cmake -B build -S . --preset web-release
-	@cmake --build build -j${nproc}
+	@cmake --build build -j$${nproc}
 	@cmake --install build --prefix out
 
 bbr:
-	@source /etc/profile.d/emscripten.sh
 	@emcmake cmake -B build -S . --preset web-release
-	@cmake --build build -j${nproc}
+	@cmake --build build -j$${nproc}
 	@cmake --install build --prefix out
 
 r:

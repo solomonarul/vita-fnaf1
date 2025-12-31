@@ -25,7 +25,7 @@ jobs:
           version: latest
 
       - name: Build Debug
-        run: make bbwd
+        run: make bbd
 
       - name: Build Release
-        run: make bbwr
+        run: make bbr
