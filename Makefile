@@ -64,6 +64,14 @@ bbr:
 	@cmake --build build -j$${nproc}
 	@cmake --install build --prefix out
 
+bbwd:
+	@emcmake cmake -B build -S . --preset web-debug
+	@cmake --build build -j$${nproc}
+
+bbwr:
+	@emcmake cmake -B build -S . --preset web-release
+	@cmake --build build -j$${nproc}
+
 r:
 	@./out/bin/${TARGET}
 
