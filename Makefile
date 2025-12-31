@@ -54,9 +54,19 @@ bvr:
 	@cmake --build build -j${nproc}
 	@cmake -E copy ./build/app.vpk ./out/vpk/app.vpk
 
+bbwd:
+	@emcmake cmake -B build -S . --preset web-debug
+	@cmake --build build -j${nproc}
+	@cmake --install build --prefix out
+
 bbd:
 	@source /etc/profile.d/emscripten.sh
 	@emcmake cmake -B build -S . --preset web-debug
+	@cmake --build build -j${nproc}
+	@cmake --install build --prefix out
+
+bbwr:
+	@emcmake cmake -B build -S . --preset web-release
 	@cmake --build build -j${nproc}
 	@cmake --install build --prefix out
 
