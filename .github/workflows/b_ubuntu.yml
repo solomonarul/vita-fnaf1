@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with:
-          submodules: recursive  # correct key
+          submodules: recursive
 
       - name: Install build dependencies
         run: |
