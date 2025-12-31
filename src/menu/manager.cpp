@@ -80,7 +80,7 @@ void Manager::event(SDL_Event& event, StateManager& sm)
     auto set_index = [this](size_t index)
     {
         if (this->current != index)
-            MIX_PlayAudio(AudioManager::get_mixer(), this->a_blip3->audio);
+            this->a_blip3->play_audio();
         this->current = index;
     };
 

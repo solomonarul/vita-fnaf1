@@ -9,7 +9,7 @@ States::NightLoader::NightLoader(StateManager& sm, int night) : IState::IState(s
 {
     sm.states.erase(sm.states.begin());
 
-    MIX_StopAllTracks(AudioManager::get_mixer(), 0);
+    AudioManager::stop_all_tracks();
 
     this->f_lcdsolid = AssetManager::get<MTSDF::Font>("f_lcdsolid");
     this->t_blip = AssetManager::get<TextureArray>("t_blip");
@@ -37,9 +37,6 @@ States::NightLoader::NightLoader(StateManager& sm, int night) : IState::IState(s
     this->t_night[1]->s = 70.0 / 544;
     this->t_night[1]->o_x = -0.5;
     this->t_night[1]->s_x = 0.6;
-
-    auto blip = AssetManager::get<Audio>("a_blip3");
-    MIX_PlayTrack(blip->track, 0);
 
     GEN_AND_SEND_VBO(this->vbo, NEX::GL::FULLSCREEN_RECT2D, GL_STATIC_DRAW);
 
@@ -74,9 +71,11 @@ States::NightLoader::NightLoader(StateManager& sm, int night) : IState::IState(s
             this->loaded_count--;
             break;
     }
+
+    AssetManager::get<Audio>("a_blip3")->play_track();
 }
 
-States::NightLoader::~NightLoader() {}
+States::NightLoader::~NightLoader(void) {}
 
 void States::NightLoader::draw(int w, int h)
 {
@@ -93,7 +92,7 @@ void States::NightLoader::draw(int w, int h)
 
     for (auto index = 0; index < 2; index++)
     {
-        this->t_night[index]->color.a = (1.0 - this->ti_fade_out.value / this->ti_fade_out.rate) * 255;
+        this->t_night[index]->color.a = (1.0 - this->ti_fade_out.progress()) * 255;
         this->t_night[index]->draw();
     }
 
@@ -147,7 +146,8 @@ void States::NightLoader::update(double dt)
 
 void States::NightLoader::event(SDL_Event& event)
 {
-    if(this->blip_frame != (uint16_t)-1) return;
+    if (this->blip_frame != (uint16_t)-1)
+        return;
 
     switch (event.type)
     {
@@ -155,7 +155,7 @@ void States::NightLoader::event(SDL_Event& event)
         case SDL_EVENT_KEY_DOWN:
 #endif
         case SDL_EVENT_MOUSE_BUTTON_UP:
-            if(AssetManager::enqueued_count() == 0)
+            if (AssetManager::enqueued_count() == 0)
                 this->ti_fade_out.update(this->ti_fade_out.rate);
             break;
     }

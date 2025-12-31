@@ -8,6 +8,10 @@ textures = [
     { path = "assets/images/night/office/5.png" }
 ]
 
+[[texture]]
+id = "t_mute_call"
+path = "assets/images/night/MUTE_CALL_BUTTON.png"
+
 [[shader]]
 id = "s_office"
 vertex = "assets/shaders/office/background.vert"

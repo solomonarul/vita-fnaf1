@@ -50,7 +50,7 @@ void States::Newspaper::draw(int w, int h)
 
 void States::Newspaper::load_night()
 {
-    if(this->state == NEWSPAPER_STATE_FADING_IN && this->alpha < 1)
+    if (this->state == NEWSPAPER_STATE_FADING_IN && this->alpha < 1)
         this->state_manager.states.erase(this->state_manager.states.begin());
     PUSH_STATE(this->state_manager, Game::States::NightLoader, 1);
 }

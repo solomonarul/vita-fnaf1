@@ -40,9 +40,9 @@ States::Menu::Menu(StateManager& sm) : IState::IState(sm)
     this->t_demo->s_x = 0.5;
 #endif
 
-    MIX_PlayTrack(this->a_static2->track, 0);
-    MIX_PlayTrack(this->a_blip3->track, 0);
-    MIX_PlayTrack(this->a_darkness_music->track, 0);
+    this->a_darkness_music->play_track();
+    this->a_static2->play_track();
+    this->a_blip3->play_track();
 }
 
 States::Menu::~Menu() {}
@@ -69,12 +69,12 @@ void States::Menu::update(double dt)
 {
     if (updates_disabled)
     {
-        MIX_StopAllTracks(AudioManager::get_mixer(), 0);
+        AudioManager::stop_all_tracks();
         return;
     }
 
-    if (!MIX_TrackPlaying(this->a_darkness_music->track))
-        MIX_PlayTrack(this->a_darkness_music->track, 0);
+    if (!this->a_darkness_music->is_playing_track())
+        this->a_darkness_music->play_track();
 
     this->o_background.update(dt);
 }

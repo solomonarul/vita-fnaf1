@@ -11,8 +11,8 @@ States::Night::Night(StateManager& sm) : IState::IState(sm)
     this->t_office = AssetManager::get<TextureArray>("t_office");
     this->s_office = AssetManager::get<Shader>("s_office");
     this->a_office_buzz = AssetManager::get<Audio>("a_office_buzz");
-    MIX_PlayTrack(this->a_office_buzz->track, 0);
-    MIX_SetTrackGain(this->a_office_buzz->track, 0.2);
+    this->a_office_buzz->play_track();
+    this->a_office_buzz->set_gain_track(0.2);
 
     this->tr_office_view = std::make_shared<RenderTexture>(this->t_office->textures[0]->w, this->t_office->textures[0]->h);
 }
@@ -72,7 +72,7 @@ void States::Night::draw(int w, int h)
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
-    // TODO: I need to clean the shit out of this.
+    this->o_call_handler.draw();
 }
 
 void States::Night::update(double dt)
@@ -91,8 +91,8 @@ void States::Night::update(double dt)
             u_view_offset = 1;
     }
 
-    if (!MIX_TrackPlaying(this->a_office_buzz->track))
-        MIX_PlayTrack(this->a_office_buzz->track, 0);
+    if (!this->a_office_buzz->is_playing_track())
+        this->a_office_buzz->play_track();
 }
 
 void States::Night::event(SDL_Event& event)
