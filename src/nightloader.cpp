@@ -50,6 +50,12 @@ States::NightLoader::NightLoader(StateManager& sm, int night) : IState::IState(s
 
     this->loaded_count += AssetManager::queue_from_toml("assets/presets/night.toml");
 
+    this->t_loader = AssetManager::get<Texture>("t_loader");
+    SDL_FRect loader_rect = {
+        .x = 856.0 / 960, .y = -500.0 / 544, .w = 64.0 / 960, .h = 64.0 / 544
+    };
+    this->spr_loader.refresh_from_rect(loader_rect);
+
     AssetManager::get<Audio>("a_blip3")->play_track();
 }
 
@@ -71,6 +77,14 @@ void States::NightLoader::draw(int w, int h)
         Texture::default_shader->setUniform("u_texture", 0);
         this->t_blip->textures[blip_frame]->activate(GL_TEXTURE0);
         spr_blip.draw(*Texture::default_shader);
+    }
+
+    if(AssetManager::enqueued_count() != 0)
+    {
+        Texture::default_shader->use();
+        Texture::default_shader->setUniform("u_texture", 0);
+        this->t_loader->activate(GL_TEXTURE0);
+        this->spr_loader.draw(*Texture::default_shader);
     }
 }
 
@@ -95,10 +109,7 @@ void States::NightLoader::update(double dt)
                 PUSH_STATE(this->state_manager, States::Office);
         }
         else
-        {
-            // TODO: add a loading bar or smth.
             AssetManager::process_enqueued();
-        }
     }
 }
 

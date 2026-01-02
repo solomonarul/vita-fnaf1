@@ -28,7 +28,7 @@ void States::Office::draw(int w, int h)
     this->tr_office_view->unuse();
 
     NEX::GL::set_view_letterbox({w, h}, {960, 544});
-    
+
     this->s_office->use();
     this->s_office->setUniform("u_texture", 0);
     this->s_office->setUniform("u_view_offset", this->u_view_offset);

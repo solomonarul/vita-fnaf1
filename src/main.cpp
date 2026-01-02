@@ -6,7 +6,7 @@ using namespace Game;
 
 States::Main::Main(StateManager& sm) : IState::IState(sm)
 {
-    this->f_tahoma = std::make_shared<MTSDF::Font>("assets/images/fonts/tahoma.sdf.png", "assets/images/fonts/tahoma.csv");
+    this->f_tahoma = AssetManager::ensure_loaded<MTSDF::Font>("f_tahoma", "assets/images/fonts/tahoma.sdf.png", "assets/images/fonts/tahoma.csv");
 
     this->t_warning[0] = std::make_unique<MTSDF::Text>(f_tahoma, "WARNING!");
     this->t_warning[0]->y = 90 / 544.0;
@@ -25,10 +25,23 @@ States::Main::Main(StateManager& sm) : IState::IState(sm)
         this->t_warning[index]->s_x = 0.6;
     }
 
+    // clang-format off
+    this->t_loader = AssetManager::ensure_loaded<Texture>("t_loader", TextureConfig{
+        .path = "assets/images/misc/LITTLE_CLOCK.png",
+        .min_filter = GL_LINEAR,
+        .mag_filter = GL_LINEAR,
+        .gpu_format = GL_RGBA,
+        .format = GL_RGBA,
+    });
+    // clang-format on
+    
+    SDL_FRect loader_rect = {
+        .x = 856.0 / 960, .y = -500.0 / 544, .w = 64.0 / 960, .h = 64.0 / 544
+    };
+    this->spr_loader.refresh_from_rect(loader_rect);
+
     this->loaded_count += AssetManager::queue_from_toml("assets/presets/main.toml");
 }
-
-States::Main::~Main() {}
 
 void States::Main::draw(int w, int h)
 {
@@ -45,6 +58,14 @@ void States::Main::draw(int w, int h)
             this->t_warning[index]->color.a = 255;
         this->t_warning[index]->draw(MTSDF::Font::default_shader);
     }
+
+    if(AssetManager::enqueued_count() != 0)
+    {
+        Texture::default_shader->use();
+        Texture::default_shader->setUniform("u_texture", 0);
+        this->t_loader->activate(GL_TEXTURE0);
+        this->spr_loader.draw(*Texture::default_shader);
+    }
 }
 
 void States::Main::update(double dt)
@@ -56,10 +77,7 @@ void States::Main::update(double dt)
             PUSH_STATE(this->state_manager, Game::States::Menu);
     }
     else
-    {
-        // TODO: add a loading bar or smth.
         AssetManager::process_enqueued();
-    }
 }
 
 void States::Main::event(SDL_Event& event)
