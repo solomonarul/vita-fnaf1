@@ -67,10 +67,12 @@ bbr:
 bbwd:
 	@emcmake cmake -B build -S . --preset web-debug
 	@cmake --build build -j$${nproc}
+# TODO: figure out why I cant install in workflows: make: cmake: Permission denied
 
 bbwr:
 	@emcmake cmake -B build -S . --preset web-release
 	@cmake --build build -j$${nproc}
+# TODO: figure out why I cant install in workflows: make: cmake: Permission denied
 
 r:
 	@./out/bin/${TARGET}

@@ -11,13 +11,7 @@ States::Newspaper::Newspaper(StateManager& sm) : IState::IState(sm)
     menu->updates_disabled = true;
 
     this->t_newspaper = AssetManager::get<Texture>("t_newspaper");
-
-    GEN_AND_SEND_VBO(this->vbo, NEX::GL::FULLSCREEN_RECT2D, GL_STATIC_DRAW);
-}
-
-States::Newspaper::~Newspaper()
-{
-    glDeleteBuffers(1, &this->vbo);
+    this->spr_newspaper.color.a = 0;
 }
 
 void States::Newspaper::draw(int w, int h)
@@ -32,38 +26,28 @@ void States::Newspaper::draw(int w, int h)
     UNUSED(h);
     Texture::default_shader->use();
     Texture::default_shader->setUniform("u_texture", 0);
-    glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
-
-    glUniform4f(glGetUniformLocation(Texture::default_shader->id, "u_color"), 1.0, 1.0, 1.0, (float)this->alpha);
-
-    GLint a_position = glGetAttribLocation(Texture::default_shader->id, "a_position");
-    glEnableVertexAttribArray(a_position);
-    glVertexAttribPointer(a_position, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-
-    GLint a_texcoord = glGetAttribLocation(Texture::default_shader->id, "a_texture_coords");
-    glEnableVertexAttribArray(a_texcoord);
-    glVertexAttribPointer(a_texcoord, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
     this->t_newspaper->activate(GL_TEXTURE0);
-
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    this->spr_newspaper.draw(*Texture::default_shader);
 }
 
 void States::Newspaper::load_night()
 {
-    if (this->state == NEWSPAPER_STATE_FADING_IN && this->alpha < 1)
+    if (this->state == NEWSPAPER_STATE_FADING_IN)
         this->state_manager.states.erase(this->state_manager.states.begin());
     PUSH_STATE(this->state_manager, Game::States::NightLoader, 1);
 }
 
 void States::Newspaper::update(double dt)
 {
+    float& alpha = this->spr_newspaper.color.a;
+
     switch (this->state)
     {
         case NEWSPAPER_STATE_FADING_IN:
-            this->alpha += inverse_timer_duration * dt;
-            if (this->alpha > 1)
+            alpha += inverse_timer_duration * dt;
+            if (alpha > 1)
             {
-                this->alpha = 1, this->state = NEWSPAPER_STATE_HOLD;
+                alpha = 1, this->state = NEWSPAPER_STATE_HOLD;
                 this->state_manager.states.erase(this->state_manager.states.begin());
             }
             break;
@@ -75,9 +59,9 @@ void States::Newspaper::update(double dt)
             break;
 
         case NEWSPAPER_STATE_FADING_OUT:
-            this->alpha -= inverse_timer_duration * dt;
-            if (this->alpha < 0)
-                this->alpha = 0, load_night();
+            alpha -= inverse_timer_duration * dt;
+            if (alpha < 0)
+                alpha = 0, load_night();
             break;
     }
 }

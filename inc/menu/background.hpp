@@ -3,6 +3,7 @@
 #include <memory>
 #include <nex.hpp>
 
+using namespace NEX::Prefabs;
 using namespace NEX::Core;
 using namespace NEX::GL;
 
@@ -21,8 +22,6 @@ namespace Game::Objects::Menu
 
     struct Background
     {
-        GLuint vbo = 0;
-
         double u_alpha = 0.5;
         double u_blip_alpha = 0;
         double u_static_alpha = 0.9;
@@ -33,6 +32,7 @@ namespace Game::Objects::Menu
         uint8_t current_static_texture = 0;
         std::shared_ptr<TextureArray> t_static;
         std::shared_ptr<Shader> shader;
+        Sprite spr_background;
 
         bool blip_show = false;
 
@@ -43,7 +43,6 @@ namespace Game::Objects::Menu
         constexpr static double bar_speed = 1.0 / 19;
 
         Background();
-        ~Background();
         void update(double);
         void draw();
     };

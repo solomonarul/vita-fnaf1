@@ -2,6 +2,7 @@
 
 #include <nex.hpp>
 
+using namespace NEX::Prefabs;
 using namespace NEX::Core;
 using namespace NEX::GL;
 
@@ -12,11 +13,10 @@ namespace Game::States
         NightLoader(StateManager&, int);
         ~NightLoader();
 
-        GLuint vbo;
-
         uint8_t loaded_count = 0;
         uint16_t blip_frame = 0;
         Timer ti_blip_update = Timer(1.0 / 75);
+        Sprite spr_blip;
 
         Timer ti_fade_out = Timer(3);
 

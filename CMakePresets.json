@@ -66,7 +66,8 @@
         "generator": "Unix Makefiles",
         "binaryDir": "${sourceDir}/build",
         "cacheVariables": {
-          "NEX_BUILD_PLATFORM": "VITA"
+          "NEX_BUILD_PLATFORM": "VITA",
+          "TOMLPLUSPLUS_VENDORED": "ON"
         }
       },
       {
@@ -80,8 +81,7 @@
         "name": "vita-release",
         "inherits": "vita-base",
         "cacheVariables": {
-          "CMAKE_BUILD_TYPE": "Release",
-          "TOMLPLUSPLUS_VENDORED": "ON"
+          "CMAKE_BUILD_TYPE": "Release"
         }
       },
       {

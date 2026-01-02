@@ -2,6 +2,7 @@
 
 #include <nex.hpp>
 
+using namespace NEX::Prefabs;
 using namespace NEX::Core;
 using namespace NEX::GL;
 

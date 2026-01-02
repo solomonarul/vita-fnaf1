@@ -10,12 +10,13 @@ namespace Game::Objects::Night
 {
     struct CallHandler
     {
+        GLuint vbo;
         std::shared_ptr<Audio> a_call;
         std::shared_ptr<Texture> t_mute_call;
 
         CallHandler();
         ~CallHandler();
 
-        void draw();
+        void draw(void);
     };
 }; // namespace Game::Objects::Night

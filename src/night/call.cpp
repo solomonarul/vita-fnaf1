@@ -13,4 +13,4 @@ CallHandler::CallHandler()
 
 CallHandler::~CallHandler() {}
 
-void CallHandler::draw() {}
+void CallHandler::draw(void) {}

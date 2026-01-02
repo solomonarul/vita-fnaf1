@@ -46,7 +46,7 @@ void States::Main::draw(int w, int h)
     for (auto index = 0; index < 3; index++)
     {
         if (AssetManager::enqueued_count() == 0)
-            this->t_warning[index]->color.a = (1.0 - this->ti_transition.value / this->ti_transition.rate) * 255;
+            this->t_warning[index]->color.a = (1.0 - this->ti_transition.progress()) * 255;
         else
             this->t_warning[index]->color.a = 255;
         this->t_warning[index]->draw(MTSDF::Font::default_shader);

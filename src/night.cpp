@@ -6,8 +6,6 @@ States::Night::Night(StateManager& sm) : IState::IState(sm)
 {
     sm.states.erase(sm.states.begin());
 
-    GEN_AND_SEND_VBO(this->vbo, NEX::GL::FULLSCREEN_RECT2D, GL_STATIC_DRAW);
-
     this->t_office = AssetManager::get<TextureArray>("t_office");
     this->s_office = AssetManager::get<Shader>("s_office");
     this->a_office_buzz = AssetManager::get<Audio>("a_office_buzz");
@@ -25,24 +23,10 @@ void States::Night::draw(int w, int h)
     glClear(GL_COLOR_BUFFER_BIT);
 
     this->tr_office_view->use();
-
-    glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
-
     Texture::default_shader->use();
     Texture::default_shader->setUniform("u_texture", 0);
-
-    glUniform4f(glGetUniformLocation(Texture::default_shader->id, "u_color"), 1.0, 1.0, 1.0, 1.0);
-
-    GLint a_position = glGetAttribLocation(Texture::default_shader->id, "a_position");
-    glEnableVertexAttribArray(a_position);
-    glVertexAttribPointer(a_position, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-
-    GLint a_texcoord = glGetAttribLocation(Texture::default_shader->id, "a_texture_coords");
-    glEnableVertexAttribArray(a_texcoord);
-    glVertexAttribPointer(a_texcoord, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
-
     this->t_office->textures[0]->activate(GL_TEXTURE0);
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    this->spr_office.draw(*Texture::default_shader);
 
 #ifndef __psp2__
     double scale = std::min(w / 960.0, h / 544.0);
@@ -57,21 +41,8 @@ void States::Night::draw(int w, int h)
     this->s_office->use();
     this->s_office->setUniform("u_texture", 0);
     this->s_office->setUniform("u_view_offset", this->u_view_offset);
-
-    glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
-    glUniform4f(glGetUniformLocation(this->s_office->id, "u_color"), 1.0, 1.0, 1.0, 1.0);
-
-    a_position = glGetAttribLocation(this->s_office->id, "a_position");
-    glEnableVertexAttribArray(a_position);
-    glVertexAttribPointer(a_position, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-
-    a_texcoord = glGetAttribLocation(this->s_office->id, "a_texture_coords");
-    glEnableVertexAttribArray(a_texcoord);
-    glVertexAttribPointer(a_texcoord, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
     this->tr_office_view->activate(GL_TEXTURE0);
-
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
+    this->spr_office_view.draw(*this->s_office);
     this->o_call_handler.draw();
 }
 

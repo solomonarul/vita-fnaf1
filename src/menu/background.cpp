@@ -4,17 +4,10 @@ using namespace Game::Objects::Menu;
 
 Background::Background()
 {
-    GEN_AND_SEND_VBO(this->vbo, NEX::GL::FULLSCREEN_RECT2D, GL_STATIC_DRAW);
-
     this->shader = AssetManager::get<Shader>("s_menu_background");
     this->t_blip = AssetManager::get<TextureArray>("t_menu_blip");
     this->t_background = AssetManager::get<TextureArray>("t_menu_background");
     this->t_static = AssetManager::get<TextureArray>("t_static");
-}
-
-Background::~Background()
-{
-    glDeleteBuffers(1, &this->vbo);
 }
 
 void Background::draw()
@@ -34,17 +27,7 @@ void Background::draw()
     this->shader->setUniform("u_blip_texture", 2);
     this->t_blip->textures[current_blip_texture]->activate(GL_TEXTURE2);
 
-    glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
-
-    GLint a_position = glGetAttribLocation(shader->id, "a_position");
-    glEnableVertexAttribArray(a_position);
-    glVertexAttribPointer(a_position, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-
-    GLint a_texcoord = glGetAttribLocation(shader->id, "a_texture_coords");
-    glEnableVertexAttribArray(a_texcoord);
-    glVertexAttribPointer(a_texcoord, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
-
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    this->spr_background.draw(*shader);
 }
 
 void Background::update(double dt)

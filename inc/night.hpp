@@ -2,8 +2,9 @@
 
 #include <nex.hpp>
 
-using namespace NEX::GL;
+using namespace NEX::Prefabs;
 using namespace NEX::Core;
+using namespace NEX::GL;
 
 #include "night/call.hpp"
 
@@ -14,13 +15,14 @@ namespace Game::States
         Night(StateManager&);
         ~Night();
 
-        GLuint vbo = 0;
         SDL_Rect r_view;
         double u_view_offset = 0.5;
         std::shared_ptr<Shader> s_office;
         std::shared_ptr<Audio> a_office_buzz;
         std::shared_ptr<TextureArray> t_office;
         std::shared_ptr<RenderTexture> tr_office_view;
+
+        Sprite spr_office, spr_office_view;
 
         Objects::Night::CallHandler o_call_handler;
 

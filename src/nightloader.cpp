@@ -38,8 +38,6 @@ States::NightLoader::NightLoader(StateManager& sm, int night) : IState::IState(s
     this->t_night[1]->o_x = -0.5;
     this->t_night[1]->s_x = 0.6;
 
-    GEN_AND_SEND_VBO(this->vbo, NEX::GL::FULLSCREEN_RECT2D, GL_STATIC_DRAW);
-
     this->loaded_count += AssetManager::queue_from_toml("assets/presets/night.toml");
 
     AssetManager::remove("a_night_call"); // Unload previously loaded night call.
@@ -100,19 +98,8 @@ void States::NightLoader::draw(int w, int h)
     {
         Texture::default_shader->use();
         Texture::default_shader->setUniform("u_texture", 0);
-        glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
-        glUniform4f(glGetUniformLocation(Texture::default_shader->id, "u_color"), 1.0, 1.0, 1.0, 1.0);
-
-        GLint a_position = glGetAttribLocation(Texture::default_shader->id, "a_position");
-        glEnableVertexAttribArray(a_position);
-        glVertexAttribPointer(a_position, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
-
-        GLint a_texcoord = glGetAttribLocation(Texture::default_shader->id, "a_texture_coords");
-        glEnableVertexAttribArray(a_texcoord);
-        glVertexAttribPointer(a_texcoord, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
         this->t_blip->textures[blip_frame]->activate(GL_TEXTURE0);
-
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+        spr_blip.draw(*Texture::default_shader);
     }
 }
 
