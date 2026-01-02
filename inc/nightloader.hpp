@@ -11,7 +11,6 @@ namespace Game::States
     struct NightLoader : public IState
     {
         NightLoader(StateManager&, int);
-        ~NightLoader();
 
         uint8_t loaded_count = 0;
         uint16_t blip_frame = 0;

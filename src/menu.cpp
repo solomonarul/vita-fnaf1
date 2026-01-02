@@ -45,16 +45,18 @@ States::Menu::Menu(StateManager& sm) : IState::IState(sm)
     this->a_blip3->play_track();
 }
 
-States::Menu::~Menu() {}
-
 void States::Menu::draw(int w, int h)
 {
 #ifndef __psp2__
     double scale = std::min(w / 960.0, h / 544.0);
     int s_w = (w - 960 * scale) / 2, s_h = (h - 544 * scale) / 2;
-    glViewport(s_w, s_h, w - 2 * s_w, h - 2 * s_h);
+    SDL_Rect r_view = SDL_Rect{s_w, s_h, w - 2 * s_w, h - 2 * s_h};
+    glViewport(r_view.x, r_view.y, r_view.w, r_view.h);
+    ;
+    InputManager::set_letterbox(r_view);
 #else
     glViewport(0, 0, w, h);
+    InputManager::set_letterbox({0, 0, w, h});
 #endif
     this->o_background.draw();
     for (auto index = 0; index < 3; index++) this->t_texts[index]->draw();

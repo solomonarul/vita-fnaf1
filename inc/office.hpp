@@ -6,16 +6,14 @@ using namespace NEX::Prefabs;
 using namespace NEX::Core;
 using namespace NEX::GL;
 
-#include "night/call.hpp"
+#include "office/call.hpp"
 
 namespace Game::States
 {
-    struct Night : public IState
+    struct Office : public IState
     {
-        Night(StateManager&);
-        ~Night();
+        Office(StateManager&);
 
-        SDL_Rect r_view;
         double u_view_offset = 0.5;
         std::shared_ptr<Shader> s_office;
         std::shared_ptr<Audio> a_office_buzz;
@@ -24,7 +22,7 @@ namespace Game::States
 
         Sprite spr_office, spr_office_view;
 
-        Objects::Night::CallHandler o_call_handler;
+        Objects::Office::CallHandler o_call_handler;
 
         virtual void draw(int w, int h) override;
         virtual void update(double dt) override;

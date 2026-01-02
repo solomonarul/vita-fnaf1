@@ -12,7 +12,6 @@ namespace Game::States
     struct Menu : public IState
     {
         Menu(StateManager&);
-        ~Menu();
 
         std::unique_ptr<MTSDF::Text> t_texts[3];
         std::shared_ptr<MTSDF::Font> f_consolas;

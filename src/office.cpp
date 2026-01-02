@@ -1,8 +1,8 @@
-#include "night.hpp"
+#include "office.hpp"
 
 using namespace Game;
 
-States::Night::Night(StateManager& sm) : IState::IState(sm)
+States::Office::Office(StateManager& sm) : IState::IState(sm)
 {
     sm.states.erase(sm.states.begin());
 
@@ -15,9 +15,7 @@ States::Night::Night(StateManager& sm) : IState::IState(sm)
     this->tr_office_view = std::make_shared<RenderTexture>(this->t_office->textures[0]->w, this->t_office->textures[0]->h);
 }
 
-States::Night::~Night() {}
-
-void States::Night::draw(int w, int h)
+void States::Office::draw(int w, int h)
 {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -31,11 +29,12 @@ void States::Night::draw(int w, int h)
 #ifndef __psp2__
     double scale = std::min(w / 960.0, h / 544.0);
     int s_w = (w - 960 * scale) / 2, s_h = (h - 544 * scale) / 2;
-    this->r_view = SDL_Rect{s_w, s_h, w - 2 * s_w, h - 2 * s_h};
-    this->tr_office_view->unuse(this->r_view.x, this->r_view.y, this->r_view.w, this->r_view.h);
-    InputManager::set_letterbox(this->r_view);
+    SDL_Rect view = SDL_Rect{s_w, s_h, w - 2 * s_w, h - 2 * s_h};
+    this->tr_office_view->unuse(view.x, view.y, view.w, view.h);
+    InputManager::set_letterbox(view);
 #else
     this->tr_office_view->unuse(0, 0, w, h);
+    InputManager::set_letterbox(SDL_FRect{0, 0, w, h})
 #endif
 
     this->s_office->use();
@@ -43,21 +42,22 @@ void States::Night::draw(int w, int h)
     this->s_office->setUniform("u_view_offset", this->u_view_offset);
     this->tr_office_view->activate(GL_TEXTURE0);
     this->spr_office_view.draw(*this->s_office);
+
     this->o_call_handler.draw();
 }
 
-void States::Night::update(double dt)
+void States::Office::update(double dt)
 {
     auto m_data = InputManager::get_mouse_data();
-    if (m_data.x / this->r_view.w < 0.25)
+    if (m_data.x < 0.25)
     {
-        u_view_offset -= 4 * dt * ((0.25 - m_data.x / this->r_view.w) / 0.25);
+        u_view_offset -= 4 * dt * ((0.25 - m_data.x) / 0.25);
         if (u_view_offset < 0)
             u_view_offset = 0;
     }
-    else if (m_data.x / this->r_view.w > 0.75)
+    else if (m_data.x > 0.75)
     {
-        u_view_offset += 4 * dt * ((m_data.x / this->r_view.w - 0.75) / 0.25);
+        u_view_offset += 4 * dt * ((m_data.x - 0.75) / 0.25);
         if (u_view_offset > 1)
             u_view_offset = 1;
     }
@@ -66,7 +66,7 @@ void States::Night::update(double dt)
         this->a_office_buzz->play_track();
 }
 
-void States::Night::event(SDL_Event& event)
+void States::Office::event(SDL_Event& event)
 {
     UNUSED(event);
 }

@@ -1,6 +1,6 @@
-#include "night/call.hpp"
+#include "office/call.hpp"
 
-using namespace Game::Objects::Night;
+using namespace Game::Objects::Office;
 
 CallHandler::CallHandler()
 {

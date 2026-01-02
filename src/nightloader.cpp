@@ -1,7 +1,7 @@
 #include "nightloader.hpp"
 
 #include "nex/core/assetmanager.hpp"
-#include "night.hpp"
+#include "office.hpp"
 
 using namespace Game;
 
@@ -42,38 +42,18 @@ States::NightLoader::NightLoader(StateManager& sm, int night) : IState::IState(s
 
     AssetManager::remove("a_night_call"); // Unload previously loaded night call.
 
-    this->loaded_count++;
-    switch (night)
+    static std::string call_paths[5] = {
+        "assets/audio/night/calls/voiceover1c.mp3", "assets/audio/night/calls/voiceover2a.mp3", "assets/audio/night/calls/voiceover3.mp3",
+        "assets/audio/night/calls/voiceover4.mp3",  "assets/audio/night/calls/voiceover5.mp3",
+    };
+
+    if (night >= 1 && night <= 5)
     {
-        case 1:
-            AssetManager::queue<Audio>("a_night_call", "assets/audio/night/calls/voiceover1c.mp3", true);
-            break;
-
-        case 2:
-            AssetManager::queue<Audio>("a_night_call", "assets/audio/night/calls/voiceover2a.mp3", true);
-            break;
-
-        case 3:
-            AssetManager::queue<Audio>("a_night_call", "assets/audio/night/calls/voiceover3.mp3", true);
-            break;
-
-        case 4:
-            AssetManager::queue<Audio>("a_night_call", "assets/audio/night/calls/voiceover4.mp3", true);
-            break;
-
-        case 5:
-            AssetManager::queue<Audio>("a_night_call", "assets/audio/night/calls/voiceover5.mp3", true);
-            break;
-
-        default:
-            this->loaded_count--;
-            break;
+        this->loaded_count++;
+        AssetManager::queue<Audio>("a_night_call", call_paths[night - 1], true);
     }
-
     AssetManager::get<Audio>("a_blip3")->play_track();
 }
-
-States::NightLoader::~NightLoader(void) {}
 
 void States::NightLoader::draw(int w, int h)
 {
@@ -121,7 +101,7 @@ void States::NightLoader::update(double dt)
         {
             this->ti_fade_out.update(dt);
             if (this->ti_fade_out.has_ticked())
-                PUSH_STATE(this->state_manager, States::Night);
+                PUSH_STATE(this->state_manager, States::Office);
         }
         else
         {

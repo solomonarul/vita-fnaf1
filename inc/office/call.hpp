@@ -6,7 +6,7 @@ using namespace NEX::GL;
 
 #include <memory>
 
-namespace Game::Objects::Night
+namespace Game::Objects::Office
 {
     struct CallHandler
     {
@@ -19,4 +19,4 @@ namespace Game::Objects::Night
 
         void draw(void);
     };
-}; // namespace Game::Objects::Night
+}; // namespace Game::Objects::Office

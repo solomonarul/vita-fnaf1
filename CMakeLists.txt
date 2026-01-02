@@ -22,8 +22,8 @@ add_executable(
         "src/menu/manager.cpp"
         "src/newspaper.cpp"
         "src/nightloader.cpp"
-        "src/night.cpp"
-        "src/night/call.cpp"
+        "src/office.cpp"
+        "src/office/call.cpp"
 )
 
 target_include_directories(

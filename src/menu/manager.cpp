@@ -115,7 +115,8 @@ void Manager::event(SDL_Event& event, StateManager& sm)
 #endif
         case SDL_EVENT_MOUSE_MOTION:
         {
-            const SDL_FPoint mouse_pos = {.x = (event.motion.x / this->last_w - 0.5f) * 2, .y = -(event.motion.y / this->last_h - 0.5f) * 2};
+            auto mouse = InputManager::get_mouse_data();
+            const SDL_FPoint mouse_pos = {.x = (mouse.x - 0.5f) * 2, .y = -(mouse.y - 0.5f) * 2};
 
             for (size_t index = 0; index < TEXT_COUNT; index++)
             {
@@ -131,7 +132,8 @@ void Manager::event(SDL_Event& event, StateManager& sm)
 
         case SDL_EVENT_MOUSE_BUTTON_UP:
         {
-            const SDL_FPoint mouse_pos = {.x = (event.button.x / this->last_w - 0.5f) * 2, .y = -(event.button.y / this->last_h - 0.5f) * 2};
+            auto mouse = InputManager::get_mouse_data();
+            const SDL_FPoint mouse_pos = {.x = (mouse.x - 0.5f) * 2, .y = -(mouse.y - 0.5f) * 2};
 
             if (this->current == 0)
                 break;
