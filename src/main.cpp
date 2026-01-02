@@ -34,10 +34,8 @@ States::Main::Main(StateManager& sm) : IState::IState(sm)
         .format = GL_RGBA,
     });
     // clang-format on
-    
-    SDL_FRect loader_rect = {
-        .x = 856.0 / 960, .y = -500.0 / 544, .w = 64.0 / 960, .h = 64.0 / 544
-    };
+
+    SDL_FRect loader_rect = {.x = 856.0 / 960, .y = -500.0 / 544, .w = 64.0 / 960, .h = 64.0 / 544};
     this->spr_loader.refresh_from_rect(loader_rect);
 
     this->loaded_count += AssetManager::queue_from_toml("assets/presets/main.toml");
@@ -59,7 +57,7 @@ void States::Main::draw(int w, int h)
         this->t_warning[index]->draw(MTSDF::Font::default_shader);
     }
 
-    if(AssetManager::enqueued_count() != 0)
+    if (AssetManager::enqueued_count() != 0)
     {
         Texture::default_shader->use();
         Texture::default_shader->setUniform("u_texture", 0);

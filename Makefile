@@ -67,12 +67,12 @@ bbr:
 bbwd:
 	@emcmake cmake -B build -S . --preset web-debug
 	@cmake --build build -j$${nproc}
-# TODO: figure out why I cant install in workflows: make: cmake: Permission denied
+	@sudo cmake --install build --prefix out
 
 bbwr:
 	@emcmake cmake -B build -S . --preset web-release
 	@cmake --build build -j$${nproc}
-# TODO: figure out why I cant install in workflows: make: cmake: Permission denied
+	@sudo cmake --install build --prefix out
 
 r:
 	@./out/bin/${TARGET}
@@ -93,3 +93,9 @@ f:
 	@echo "[INFO] Starting formatting..."
 	@find . -path ./build -prune -o \( -name "*.cpp" -o -name "*.hpp" -o -name "*.h" \) -print0 | xargs -0 -I{} sh -c 'echo "{}"; clang-format -i --style=file "{}"'
 	@echo "[INFO] Ended formatting."
+
+lc:
+	@echo "[INFO] NexGL line count:"
+	@cd lib/nexgl && find . -type f \( -name "*.cpp" -o -name "*.hpp" \) ! -path "*/lib/*" ! -path "*/build/*" -exec wc -l {} + | sort -nr | tee
+	@echo "[INFO] App line count:"
+	@find . -type f \( -name "*.cpp" -o -name "*.hpp" \) ! -path "*/lib/*" ! -path "*/build/*" -exec wc -l {} + | sort -nr | tee
