@@ -41,13 +41,8 @@ Manager::Manager()
     this->t_night_count->s_x = 0.6;
 }
 
-Manager::~Manager() {}
-
-void Manager::draw(int w, int h)
+void Manager::draw()
 {
-    this->last_w = w;
-    this->last_h = h;
-
     if (this->current > 0)
     {
         this->t_pointer->y = this->t_texts[this->current - 1]->y + 5.0 / 544;

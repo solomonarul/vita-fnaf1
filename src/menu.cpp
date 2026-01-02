@@ -50,7 +50,7 @@ void States::Menu::draw(int w, int h)
     NEX::GL::set_view_letterbox({w, h}, {960, 544});
 
     this->o_background.draw();
-    this->o_selector.draw(w, h);
+    this->o_selector.draw();
     for (auto index = 0; index < 3; index++) this->t_texts[index]->draw();
 
 #ifdef APP_IS_DEMO
