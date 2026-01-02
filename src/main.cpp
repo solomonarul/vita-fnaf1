@@ -35,8 +35,7 @@ States::Main::Main(StateManager& sm) : IState::IState(sm)
     });
     // clang-format on
 
-    SDL_FRect loader_rect = {.x = 856.0 / 960, .y = -500.0 / 544, .w = 64.0 / 960, .h = 64.0 / 544};
-    this->spr_loader.refresh_from_rect(loader_rect);
+    this->spr_loader.refresh_from_rect(SDL_FRect{.x = 856.0 / 960, .y = -500.0 / 544, .w = 64.0 / 960, .h = 64.0 / 544});
 
     this->loaded_count += AssetManager::queue_from_toml("assets/presets/main.toml");
 }

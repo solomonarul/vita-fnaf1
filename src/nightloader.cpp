@@ -38,10 +38,15 @@ States::NightLoader::NightLoader(StateManager& sm, int night) : IState::IState(s
     this->t_night[1]->s_x = 0.6;
 
     AssetManager::remove("a_night_call"); // Unload previously loaded night call.
+    // clang-format off
     static std::string call_paths[5] = {
-        "assets/audio/night/calls/voiceover1c.mp3", "assets/audio/night/calls/voiceover2a.mp3", "assets/audio/night/calls/voiceover3.mp3",
-        "assets/audio/night/calls/voiceover4.mp3",  "assets/audio/night/calls/voiceover5.mp3",
+        "assets/audio/night/calls/voiceover1c.mp3",
+        "assets/audio/night/calls/voiceover2a.mp3",
+        "assets/audio/night/calls/voiceover3.mp3",
+        "assets/audio/night/calls/voiceover4.mp3", 
+        "assets/audio/night/calls/voiceover5.mp3",
     };
+    // clang-format on
     if (night >= 1 && night <= 5)
     {
         this->loaded_count++;
@@ -51,8 +56,7 @@ States::NightLoader::NightLoader(StateManager& sm, int night) : IState::IState(s
     this->loaded_count += AssetManager::queue_from_toml("assets/presets/night.toml");
 
     this->t_loader = AssetManager::get<Texture>("t_loader");
-    SDL_FRect loader_rect = {.x = 856.0 / 960, .y = -500.0 / 544, .w = 64.0 / 960, .h = 64.0 / 544};
-    this->spr_loader.refresh_from_rect(loader_rect);
+    this->spr_loader.refresh_from_rect(SDL_FRect{.x = 856.0 / 960, .y = -500.0 / 544, .w = 64.0 / 960, .h = 64.0 / 544});
 
     AssetManager::get<Audio>("a_blip3")->play_track();
 }

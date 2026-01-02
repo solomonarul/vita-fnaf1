@@ -56,9 +56,11 @@ void States::Office::update(double dt)
 
     if (!this->a_office_buzz->is_playing_track())
         this->a_office_buzz->play_track();
+
+    this->o_call_handler.update(dt);
 }
 
 void States::Office::event(SDL_Event& event)
 {
-    UNUSED(event);
+    this->o_call_handler.event(event);
 }

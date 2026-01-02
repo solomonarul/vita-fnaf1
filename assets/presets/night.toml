@@ -11,6 +11,8 @@ textures = [
 [[texture]]
 id = "t_mute_call"
 path = "assets/images/night/MUTE_CALL_BUTTON.png"
+gpu_format = "rgba"
+format = "rgba"
 
 [[shader]]
 id = "s_office"
