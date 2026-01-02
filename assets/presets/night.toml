@@ -20,6 +20,11 @@ vertex = "assets/shaders/office/background.vert"
 fragment = "assets/shaders/office/background.frag"
 
 [[audio]]
+id = "a_freddy_nose"
+path = "assets/audio/night/freddy_nose.mp3"
+predecode = true
+
+[[audio]]
 id = "a_office_buzz"
 path = "assets/audio/night/Buzz_Fan_Florescent2.mp3"
 predecode = true

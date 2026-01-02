@@ -12,7 +12,19 @@ States::Office::Office(StateManager& sm) : IState::IState(sm)
     this->a_office_buzz->play_track();
     this->a_office_buzz->set_gain_track(0.2);
 
+    this->a_freddy_nose = AssetManager::get<Audio>("a_freddy_nose");
+    this->a_freddy_nose->set_gain_track(0.75);
+
     this->tr_office_view = std::make_shared<RenderTexture>(this->t_office->textures[0]->w, this->t_office->textures[0]->h);
+
+    this->cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_DEFAULT);
+    this->hover_cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_POINTER);
+}
+
+States::Office::~Office()
+{
+    SDL_DestroyCursor(this->cursor);
+    SDL_DestroyCursor(this->hover_cursor);
 }
 
 void States::Office::draw(int w, int h)
@@ -62,5 +74,34 @@ void States::Office::update(double dt)
 
 void States::Office::event(SDL_Event& event)
 {
+    SDL_FRect const rect_freddy_nose = SDL_FRect{.x = 495.0, .y = 165.0, .w = 30.0, .h = 30.0};
+
+    switch (event.type)
+    {
+        case SDL_EVENT_MOUSE_MOTION:
+        {
+            auto mouse = InputManager::get_mouse_data().get_coords();
+            mouse.x *= 960;
+            mouse.y *= 540;
+            mouse.x += u_view_offset * (1210 - 960);
+            if (SDL_PointInRectFloat(&mouse, &rect_freddy_nose))
+                SDL_SetCursor(this->hover_cursor);
+            else
+                SDL_SetCursor(this->cursor);
+            break;
+        }
+
+        case SDL_EVENT_MOUSE_BUTTON_UP:
+        {
+            auto mouse = InputManager::get_mouse_data().get_coords();
+            mouse.x *= 960;
+            mouse.y *= 540;
+            mouse.x += u_view_offset * (1210 - 960);
+            if (SDL_PointInRectFloat(&mouse, &rect_freddy_nose))
+                this->a_freddy_nose->play_track();
+            break;
+        }
+    }
+
     this->o_call_handler.event(event);
 }

@@ -13,10 +13,13 @@ namespace Game::States
     struct Office : public IState
     {
         Office(StateManager&);
+        ~Office();
+
+        SDL_Cursor *cursor, *hover_cursor;
 
         double u_view_offset = 0.5;
         std::shared_ptr<Shader> s_office;
-        std::shared_ptr<Audio> a_office_buzz;
+        std::shared_ptr<Audio> a_office_buzz, a_freddy_nose;
         std::shared_ptr<TextureArray> t_office;
         std::shared_ptr<RenderTexture> tr_office_view;
 
