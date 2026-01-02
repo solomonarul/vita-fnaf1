@@ -7,9 +7,8 @@ using namespace Game;
 
 States::NightLoader::NightLoader(StateManager& sm, int night) : IState::IState(sm)
 {
-    sm.states.erase(sm.states.begin());
-
     AudioManager::stop_all_tracks();
+    sm.states.erase(sm.states.begin());
 
     this->f_lcdsolid = AssetManager::get<MTSDF::Font>("f_lcdsolid");
     this->t_blip = AssetManager::get<TextureArray>("t_blip");
@@ -38,20 +37,19 @@ States::NightLoader::NightLoader(StateManager& sm, int night) : IState::IState(s
     this->t_night[1]->o_x = -0.5;
     this->t_night[1]->s_x = 0.6;
 
-    this->loaded_count += AssetManager::queue_from_toml("assets/presets/night.toml");
-
     AssetManager::remove("a_night_call"); // Unload previously loaded night call.
-
     static std::string call_paths[5] = {
         "assets/audio/night/calls/voiceover1c.mp3", "assets/audio/night/calls/voiceover2a.mp3", "assets/audio/night/calls/voiceover3.mp3",
         "assets/audio/night/calls/voiceover4.mp3",  "assets/audio/night/calls/voiceover5.mp3",
     };
-
     if (night >= 1 && night <= 5)
     {
         this->loaded_count++;
         AssetManager::queue<Audio>("a_night_call", call_paths[night - 1], true);
     }
+
+    this->loaded_count += AssetManager::queue_from_toml("assets/presets/night.toml");
+
     AssetManager::get<Audio>("a_blip3")->play_track();
 }
 
@@ -59,14 +57,7 @@ void States::NightLoader::draw(int w, int h)
 {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
-
-#ifndef __psp2__
-    double scale = std::min(w / 960.0, h / 544.0);
-    int s_w = (w - 960 * scale) / 2, s_h = (h - 544 * scale) / 2;
-    glViewport(s_w, s_h, w - 2 * s_w, h - 2 * s_h);
-#else
-    glViewport(0, 0, w, h);
-#endif
+    NEX::GL::set_view_letterbox({w, h}, {960, 544});
 
     for (auto index = 0; index < 2; index++)
     {

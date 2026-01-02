@@ -21,9 +21,8 @@ void States::Newspaper::draw(int w, int h)
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
     }
+    NEX::GL::set_view_letterbox({w, h}, {960, 544});
 
-    UNUSED(w);
-    UNUSED(h);
     Texture::default_shader->use();
     Texture::default_shader->setUniform("u_texture", 0);
     this->t_newspaper->activate(GL_TEXTURE0);

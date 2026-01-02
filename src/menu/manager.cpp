@@ -115,13 +115,11 @@ void Manager::event(SDL_Event& event, StateManager& sm)
 #endif
         case SDL_EVENT_MOUSE_MOTION:
         {
-            auto mouse = InputManager::get_mouse_data();
-            const SDL_FPoint mouse_pos = {.x = (mouse.x - 0.5f) * 2, .y = -(mouse.y - 0.5f) * 2};
-
+            auto mouse = InputManager::get_mouse_data().get_coords_normalized();
             for (size_t index = 0; index < TEXT_COUNT; index++)
             {
                 const SDL_FRect text_box = this->t_texts[index]->get_bounding_box();
-                if (SDL_PointInRectFloat(&mouse_pos, &text_box))
+                if (SDL_PointInRectFloat(&mouse, &text_box))
                 {
                     set_index(index + 1);
                     break;
@@ -132,14 +130,12 @@ void Manager::event(SDL_Event& event, StateManager& sm)
 
         case SDL_EVENT_MOUSE_BUTTON_UP:
         {
-            auto mouse = InputManager::get_mouse_data();
-            const SDL_FPoint mouse_pos = {.x = (mouse.x - 0.5f) * 2, .y = -(mouse.y - 0.5f) * 2};
-
             if (this->current == 0)
                 break;
 
+            auto mouse = InputManager::get_mouse_data().get_coords_normalized();
             const SDL_FRect text_box = this->t_texts[this->current - 1]->get_bounding_box();
-            if (SDL_PointInRectFloat(&mouse_pos, &text_box))
+            if (SDL_PointInRectFloat(&mouse, &text_box))
                 switch_night();
         }
             // TODO: gamepad input for Vita / PC.

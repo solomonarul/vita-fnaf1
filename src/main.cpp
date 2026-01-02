@@ -35,13 +35,7 @@ void States::Main::draw(int w, int h)
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-#ifndef __psp2__
-    double scale = std::min(w / 960.0, h / 544.0);
-    int s_w = (w - 960 * scale) / 2, s_h = (h - 544 * scale) / 2;
-    glViewport(s_w, s_h, w - 2 * s_w, h - 2 * s_h);
-#else
-    glViewport(0, 0, w, h);
-#endif
+    NEX::GL::set_view_letterbox({w, h}, {960, 544});
 
     for (auto index = 0; index < 3; index++)
     {

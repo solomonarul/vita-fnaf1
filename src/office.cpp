@@ -26,16 +26,7 @@ void States::Office::draw(int w, int h)
     this->t_office->textures[0]->activate(GL_TEXTURE0);
     this->spr_office.draw(*Texture::default_shader);
 
-#ifndef __psp2__
-    double scale = std::min(w / 960.0, h / 544.0);
-    int s_w = (w - 960 * scale) / 2, s_h = (h - 544 * scale) / 2;
-    SDL_Rect view = SDL_Rect{s_w, s_h, w - 2 * s_w, h - 2 * s_h};
-    this->tr_office_view->unuse(view.x, view.y, view.w, view.h);
-    InputManager::set_letterbox(view);
-#else
-    this->tr_office_view->unuse(0, 0, w, h);
-    InputManager::set_letterbox(SDL_FRect{0, 0, w, h})
-#endif
+    NEX::GL::set_view_letterbox({w, h}, {960, 544});
 
     this->s_office->use();
     this->s_office->setUniform("u_texture", 0);
