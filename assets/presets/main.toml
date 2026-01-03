@@ -40,10 +40,10 @@ path = "assets/images/misc/NEWSPAPER.png"
 [[texture_array]]
 id = "t_menu_background"
 textures = [
-    { path = "assets/images/menu/background/431.png" },
-    { path = "assets/images/menu/background/440.png" },
-    { path = "assets/images/menu/background/441.png" },
-    { path = "assets/images/menu/background/442.png" }
+    { path = "assets/images/menu/background/1.png" },
+    { path = "assets/images/menu/background/2.png" },
+    { path = "assets/images/menu/background/3.png" },
+    { path = "assets/images/menu/background/4.png" }
 ]
 
 [[texture_array]]
@@ -62,15 +62,15 @@ textures = [
 [[texture_array]]
 id = "t_blip"
 textures = [
+    { path = "assets/images/misc/night_bars/1.png",  gpu_format = "rgba", format = "rgba" },
+    { path = "assets/images/misc/night_bars/2.png",  gpu_format = "rgba", format = "rgba" },
+    { path = "assets/images/misc/night_bars/3.png",  gpu_format = "rgba", format = "rgba" },
     { path = "assets/images/misc/night_bars/4.png",  gpu_format = "rgba", format = "rgba" },
-    { path = "assets/images/misc/night_bars/6.png",  gpu_format = "rgba", format = "rgba" },
-    { path = "assets/images/misc/night_bars/8.png",  gpu_format = "rgba", format = "rgba" },
-    { path = "assets/images/misc/night_bars/9.png",  gpu_format = "rgba", format = "rgba" },
-    { path = "assets/images/misc/night_bars/10.png", gpu_format = "rgba", format = "rgba" },
-    { path = "assets/images/misc/night_bars/21.png", gpu_format = "rgba", format = "rgba" },
-    { path = "assets/images/misc/night_bars/22.png", gpu_format = "rgba", format = "rgba" },
-    { path = "assets/images/misc/night_bars/23.png", gpu_format = "rgba", format = "rgba" },
-    { path = "assets/images/misc/night_bars/25.png", gpu_format = "rgba", format = "rgba" }
+    { path = "assets/images/misc/night_bars/5.png", gpu_format = "rgba", format = "rgba" },
+    { path = "assets/images/misc/night_bars/6.png", gpu_format = "rgba", format = "rgba" },
+    { path = "assets/images/misc/night_bars/7.png", gpu_format = "rgba", format = "rgba" },
+    { path = "assets/images/misc/night_bars/8.png", gpu_format = "rgba", format = "rgba" },
+    { path = "assets/images/misc/night_bars/9.png", gpu_format = "rgba", format = "rgba" }
 ]
 
 [[texture_array]]

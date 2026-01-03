@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#ifdef __psp2__
+#ifdef NEX_PLATFORM_VITA
 // PSVita newlib + Sony SDK heap sizes.
 // TODO: Probably I don't actually need this much.
 int _newlib_heap_size_user = 100 * 1024 * 1024;   // 100MB
@@ -23,7 +23,7 @@ struct AppState : public IAppState
 bool main_loop(double time, void* userData)
 {
     CursorManager::commit();
-    
+
     constexpr double timer_rate = 1.0 / 60;
     constexpr double delta_time_limit = 1.0 / 2; // If less than 2 fps, ignore the update.
 

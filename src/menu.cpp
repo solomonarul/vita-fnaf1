@@ -2,6 +2,18 @@
 
 using namespace Game;
 
+#define VERSION "v. 1.00 "
+
+#ifdef __unix__
+#define PLATFORM "UNIX"
+#elif __psp2__
+#define PLATFORM "VITA"
+#elif EMSCRIPTEN
+#define PLATFORM "WEB"
+#else
+#define PLATFORM "WINDOWS"
+#endif
+
 States::Menu::Menu(StateManager& sm) : IState::IState(sm)
 {
     sm.states.erase(sm.states.begin());
@@ -17,7 +29,7 @@ States::Menu::Menu(StateManager& sm) : IState::IState(sm)
     this->t_texts[0]->s = 79 / 544.0;
     this->t_texts[0]->s_x = 0.5;
 
-    this->t_texts[1] = std::make_unique<MTSDF::Text>(this->f_consolas, "v. 1.00");
+    this->t_texts[1] = std::make_unique<MTSDF::Text>(this->f_consolas, VERSION PLATFORM);
     this->t_texts[1]->x = -945 / 960.0;
     this->t_texts[1]->y = -1;
     this->t_texts[1]->s = 40 / 544.0;

@@ -90,7 +90,7 @@ void States::Office::update(double dt)
         CursorManager::set_cursor(CURSOR_POINT);
 
     this->ti_fan.update(dt);
-    if(this->ti_fan.has_ticked())
+    if (this->ti_fan.has_ticked())
         this->fan_image = (this->fan_image + 1) % this->t_fan->textures.size();
 }
 
