@@ -8,6 +8,14 @@ textures = [
     { path = "assets/images/night/office/5.png" }
 ]
 
+[[texture_array]]
+id = "t_fan"
+textures = [
+    { path = "assets/images/night/fan/1.png" },
+    { path = "assets/images/night/fan/2.png" },
+    { path = "assets/images/night/fan/3.png" },  
+]
+
 [[texture]]
 id = "t_mute_call"
 path = "assets/images/night/MUTE_CALL_BUTTON.png"

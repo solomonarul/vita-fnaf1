@@ -20,8 +20,12 @@ namespace Game::States
         double u_view_offset = 0.5;
         std::shared_ptr<Shader> s_office;
         std::shared_ptr<Audio> a_office_buzz, a_freddy_nose;
-        std::shared_ptr<TextureArray> t_office;
+        std::shared_ptr<TextureArray> t_office, t_fan;
         std::shared_ptr<RenderTexture> tr_office_view;
+
+        Timer ti_fan = Timer(1.0 / 60);
+        Sprite spr_fan;
+        size_t fan_image = 0;
 
         Sprite spr_office, spr_office_view;
 

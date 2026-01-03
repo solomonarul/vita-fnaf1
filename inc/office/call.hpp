@@ -17,12 +17,11 @@ namespace Game::Objects::Office
         Sprite spr_mute_call;
 
         Timer t_call = Timer(15);
-        SDL_FRect rect_call = SDL_FRect{.x = -900.0 / 960, .y = 444.0 / 544, .w = 192.0 / 960, .h = 48.0 / 544};
 
         CallHandler();
 
         void draw(void);
-        void update(double dt);
+        void update(double);
         void event(SDL_Event&);
     };
 }; // namespace Game::Objects::Office

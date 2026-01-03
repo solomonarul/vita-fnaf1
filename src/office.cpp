@@ -2,6 +2,9 @@
 
 using namespace Game;
 
+static SDL_FRect const RECT_FAN = SDL_FRect{.x = -24.0 / 960, .y = -209.0 / 544, .w = 163.0 / 960, .h = 294.0 / 544};
+static SDL_FRect const RECT_FREDDY_NOSE = SDL_FRect{.x = 500.0, .y = 165.0, .w = 30.0, .h = 30.0};
+
 States::Office::Office(StateManager& sm) : IState::IState(sm)
 {
     sm.states.erase(sm.states.begin());
@@ -15,10 +18,14 @@ States::Office::Office(StateManager& sm) : IState::IState(sm)
     this->a_freddy_nose = AssetManager::get<Audio>("a_freddy_nose");
     this->a_freddy_nose->set_gain_track(0.75);
 
+    this->t_fan = AssetManager::get<TextureArray>("t_fan");
+
     this->tr_office_view = std::make_shared<RenderTexture>(this->t_office->textures[0]->w, this->t_office->textures[0]->h);
 
     this->cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_DEFAULT);
     this->hover_cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_POINTER);
+
+    this->spr_fan.refresh_from_rect(RECT_FAN);
 }
 
 States::Office::~Office()
@@ -37,6 +44,10 @@ void States::Office::draw(int w, int h)
     Texture::default_shader->setUniform("u_texture", 0);
     this->t_office->textures[0]->activate(GL_TEXTURE0);
     this->spr_office.draw(*Texture::default_shader);
+    Texture::default_shader->use();
+    Texture::default_shader->setUniform("u_texture", 0);
+    this->t_fan->textures[this->fan_image]->activate(GL_TEXTURE0);
+    this->spr_fan.draw(*Texture::default_shader);
     this->tr_office_view->unuse();
 
     NEX::GL::set_view_letterbox({w, h}, {960, 544});
@@ -70,12 +81,21 @@ void States::Office::update(double dt)
         this->a_office_buzz->play_track();
 
     this->o_call_handler.update(dt);
+
+    auto mouse = InputManager::get_mouse_data().get_coords();
+    mouse.x *= 960;
+    mouse.y *= 540;
+    mouse.x += u_view_offset * (1210 - 960);
+    if (SDL_PointInRectFloat(&mouse, &RECT_FREDDY_NOSE))
+        CursorManager::set_cursor(CURSOR_POINT);
+
+    this->ti_fan.update(dt);
+    if(this->ti_fan.has_ticked())
+        this->fan_image = (this->fan_image + 1) % this->t_fan->textures.size();
 }
 
 void States::Office::event(SDL_Event& event)
 {
-    SDL_FRect const rect_freddy_nose = SDL_FRect{.x = 495.0, .y = 165.0, .w = 30.0, .h = 30.0};
-
     switch (event.type)
     {
         case SDL_EVENT_MOUSE_MOTION:
@@ -84,10 +104,8 @@ void States::Office::event(SDL_Event& event)
             mouse.x *= 960;
             mouse.y *= 540;
             mouse.x += u_view_offset * (1210 - 960);
-            if (SDL_PointInRectFloat(&mouse, &rect_freddy_nose))
-                SDL_SetCursor(this->hover_cursor);
-            else
-                SDL_SetCursor(this->cursor);
+            if (SDL_PointInRectFloat(&mouse, &RECT_FREDDY_NOSE))
+                CursorManager::set_cursor(CURSOR_POINT);
             break;
         }
 
@@ -97,7 +115,7 @@ void States::Office::event(SDL_Event& event)
             mouse.x *= 960;
             mouse.y *= 540;
             mouse.x += u_view_offset * (1210 - 960);
-            if (SDL_PointInRectFloat(&mouse, &rect_freddy_nose))
+            if (SDL_PointInRectFloat(&mouse, &RECT_FREDDY_NOSE))
                 this->a_freddy_nose->play_track();
             break;
         }

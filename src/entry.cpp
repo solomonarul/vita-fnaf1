@@ -22,12 +22,16 @@ struct AppState : public IAppState
 
 bool main_loop(double time, void* userData)
 {
+    CursorManager::commit();
+    
     constexpr double timer_rate = 1.0 / 60;
     constexpr double delta_time_limit = 1.0 / 2; // If less than 2 fps, ignore the update.
 
     AppState* const status = static_cast<AppState*>(userData);
     status->states.draw(status->window.w, status->window.h);
     status->window.swap();
+
+    CursorManager::reset();
 
     if (time < delta_time_limit)
         status->timer += time;
