@@ -12,7 +12,7 @@ namespace Game::States
     {
         Main(StateManager&);
 
-        size_t loaded_count = 0;
+        uint8_t loaded_count = 0;
         std::unique_ptr<MTSDF::Text> t_warning[3];
         std::shared_ptr<MTSDF::Font> f_tahoma;
 

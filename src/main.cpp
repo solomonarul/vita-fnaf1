@@ -1,5 +1,6 @@
 #include "main.hpp"
 
+#include "assets/main.hpp"
 #include "menu.hpp"
 
 using namespace Game;
@@ -34,10 +35,9 @@ States::Main::Main(StateManager& sm) : IState::IState(sm)
         .format = GL_RGBA,
     });
     // clang-format on
-
     this->spr_loader.refresh_from_rect(SDL_FRect{.x = 856.0 / 960, .y = -500.0 / 544, .w = 64.0 / 960, .h = 64.0 / 544});
 
-    this->loaded_count += AssetManager::queue_from_toml("assets/presets/main.toml");
+    queue_assets(&this->loaded_count);
 }
 
 void States::Main::draw(int w, int h)
