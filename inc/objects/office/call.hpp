@@ -16,7 +16,7 @@ namespace Game::Objects::Office
         std::shared_ptr<Texture> t_mute_call;
         Sprite spr_mute_call;
 
-        Timer t_call = Timer(15);
+        Timer t_call = Timer(16);
 
         CallHandler();
 

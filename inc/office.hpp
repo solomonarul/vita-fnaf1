@@ -6,16 +6,14 @@ using namespace NEX::Prefabs;
 using namespace NEX::Core;
 using namespace NEX::GL;
 
-#include "office/call.hpp"
+#include "objects/cursor.hpp"
+#include "objects/office/call.hpp"
 
 namespace Game::States
 {
     struct Office : public IState
     {
-        Office(StateManager&);
-        ~Office();
-
-        SDL_Cursor *cursor, *hover_cursor;
+        Office(StateManager&, std::shared_ptr<Objects::Cursor>);
 
         double u_view_offset = 0.5;
         std::shared_ptr<Shader> s_office;
@@ -29,6 +27,7 @@ namespace Game::States
 
         Sprite spr_office, spr_office_view;
 
+        std::shared_ptr<Objects::Cursor> o_cursor;
         Objects::Office::CallHandler o_call_handler;
 
         virtual void draw(int w, int h) override;

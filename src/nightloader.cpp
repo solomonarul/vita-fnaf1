@@ -5,7 +5,7 @@
 
 using namespace Game;
 
-States::NightLoader::NightLoader(StateManager& sm, int night) : IState::IState(sm)
+States::NightLoader::NightLoader(StateManager& sm, std::shared_ptr<Objects::Cursor> cursor, int night) : IState::IState(sm)
 {
     AudioManager::stop_all_tracks();
     sm.states.erase(sm.states.begin());
@@ -43,6 +43,8 @@ States::NightLoader::NightLoader(StateManager& sm, int night) : IState::IState(s
     queue_assets(&this->loaded_count, night);
 
     AssetManager::get<Audio>("a_blip3")->play_track();
+
+    this->o_cursor = cursor;
 }
 
 void States::NightLoader::draw(int w, int h)
@@ -72,6 +74,9 @@ void States::NightLoader::draw(int w, int h)
         this->t_loader->activate(GL_TEXTURE0);
         this->spr_loader.draw(*Texture::default_shader);
     }
+
+    Texture::default_shader->use();
+    this->o_cursor->draw(*Texture::default_shader);
 }
 
 void States::NightLoader::update(double dt)
@@ -92,7 +97,7 @@ void States::NightLoader::update(double dt)
         {
             this->ti_fade_out.update(dt);
             if (this->ti_fade_out.has_ticked())
-                PUSH_STATE(this->state_manager, States::Office);
+                PUSH_STATE(this->state_manager, States::Office, this->o_cursor);
         }
         else
             AssetManager::process_enqueued();

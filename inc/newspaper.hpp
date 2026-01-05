@@ -6,11 +6,15 @@ using namespace NEX::Prefabs;
 using namespace NEX::Core;
 using namespace NEX::GL;
 
+#include "objects/cursor.hpp"
+
 namespace Game::States
 {
     struct Newspaper : public IState
     {
-        Newspaper(StateManager&);
+        Newspaper(StateManager&, std::shared_ptr<Objects::Cursor>);
+
+        std::shared_ptr<Objects::Cursor> o_cursor;
 
         std::shared_ptr<Shader> s_texture_default;
         std::shared_ptr<Texture> t_newspaper;

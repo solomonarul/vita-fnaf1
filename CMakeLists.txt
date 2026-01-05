@@ -18,12 +18,13 @@ add_executable(
         "src/entry.cpp"
         "src/main.cpp"
         "src/menu.cpp"
-        "src/menu/background.cpp"
-        "src/menu/manager.cpp"
         "src/newspaper.cpp"
         "src/nightloader.cpp"
         "src/office.cpp"
-        "src/office/call.cpp"
+        "src/objects/cursor.cpp"
+        "src/objects/menu/background.cpp"
+        "src/objects/menu/manager.cpp"
+        "src/objects/office/call.cpp"
 )
 
 target_include_directories(

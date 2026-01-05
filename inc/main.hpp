@@ -2,6 +2,8 @@
 
 #include <nex.hpp>
 
+#include "objects/cursor.hpp"
+
 using namespace NEX::Prefabs;
 using namespace NEX::Core;
 using namespace NEX::GL;
@@ -18,6 +20,8 @@ namespace Game::States
 
         std::shared_ptr<Texture> t_loader;
         Sprite spr_loader;
+
+        std::shared_ptr<Objects::Cursor> o_cursor;
 
         Timer ti_transition = Timer(3.0);
 

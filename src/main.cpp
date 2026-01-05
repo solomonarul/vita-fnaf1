@@ -34,7 +34,13 @@ States::Main::Main(StateManager& sm) : IState::IState(sm)
         .gpu_format = GL_RGBA,
         .format = GL_RGBA,
     });
+    this->o_cursor = std::make_shared<Objects::Cursor>(std::make_shared<Texture>(TextureConfig{
+        .path = "assets/images/cursor.png",
+        .gpu_format = GL_RGBA,
+        .format = GL_RGBA
+    }), 8, 3);
     // clang-format on
+
     this->spr_loader.refresh_from_rect(SDL_FRect{.x = 856.0 / 960, .y = -500.0 / 544, .w = 64.0 / 960, .h = 64.0 / 544});
 
     queue_assets(&this->loaded_count);
@@ -63,6 +69,9 @@ void States::Main::draw(int w, int h)
         this->t_loader->activate(GL_TEXTURE0);
         this->spr_loader.draw(*Texture::default_shader);
     }
+
+    Texture::default_shader->use();
+    this->o_cursor->draw(*Texture::default_shader);
 }
 
 void States::Main::update(double dt)
@@ -71,7 +80,7 @@ void States::Main::update(double dt)
     {
         this->ti_transition.update(dt);
         if (this->ti_transition.has_ticked())
-            PUSH_STATE(this->state_manager, Game::States::Menu);
+            PUSH_STATE(this->state_manager, Game::States::Menu, this->o_cursor);
     }
     else
         AssetManager::process_enqueued();

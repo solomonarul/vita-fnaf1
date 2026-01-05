@@ -1,4 +1,4 @@
-#include "office/call.hpp"
+#include "objects/office/call.hpp"
 
 using namespace Game::Objects::Office;
 
@@ -32,8 +32,7 @@ void CallHandler::update(double dt)
         this->t_call.update(dt);
 
     auto mouse = InputManager::get_mouse_data().get_coords_normalized();
-    if (SDL_PointInRectFloat(&mouse, &RECT_CALL))
-        CursorManager::set_cursor(CURSOR_POINT);
+    if (SDL_PointInRectFloat(&mouse, &RECT_CALL)) {}
 }
 
 void CallHandler::event(SDL_Event& event)

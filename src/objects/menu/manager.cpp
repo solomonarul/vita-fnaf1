@@ -1,4 +1,4 @@
-#include "menu/manager.hpp"
+#include "objects/menu/manager.hpp"
 
 #include "newspaper.hpp"
 #include "nightloader.hpp"
@@ -41,6 +41,20 @@ Manager::Manager()
     this->t_night_count->s_x = 0.6;
 }
 
+void Manager::update()
+{
+    auto mouse = InputManager::get_mouse_data().get_coords_normalized();
+    for (size_t index = 0; index < TEXT_COUNT; index++)
+    {
+        const SDL_FRect text_box = this->t_texts[index]->get_bounding_box();
+        if (SDL_PointInRectFloat(&mouse, &text_box))
+        {
+            this->o_cursor->type = CURSOR_HIGHLIGHT;
+            break;
+        }
+    }
+}
+
 void Manager::draw()
 {
     if (this->current > 0)
@@ -62,11 +76,11 @@ void Manager::event(SDL_Event& event, StateManager& sm)
         switch (this->current - 1)
         {
             case TEXT_NEW_GAME:
-                PUSH_STATE(sm, Game::States::Newspaper);
+                PUSH_STATE(sm, Game::States::Newspaper, this->o_cursor);
                 break;
 
             case TEXT_CONTINUE:
-                PUSH_STATE(sm, Game::States::NightLoader, 1);
+                PUSH_STATE(sm, Game::States::NightLoader, this->o_cursor, 1);
                 // TODO: goto night[nightcount]
                 break;
         }
@@ -117,6 +131,7 @@ void Manager::event(SDL_Event& event, StateManager& sm)
                 if (SDL_PointInRectFloat(&mouse, &text_box))
                 {
                     set_index(index + 1);
+                    this->o_cursor->type = CURSOR_HIGHLIGHT;
                     break;
                 }
             }

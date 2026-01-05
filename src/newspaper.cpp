@@ -5,13 +5,15 @@
 
 using namespace Game;
 
-States::Newspaper::Newspaper(StateManager& sm) : IState::IState(sm)
+States::Newspaper::Newspaper(StateManager& sm, std::shared_ptr<Objects::Cursor> cursor) : IState::IState(sm)
 {
     auto menu = (States::Menu*)sm.states.begin()->get();
     menu->updates_disabled = true;
 
     this->t_newspaper = AssetManager::get<Texture>("t_newspaper");
     this->spr_newspaper.color.a = 0;
+
+    this->o_cursor = cursor;
 }
 
 void States::Newspaper::draw(int w, int h)
@@ -27,13 +29,16 @@ void States::Newspaper::draw(int w, int h)
     Texture::default_shader->setUniform("u_texture", 0);
     this->t_newspaper->activate(GL_TEXTURE0);
     this->spr_newspaper.draw(*Texture::default_shader);
+
+    Texture::default_shader->use();
+    this->o_cursor->draw(*Texture::default_shader);
 }
 
 void States::Newspaper::load_night()
 {
     if (this->state == NEWSPAPER_STATE_FADING_IN)
         this->state_manager.states.erase(this->state_manager.states.begin());
-    PUSH_STATE(this->state_manager, Game::States::NightLoader, 1);
+    PUSH_STATE(this->state_manager, Game::States::NightLoader, this->o_cursor, 1);
 }
 
 void States::Newspaper::update(double dt)

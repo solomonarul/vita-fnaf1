@@ -6,8 +6,8 @@
 #ifdef __psp2__
 // PSVita newlib + Sony SDK heap sizes.
 // TODO: Probably I don't actually need this much.
-int _newlib_heap_size_user = 100 * 1024 * 1024;   // 100MB
-unsigned int sceLibcHeapSize = 100 * 1024 * 1024; // 100MB
+int _newlib_heap_size_user = 100 * 1024 * 1024;  // 100MB
+unsigned int sceLibcHeapSize = 16 * 1024 * 1024; // 16MB
 #endif
 
 using namespace NEX::Core;
@@ -22,17 +22,10 @@ struct AppState : public IAppState
 
 bool main_loop(double time, void* userData)
 {
-    CursorManager::commit();
-
     constexpr double timer_rate = 1.0 / 60;
     constexpr double delta_time_limit = 1.0 / 2; // If less than 2 fps, ignore the update.
 
     AppState* const status = static_cast<AppState*>(userData);
-    status->states.draw(status->window.w, status->window.h);
-    status->window.swap();
-
-    CursorManager::reset();
-
     if (time < delta_time_limit)
         status->timer += time;
 
@@ -41,6 +34,9 @@ bool main_loop(double time, void* userData)
         status->states.update(timer_rate);
         status->timer -= timer_rate; // All my homies like fixed rate delta timing.
     }
+
+    status->states.draw(status->window.w, status->window.h);
+    status->window.swap();
 
     SDL_Event event;
     while (SDL_PollEvent(&event))
@@ -78,6 +74,7 @@ int main(int argc, char* argv[])
     AppState status;
     status.window.use();
     status.window.vsync(true);
+    SDL_HideCursor();
     PUSH_STATE(status.states, Game::States::Main);
     RUN_MAIN_LOOP(main_loop, &status);
     return EXIT_SUCCESS;

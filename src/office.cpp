@@ -3,9 +3,9 @@
 using namespace Game;
 
 static SDL_FRect const RECT_FAN = SDL_FRect{.x = -24.0 / 960, .y = -209.0 / 544, .w = 163.0 / 960, .h = 294.0 / 544};
-static SDL_FRect const RECT_FREDDY_NOSE = SDL_FRect{.x = 500.0, .y = 165.0, .w = 30.0, .h = 30.0};
+static SDL_FRect const RECT_FREDDY_NOSE = SDL_FRect{.x = 500.0 / 960, .y = 165.0 / 544, .w = 30.0 / 960, .h = 30.0 / 544};
 
-States::Office::Office(StateManager& sm) : IState::IState(sm)
+States::Office::Office(StateManager& sm, std::shared_ptr<Objects::Cursor> cursor) : IState::IState(sm)
 {
     sm.states.erase(sm.states.begin());
 
@@ -22,16 +22,9 @@ States::Office::Office(StateManager& sm) : IState::IState(sm)
 
     this->tr_office_view = std::make_shared<RenderTexture>(this->t_office->textures[0]->w, this->t_office->textures[0]->h);
 
-    this->cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_DEFAULT);
-    this->hover_cursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_POINTER);
-
     this->spr_fan.refresh_from_rect(RECT_FAN);
-}
 
-States::Office::~Office()
-{
-    SDL_DestroyCursor(this->cursor);
-    SDL_DestroyCursor(this->hover_cursor);
+    this->o_cursor = cursor;
 }
 
 void States::Office::draw(int w, int h)
@@ -59,11 +52,14 @@ void States::Office::draw(int w, int h)
     this->spr_office_view.draw(*this->s_office);
 
     this->o_call_handler.draw();
+
+    Texture::default_shader->use();
+    this->o_cursor->draw(*Texture::default_shader);
 }
 
 void States::Office::update(double dt)
 {
-    auto m_data = InputManager::get_mouse_data();
+    auto m_data = InputManager::get_mouse_data().get_coords();
     if (m_data.x < 0.25)
     {
         u_view_offset -= 4 * dt * ((0.25 - m_data.x) / 0.25);
@@ -83,11 +79,9 @@ void States::Office::update(double dt)
     this->o_call_handler.update(dt);
 
     auto mouse = InputManager::get_mouse_data().get_coords();
-    mouse.x *= 960;
-    mouse.y *= 540;
-    mouse.x += u_view_offset * (1210 - 960);
+    mouse.x += u_view_offset * (1210 - 960) / 960.0;
     if (SDL_PointInRectFloat(&mouse, &RECT_FREDDY_NOSE))
-        CursorManager::set_cursor(CURSOR_POINT);
+        this->o_cursor->type = Objects::CURSOR_MASCOT;
 
     this->ti_fan.update(dt);
     if (this->ti_fan.has_ticked())
@@ -98,23 +92,10 @@ void States::Office::event(SDL_Event& event)
 {
     switch (event.type)
     {
-        case SDL_EVENT_MOUSE_MOTION:
-        {
-            auto mouse = InputManager::get_mouse_data().get_coords();
-            mouse.x *= 960;
-            mouse.y *= 540;
-            mouse.x += u_view_offset * (1210 - 960);
-            if (SDL_PointInRectFloat(&mouse, &RECT_FREDDY_NOSE))
-                CursorManager::set_cursor(CURSOR_POINT);
-            break;
-        }
-
         case SDL_EVENT_MOUSE_BUTTON_UP:
         {
             auto mouse = InputManager::get_mouse_data().get_coords();
-            mouse.x *= 960;
-            mouse.y *= 540;
-            mouse.x += u_view_offset * (1210 - 960);
+            mouse.x += u_view_offset * (1210 - 960) / 960.0;
             if (SDL_PointInRectFloat(&mouse, &RECT_FREDDY_NOSE))
                 this->a_freddy_nose->play_track();
             break;
