@@ -14,6 +14,7 @@ States::Newspaper::Newspaper(StateManager& sm, std::shared_ptr<Objects::Cursor> 
     this->spr_newspaper.color.a = 0;
 
     this->o_cursor = cursor;
+    this->o_cursor->enabled = false;
 }
 
 void States::Newspaper::draw(int w, int h)
@@ -81,4 +82,5 @@ void States::Newspaper::event(SDL_Event& event)
             load_night();
             break;
     }
+    this->o_cursor->event(event);
 }

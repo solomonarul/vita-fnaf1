@@ -32,7 +32,8 @@ void CallHandler::update(double dt)
         this->t_call.update(dt);
 
     auto mouse = InputManager::get_mouse_data().get_coords_normalized();
-    if (SDL_PointInRectFloat(&mouse, &RECT_CALL)) {}
+    if (SDL_PointInRectFloat(&mouse, &RECT_CALL))
+        this->o_cursor->type = CURSOR_HIGHLIGHT;
 }
 
 void CallHandler::event(SDL_Event& event)

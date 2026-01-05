@@ -96,4 +96,5 @@ void States::Menu::event(SDL_Event& event)
     if (updates_disabled)
         return;
     this->o_selector.event(event, this->state_manager);
+    this->o_cursor->event(event);
 }

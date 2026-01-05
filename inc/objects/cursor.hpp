@@ -43,8 +43,10 @@ namespace Game::Objects
         CursorType type;
         std::shared_ptr<Texture> t_cursor;
         SpriteAtlas spr_cursor;
+        bool enabled;
 
         Cursor(std::shared_ptr<Texture>, size_t, size_t);
         void draw(Shader&);
+        void event(SDL_Event&);
     };
 }; // namespace Game::Objects

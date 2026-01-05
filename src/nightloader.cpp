@@ -106,6 +106,8 @@ void States::NightLoader::update(double dt)
 
 void States::NightLoader::event(SDL_Event& event)
 {
+    this->o_cursor->event(event);
+    
     if (this->blip_frame != (uint16_t)-1)
         return;
 

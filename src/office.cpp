@@ -25,6 +25,7 @@ States::Office::Office(StateManager& sm, std::shared_ptr<Objects::Cursor> cursor
     this->spr_fan.refresh_from_rect(RECT_FAN);
 
     this->o_cursor = cursor;
+    this->o_call_handler.o_cursor = cursor;
 }
 
 void States::Office::draw(int w, int h)
@@ -103,4 +104,5 @@ void States::Office::event(SDL_Event& event)
     }
 
     this->o_call_handler.event(event);
+    this->o_cursor->event(event);
 }

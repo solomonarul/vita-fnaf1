@@ -97,4 +97,6 @@ void States::Main::event(SDL_Event& event)
             this->ti_transition.update(this->ti_transition.rate);
             break;
     }
+
+    this->o_cursor->event(event);
 }

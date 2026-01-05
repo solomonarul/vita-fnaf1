@@ -1,12 +1,13 @@
 #pragma once
 
+#include <memory>
 #include <nex.hpp>
 
 using namespace NEX::Prefabs;
 using namespace NEX::Core;
 using namespace NEX::GL;
 
-#include <memory>
+#include "objects/cursor.hpp"
 
 namespace Game::Objects::Office
 {
@@ -17,6 +18,7 @@ namespace Game::Objects::Office
         Sprite spr_mute_call;
 
         Timer t_call = Timer(16);
+        std::shared_ptr<Objects::Cursor> o_cursor;
 
         CallHandler();
 
