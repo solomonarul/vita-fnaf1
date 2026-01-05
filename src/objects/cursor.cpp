@@ -12,7 +12,7 @@ Cursor::Cursor(std::shared_ptr<Texture> texture, size_t w, size_t h)
 void Cursor::draw(Shader& shader)
 {
     const auto mouse_pos = InputManager::get_mouse_data().get_coords_normalized();
-    this->spr_cursor.push_sprite(this->type, SDL_FRect{.x = mouse_pos.x, .y = mouse_pos.y, .w = 48.0 / 960, .h = -48.0 / 544});
+    this->spr_cursor.push_sprite(this->type, SDL_FRect{.x = mouse_pos.x, .y = mouse_pos.y, .w = 64.0 / 960, .h = -64.0 / 544});
 
     shader.setUniform("u_texture", 0);
     this->t_cursor->activate(GL_TEXTURE0);
