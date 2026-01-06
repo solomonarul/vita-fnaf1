@@ -37,11 +37,11 @@ buwr:
 
 bwd:
 	@cmake -B build -S . --preset windows-debug
-	@cmake --build build
+	@cmake --build build --config Debug
 	@cmake --install build --prefix out
 bwr:
 	@cmake -B build -S . --preset windows-release
-	@cmake --build build
+	@cmake --build build --config Release
 	@cmake --install build --prefix out
 
 bvd:

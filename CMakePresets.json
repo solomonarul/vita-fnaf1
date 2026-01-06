@@ -3,10 +3,11 @@
     "configurePresets": [
       {
         "name": "windows-base",
-        "generator": "Unix Makefiles",
+        "generator": "Visual Studio 18 2026",
         "binaryDir": "${sourceDir}/build",
         "cacheVariables": {
-          "NEX_BUILD_PLATFORM": "WINDOWS"
+          "NEX_BUILD_PLATFORM": "WINDOWS",
+          "SDL3_MIXER_VENDORED": "ON"
         }
       },
       {

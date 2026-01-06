@@ -13,8 +13,9 @@ set(VITA_MKSFOEX_FLAGS "${VITA_MKSFOEX_FLAGS} -d PARENTAL_LEVEL=1")
 add_subdirectory(lib)
 
 project(${NEX_APP_EXECUTABLE})
-add_executable(
-    ${PROJECT_NAME}
+
+set(
+    ${PROJECT_NAME}_SRCS
         "src/entry.cpp"
         "src/main.cpp"
         "src/menu.cpp"
@@ -26,6 +27,18 @@ add_executable(
         "src/objects/menu/manager.cpp"
         "src/objects/office/call.cpp"
 )
+
+if(NEX_BUILD_PLATFORM MATCHES "WINDOWS")
+    add_executable(
+        ${PROJECT_NAME}
+            ${${PROJECT_NAME}_SRCS}
+    )
+else()
+    add_executable(
+        ${PROJECT_NAME}
+            ${${PROJECT_NAME}_SRCS}
+    )
+endif()
 
 target_include_directories(
     ${PROJECT_NAME}
