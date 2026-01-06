@@ -1,7 +1,7 @@
 #include <nex.hpp>
 #include "main.hpp"
 
-#include <iostream>
+#include <SDL3/SDL_main.h>
 
 #ifdef __psp2__
 // PSVita newlib + Sony SDK heap sizes.
@@ -54,6 +54,19 @@ bool main_loop(double time, void* userData)
                 status->running = false;
                 break;
 
+            case SDL_EVENT_KEY_DOWN:
+                switch(event.key.key)
+                {
+                case SDLK_F11:
+                    status->window.set_fullscreen(!status->window.fullscreen);
+                    break;
+
+                default:
+                    status->states.send(event);
+                    break;
+                }
+                break;
+
             default:
                 status->states.send(event);
                 break;
@@ -68,7 +81,7 @@ int main(int argc, char* argv[])
     UNUSED(argc);
     UNUSED(argv);
 
-    std::cout << TTY_BLUE << "[INFO] App initialization complete.\n" << TTY_RESET;
+    SDL_Log("%s[INFO] App initialization complete.%s\n", TTY_BLUE, TTY_RESET);
     // TODO: figure out why the Vita doesn't allocate the heaps unless I do this.
 
     AppState status;

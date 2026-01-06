@@ -95,7 +95,7 @@ void Manager::event(SDL_Event& event, StateManager& sm)
 
     switch (event.type)
     {
-#ifndef __psp2__
+#if !defined(__psp2__)
         case SDL_EVENT_KEY_DOWN:
             if (event.key.repeat)
                 break;

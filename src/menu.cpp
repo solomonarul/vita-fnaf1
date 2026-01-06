@@ -10,8 +10,10 @@ using namespace Game;
 #define PLATFORM "VITA"
 #elif EMSCRIPTEN
 #define PLATFORM "WEB"
-#else
+#elif _WIN32
 #define PLATFORM "WINDOWS"
+#else
+#define PLATFORM "GENERIC"
 #endif
 
 States::Menu::Menu(StateManager& sm, std::shared_ptr<Objects::Cursor> cursor) : IState::IState(sm)

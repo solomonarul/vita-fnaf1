@@ -31,6 +31,7 @@ set(
 if(NEX_BUILD_PLATFORM MATCHES "WINDOWS")
     add_executable(
         ${PROJECT_NAME}
+        WIN32
             ${${PROJECT_NAME}_SRCS}
     )
 else()
