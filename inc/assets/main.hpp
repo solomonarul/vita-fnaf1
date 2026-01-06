@@ -42,15 +42,15 @@ inline void queue_assets(uint8_t* count)
 
     (*count)++;
     AssetManager::queue<TextureArray>("t_blip", std::vector<TextureConfig>{
-        TextureConfig{.path = "assets/images/misc/night_bars/1.png", .gpu_format = GL_RGBA, .format = GL_RGBA,},
-        TextureConfig{.path = "assets/images/misc/night_bars/2.png", .gpu_format = GL_RGBA, .format = GL_RGBA,},
-        TextureConfig{.path = "assets/images/misc/night_bars/3.png", .gpu_format = GL_RGBA, .format = GL_RGBA,},
-        TextureConfig{.path = "assets/images/misc/night_bars/4.png", .gpu_format = GL_RGBA, .format = GL_RGBA,},
-        TextureConfig{.path = "assets/images/misc/night_bars/5.png", .gpu_format = GL_RGBA, .format = GL_RGBA,},
-        TextureConfig{.path = "assets/images/misc/night_bars/6.png", .gpu_format = GL_RGBA, .format = GL_RGBA,},
-        TextureConfig{.path = "assets/images/misc/night_bars/7.png", .gpu_format = GL_RGBA, .format = GL_RGBA,},
-        TextureConfig{.path = "assets/images/misc/night_bars/8.png", .gpu_format = GL_RGBA, .format = GL_RGBA,},
-        TextureConfig{.path = "assets/images/misc/night_bars/9.png", .gpu_format = GL_RGBA, .format = GL_RGBA,},
+        TextureConfig{.path = "assets/images/misc/night_bars/1.png"},
+        TextureConfig{.path = "assets/images/misc/night_bars/2.png"},
+        TextureConfig{.path = "assets/images/misc/night_bars/3.png"},
+        TextureConfig{.path = "assets/images/misc/night_bars/4.png"},
+        TextureConfig{.path = "assets/images/misc/night_bars/5.png"},
+        TextureConfig{.path = "assets/images/misc/night_bars/6.png"},
+        TextureConfig{.path = "assets/images/misc/night_bars/7.png"},
+        TextureConfig{.path = "assets/images/misc/night_bars/8.png"},
+        TextureConfig{.path = "assets/images/misc/night_bars/9.png"},
     });
 
     (*count)++;

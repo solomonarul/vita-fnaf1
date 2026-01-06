@@ -31,13 +31,9 @@ States::Main::Main(StateManager& sm) : IState::IState(sm)
         .path = "assets/images/misc/LITTLE_CLOCK.png",
         .min_filter = GL_LINEAR,
         .mag_filter = GL_LINEAR,
-        .gpu_format = GL_RGBA,
-        .format = GL_RGBA,
     });
     this->o_cursor = std::make_shared<Objects::Cursor>(std::make_shared<Texture>(TextureConfig{
         .path = "assets/images/cursor.png",
-        .gpu_format = GL_RGBA,
-        .format = GL_RGBA
     }), 8, 3);
     // clang-format on
 

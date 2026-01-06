@@ -37,11 +37,12 @@ buwr:
 
 bwd:
 	@cmake -B build -S . --preset windows-debug
-	@cmake --build build --config Debug
+	@cmake --build build --config Debug -j $(shell powershell -Command "[Environment]::ProcessorCount")
 	@cmake --install build --prefix out
+
 bwr:
 	@cmake -B build -S . --preset windows-release
-	@cmake --build build --config Release
+	@cmake --build build --config Release -j $(shell powershell -Command "[Environment]::ProcessorCount")
 	@cmake --install build --prefix out
 
 bvd:

@@ -43,7 +43,7 @@ inline void queue_assets(uint8_t* count, int night)
 
     (*count)++;
     AssetManager::queue<Texture>("t_mute_call",
-        TextureConfig{.path = "assets/images/night/MUTE_CALL_BUTTON.png", .gpu_format = GL_RGBA, .format = GL_RGBA}
+        TextureConfig{.path = "assets/images/night/MUTE_CALL_BUTTON.png"}
     );
 
     (*count)++;
