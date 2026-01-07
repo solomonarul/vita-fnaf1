@@ -1,0 +1,63 @@
+name: Build on Latest Windows
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Setup MSVC environment
+        shell: pwsh
+        run: |
+          & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
+          cl.exe
+          cmake --version
+          ninja --version
+
+      - name: Build SDL3
+        shell: pwsh
+        run: |
+          & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
+
+          git clone https://github.com/libsdl-org/SDL.git
+          cd SDL
+
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          cmake --build build
+          cmake --install build --prefix "${env:GITHUB_WORKSPACE}\sdl-install"
+
+      - name: Build SDL3_mixer
+        shell: pwsh
+        run: |
+          & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
+
+          git clone https://github.com/libsdl-org/SDL_mixer.git
+          cd SDL_mixer
+
+          cmake -S . -B build -G Ninja `
+            -DCMAKE_BUILD_TYPE=Release `
+            -DSDL3_DIR="${env:GITHUB_WORKSPACE}\sdl-install\lib\cmake\SDL3"
+
+          cmake --build build
+          cmake --install build --prefix "${env:GITHUB_WORKSPACE}\sdl-install"
+
+      - name: Build Debug
+        run: |
+          cmake -B build -S . --preset windows-debug
+          cmake --build build --config Debug -j [Environment]::ProcessorCount
+          cmake --install build --prefix out
+
+      - name: Build Release
+        run: |
+        	cmake -B build -S . --preset windows-release
+          cmake --build build --config Release -j [Environment]::ProcessorCount
+          cmake --install build --prefix out
