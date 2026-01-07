@@ -66,12 +66,14 @@ void States::Office::update(double dt)
         u_view_offset -= 4 * dt * ((0.25 - m_data.x) / 0.25);
         if (u_view_offset < 0)
             u_view_offset = 0;
+        this->o_cursor->type = Objects::CursorType::CURSOR_ARROW_LEFT;
     }
     else if (m_data.x > 0.75)
     {
         u_view_offset += 4 * dt * ((m_data.x - 0.75) / 0.25);
         if (u_view_offset > 1)
             u_view_offset = 1;
+        this->o_cursor->type = Objects::CursorType::CURSOR_ARROW_RIGHT;
     }
 
     if (!this->a_office_buzz->is_playing_track())
@@ -82,7 +84,7 @@ void States::Office::update(double dt)
     auto mouse = InputManager::get_mouse_data().get_coords();
     mouse.x += u_view_offset * (1210 - 960) / 960.0;
     if (SDL_PointInRectFloat(&mouse, &RECT_FREDDY_NOSE))
-        this->o_cursor->type = Objects::CURSOR_MASCOT;
+        this->o_cursor->type = Objects::CursorType::CURSOR_MASCOT;
 
     this->ti_fan.update(dt);
     if (this->ti_fan.has_ticked())

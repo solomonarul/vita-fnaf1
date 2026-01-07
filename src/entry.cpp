@@ -55,15 +55,15 @@ bool main_loop(double time, void* userData)
                 break;
 
             case SDL_EVENT_KEY_DOWN:
-                switch(event.key.key)
+                switch (event.key.key)
                 {
-                case SDLK_F11:
-                    status->window.set_fullscreen(!status->window.fullscreen);
-                    break;
+                    case SDLK_F11:
+                        status->window.set_fullscreen(!status->window.fullscreen);
+                        break;
 
-                default:
-                    status->states.send(event);
-                    break;
+                    default:
+                        status->states.send(event);
+                        break;
                 }
                 break;
 
@@ -72,6 +72,8 @@ bool main_loop(double time, void* userData)
                 break;
         }
     }
+
+    SDL_DelayNS(SDL_SECONDS_TO_NS(timer_rate - status->timer));
 
     return true;
 }

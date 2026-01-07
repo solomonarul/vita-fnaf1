@@ -12,7 +12,8 @@ Cursor::Cursor(std::shared_ptr<Texture> texture, size_t w, size_t h)
 
 void Cursor::draw(Shader& shader)
 {
-    if(!this->enabled) return;
+    if (!this->enabled)
+        return;
 
     const auto mouse_pos = InputManager::get_mouse_data().get_coords_normalized();
     this->spr_cursor.push_sprite(this->type, SDL_FRect{.x = mouse_pos.x, .y = mouse_pos.y, .w = 64.0 / 960, .h = -64.0 / 544});
@@ -26,7 +27,7 @@ void Cursor::draw(Shader& shader)
 
 void Cursor::event(SDL_Event& event)
 {
-    switch(event.type)
+    switch (event.type)
     {
         case SDL_EVENT_MOUSE_MOTION:
             this->enabled = true;
