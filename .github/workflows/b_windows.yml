@@ -58,6 +58,7 @@ jobs:
 
       - name: Build Release
         run: |
-        	cmake -B build -S . --preset windows-release
+          cmake -B build -S . --preset windows-release
           cmake --build build --config Release -j [Environment]::ProcessorCount
           cmake --install build --prefix out
+          
