@@ -15,19 +15,9 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Setup MSVC environment
-        shell: pwsh
-        run: |
-          & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
-          cl.exe
-          cmake --version
-          ninja --version
-
       - name: Build SDL3
         shell: pwsh
         run: |
-          & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
-
           git clone https://github.com/libsdl-org/SDL.git
           cd SDL
 
@@ -38,8 +28,6 @@ jobs:
       - name: Build SDL3_mixer
         shell: pwsh
         run: |
-          & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
-
           git clone https://github.com/libsdl-org/SDL_mixer.git
           cd SDL_mixer
 
