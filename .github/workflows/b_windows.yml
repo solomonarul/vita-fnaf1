@@ -25,8 +25,8 @@ jobs:
           git clone https://github.com/libsdl-org/SDL.git
           cd SDL
 
-          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release --parallel
-          cmake --build build
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          cmake --build build --config Release --parallel
           cmake --install build --prefix "${env:GITHUB_WORKSPACE}\sdl-install"
 
       - name: Build SDL3_mixer
@@ -36,10 +36,10 @@ jobs:
           cd SDL_mixer
 
           cmake -S . -B build -G Ninja `
-            -DCMAKE_BUILD_TYPE=Release --parallel`
+            -DCMAKE_BUILD_TYPE=Release`
             -DSDL3_DIR="${env:GITHUB_WORKSPACE}\sdl-install\lib\cmake\SDL3"
 
-          cmake --build build
+          cmake --build build --config Release --parallel
           cmake --install build --prefix "${env:GITHUB_WORKSPACE}\sdl-install"
 
       - name: Build Debug
