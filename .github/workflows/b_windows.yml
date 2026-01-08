@@ -41,13 +41,13 @@ jobs:
 
       - name: Build Debug
         run: |
-          cmake -B build -S . --preset windows-workflow-base -DSDL3_DIR="${env:GITHUB_WORKSPACE}\sdl-install\lib\cmake\SDL3" -DSDL3_mixer_DIR="${env:GITHUB_WORKSPACE}\sdl-install\lib\cmake\SDL3_mixer"
-          cmake --build build --config Debug --parallel
-          cmake --install build --prefix out
+          cmake -B build_debug -S . --preset windows-workflow-base -DSDL3_DIR="${env:GITHUB_WORKSPACE}\sdl-install\lib\cmake\SDL3" -DSDL3_mixer_DIR="${env:GITHUB_WORKSPACE}\sdl-install\lib\cmake\SDL3_mixer"
+          cmake --build_debug --config Debug --parallel
+          cmake --install build_debug --prefix out
 
       - name: Build Release
         run: |
-          cmake -B build -S . --preset windows-workflow-base -DSDL3_DIR="${env:GITHUB_WORKSPACE}\sdl-install\lib\cmake\SDL3" -DSDL3_mixer_DIR="${env:GITHUB_WORKSPACE}\sdl-install\lib\cmake\SDL3_mixer"
-          cmake --build build --config Release --parallel
-          cmake --install build --prefix out
+          cmake -B build_release -S . --preset windows-workflow-base -DSDL3_DIR="${env:GITHUB_WORKSPACE}\sdl-install\lib\cmake\SDL3" -DSDL3_mixer_DIR="${env:GITHUB_WORKSPACE}\sdl-install\lib\cmake\SDL3_mixer"
+          cmake --build build_release --config Release --parallel
+          cmake --install build_release --prefix out
           

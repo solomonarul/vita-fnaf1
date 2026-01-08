@@ -47,4 +47,6 @@ jobs:
         run: make buwd
 
       - name: Build Release
-        run: make buwr
+        run: |
+          make co
+          make buwr

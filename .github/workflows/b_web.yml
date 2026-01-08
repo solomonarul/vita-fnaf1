@@ -28,4 +28,6 @@ jobs:
         run: make bbwd
 
       - name: Build Release
-        run: make bbwr
+        run: |
+          make co
+          make bbwr
