@@ -2,6 +2,28 @@
     "version": 2,
     "configurePresets": [
       {
+        "name": "windows-workflow-base",
+        "generator": "Ninja",
+        "binaryDir": "${sourceDir}/build",
+        "cacheVariables": {
+          "NEX_BUILD_PLATFORM": "WINDOWS"
+        }
+      },
+      {
+        "name": "windows-workflow-debug",
+        "inherits": "windows-workflow-base",
+        "cacheVariables": {
+          "CMAKE_BUILD_TYPE": "Debug"
+        }
+      },
+      {
+        "name": "windows-workflow-release",
+        "inherits": "windows-workflow-base",
+        "cacheVariables": {
+          "CMAKE_BUILD_TYPE": "Release"
+        }
+      },
+      {
         "name": "windows-base",
         "generator": "Visual Studio 18 2026",
         "binaryDir": "${sourceDir}/build",

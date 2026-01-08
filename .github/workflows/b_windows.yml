@@ -25,7 +25,7 @@ jobs:
           git clone https://github.com/libsdl-org/SDL.git
           cd SDL
 
-          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DSDL_TEST_LIBRARY=OFF -DSDL_TESTS=OFF
           cmake --build build --config Release --parallel
           cmake --install build --prefix "${env:GITHUB_WORKSPACE}\sdl-install"
 
@@ -41,13 +41,13 @@ jobs:
 
       - name: Build Debug
         run: |
-          cmake -B build -S . --preset windows-base -DSDL3_DIR="${env:GITHUB_WORKSPACE}\sdl-install\lib\cmake\SDL3" -DSDL3_MIXER_DIR="${env:GITHUB_WORKSPACE}\sdl-install\lib\cmake\SDL_mixer"
+          cmake -B build -S . --preset windows-workflow-base -DSDL3_DIR="${env:GITHUB_WORKSPACE}\sdl-install\lib\cmake\SDL3" -DSDL3_MIXER_DIR="${env:GITHUB_WORKSPACE}\sdl-install\lib\cmake\SDL_mixer"
           cmake --build build --config Debug --parallel
           cmake --install build --prefix out
 
       - name: Build Release
         run: |
-          cmake -B build -S . --preset windows-base -DSDL3_DIR="${env:GITHUB_WORKSPACE}\sdl-install\lib\cmake\SDL3" -DSDL3_MIXER_DIR="${env:GITHUB_WORKSPACE}\sdl-install\lib\cmake\SDL_mixer"
+          cmake -B build -S . --preset windows-workflow-base -DSDL3_DIR="${env:GITHUB_WORKSPACE}\sdl-install\lib\cmake\SDL3" -DSDL3_MIXER_DIR="${env:GITHUB_WORKSPACE}\sdl-install\lib\cmake\SDL_mixer"
           cmake --build build --config Release --parallel
           cmake --install build --prefix out
           
