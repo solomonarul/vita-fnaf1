@@ -42,10 +42,10 @@ jobs:
 
             wget -O PSVita_Release.zip https://github.com/GrapheneCt/PVR_PSP2/releases/download/v3.9/PSVita_Release.zip
             unzip PSVita_Release.zip -d PSP_PVR2_Release
-            cp PSP_PVR2_Release/libGLESv2.suprx "./vita-fnaf1/platform/vita/module/"
-            cp PSP_PVR2_Release/libgpu_es4_ext.suprx "./vita-fnaf1/platform/vita/module/"
-            cp PSP_PVR2_Release/libIMGEGL.suprx "./vita-fnaf1/platform/vita/module/"
-            cp PSP_PVR2_Release/libpvrPSP2_WSEGL.suprx "./vita-fnaf1/platform/vita/module/"
+            cp PSP_PVR2_Release/libGLESv2.suprx "platform/vita/module/"
+            cp PSP_PVR2_Release/libgpu_es4_ext.suprx "platform/vita/module/"
+            cp PSP_PVR2_Release/libIMGEGL.suprx "platform/vita/module/"
+            cp PSP_PVR2_Release/libpvrPSP2_WSEGL.suprx "platform/vita/module/"
 
       - name: Fetch custom SDL3 and SDL3_mixer
         run: |
