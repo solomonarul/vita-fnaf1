@@ -31,15 +31,22 @@ jobs:
 
       - name: Fetch custom SDL3 and SDL3_mixer
         run: |
+            export VITASDK=/usr/local/vitasdk
+            export PATH=$VITASDK/bin:$PATH
             git clone https://github.com/solomonarul/vita-packages.git
             cd vita-packages
             ./build.sh sdl3
             ./build.sh sdl3_mixer
 
       - name: Build Debug
-        run: make bvd
+        run: |
+            export VITASDK=/usr/local/vitasdk
+            export PATH=$VITASDK/bin:$PATH
+            make bvd
 
       - name: Build Release
         run: |
+            export VITASDK=/usr/local/vitasdk
+            export PATH=$VITASDK/bin:$PATH
             make c
             make bvr
