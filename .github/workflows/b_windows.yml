@@ -22,7 +22,7 @@ jobs:
       - name: Build SDL3
         shell: pwsh
         run: |
-          git clone https://github.com/libsdl-org/SDL.git
+          git clone https://github.com/libsdl-org/SDL.git --depth 1
           cd SDL
 
           cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DSDL_TEST_LIBRARY=OFF -DSDL_TESTS=OFF
@@ -32,7 +32,7 @@ jobs:
       - name: Build SDL3_mixer
         shell: pwsh
         run: |
-          git clone https://github.com/libsdl-org/SDL_mixer.git
+          git clone https://github.com/libsdl-org/SDL_mixer.git --depth 1
           cd SDL_mixer
 
           cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DSDL3_DIR="${env:GITHUB_WORKSPACE}\sdl-install\lib\cmake\SDL3"

@@ -24,7 +24,7 @@ jobs:
             export VITASDK=/usr/local/vitasdk
             export PATH=$VITASDK/bin:$PATH
             printf '\nexport VITASDK=/usr/local/vitasdk\nexport PATH=$VITASDK/bin:$PATH\n' >> ~/.bashrc
-            git clone https://github.com/vitasdk/vdpm
+            git clone https://github.com/vitasdk/vdpm --depth 1
             cd vdpm
             ./bootstrap-vitasdk.sh
             ./install-all.sh
@@ -51,7 +51,7 @@ jobs:
         run: |
             export VITASDK=/usr/local/vitasdk
             export PATH=$VITASDK/bin:$PATH
-            git clone https://github.com/solomonarul/vita-packages.git
+            git clone https://github.com/solomonarul/vita-packages.git --depth 1
             cd vita-packages
             ./build.sh sdl3
             ./build.sh sdl3_mixer
