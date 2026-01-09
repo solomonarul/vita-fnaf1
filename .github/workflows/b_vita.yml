@@ -33,7 +33,6 @@ jobs:
         run: |
             git clone https://github.com/solomonarul/vita-packages.git
             cd vita-packages
-            ls -l
             ./build.sh sdl3
             ./build.sh sdl3_mixer
 
