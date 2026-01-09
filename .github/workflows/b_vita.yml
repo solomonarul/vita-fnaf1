@@ -35,7 +35,7 @@ jobs:
             export PATH=$VITASDK/bin:$PATH
             wget -O vitasdk_stubs.zip https://github.com/GrapheneCt/PVR_PSP2/releases/download/v3.9/vitasdk_stubs.zip
             unzip vitasdk_stubs.zip -d vitasdk_stubs
-            cp -r vitasdk_stubs/libGLESv1_stub_vitasdk.a/* "${VITASDK}/arm-vita-eabi/lib/"
+            cp -r vitasdk_stubs/libGLESv1_CM_stub_vitasdk.a/* "${VITASDK}/arm-vita-eabi/lib/"
             cp -r vitasdk_stubs/libGLESv2_stub_vitasdk.a/* "${VITASDK}/arm-vita-eabi/lib/"
             cp -r vitasdk_stubs/libgpu_es4_ext_stub_vitasdk.a/* "${VITASDK}/arm-vita-eabi/lib/"
             cp -r vitasdk_stubs/libIMGEGL_stub_vitasdk.a/* "${VITASDK}/arm-vita-eabi/lib/"
