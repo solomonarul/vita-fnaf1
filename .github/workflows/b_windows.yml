@@ -42,7 +42,7 @@ jobs:
       - name: Build Debug
         run: |
           cmake -B build_debug -S . --preset windows-workflow-base -DSDL3_DIR="${env:GITHUB_WORKSPACE}\sdl-install\lib\cmake\SDL3" -DSDL3_mixer_DIR="${env:GITHUB_WORKSPACE}\sdl-install\lib\cmake\SDL3_mixer"
-          cmake --build_debug --config Debug --parallel
+          cmake --build build_debug --config Debug --parallel
           cmake --install build_debug --prefix out
 
       - name: Build Release
