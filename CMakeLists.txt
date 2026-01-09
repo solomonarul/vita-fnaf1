@@ -33,6 +33,7 @@ if(NEX_BUILD_PLATFORM MATCHES "WINDOWS")
         ${PROJECT_NAME}
         WIN32
             ${${PROJECT_NAME}_SRCS}
+            platform/windows/${PROJECT_NAME}.rc
     )
 else()
     add_executable(

@@ -47,6 +47,11 @@ inline void queue_assets(uint8_t* count, int night)
     );
 
     (*count)++;
+    AssetManager::queue<Texture>("t_camera_flip",
+        TextureConfig{.path = "assets/images/night/FLIP.png"}
+    );
+
+    (*count)++;
     AssetManager::queue<Shader>("s_office",
         "assets/shaders/office/background.vert", "assets/shaders/office/background.frag"
     );
