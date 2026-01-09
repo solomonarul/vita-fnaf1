@@ -29,6 +29,24 @@ jobs:
             ./bootstrap-vitasdk.sh
             ./install-all.sh
 
+      - name: Install PSP_PVR2
+        run: |
+            export VITASDK=/usr/local/vitasdk
+            export PATH=$VITASDK/bin:$PATH
+            wget -O vitasdk_stubs.zip https://github.com/GrapheneCt/PVR_PSP2/releases/download/v3.9/vitasdk_stubs.zip
+            unzip vitasdk_stubs.zip -d vitasdk_stubs
+            cp -r vitasdk_stubs/libGLESv1_stub_vitasdk.a/* "${VITASDK}/arm-vita-eabi/lib/"
+            cp -r vitasdk_stubs/libGLESv2_stub_vitasdk.a/* "${VITASDK}/arm-vita-eabi/lib/"
+            cp -r vitasdk_stubs/libgpu_es4_ext_stub_vitasdk.a/* "${VITASDK}/arm-vita-eabi/lib/"
+            cp -r vitasdk_stubs/libIMGEGL_stub_vitasdk.a/* "${VITASDK}/arm-vita-eabi/lib/"
+
+            wget -O PSVita_Release.zip https://github.com/GrapheneCt/PVR_PSP2/releases/download/v3.9/PSVita_Release.zip
+            unzip PSVita_Release.zip -d PSP_PVR2_Release
+            cp PSP_PVR2_Release/libGLESv2.suprx "./vita-fnaf1/platform/vita/module/"
+            cp PSP_PVR2_Release/libgpu_es4_ext.suprx "./vita-fnaf1/platform/vita/module/"
+            cp PSP_PVR2_Release/libIMGEGL.suprx "./vita-fnaf1/platform/vita/module/"
+            cp PSP_PVR2_Release/libpvrPSP2_WSEGL.suprx "./vita-fnaf1/platform/vita/module/"
+
       - name: Fetch custom SDL3 and SDL3_mixer
         run: |
             export VITASDK=/usr/local/vitasdk
