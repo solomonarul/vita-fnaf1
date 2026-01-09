@@ -1,31 +1,37 @@
 # Vita FNAF1
 
-Remake of FNAF1 for the PSVita.
+Remake of FNAF1 targeted towards the PSVita.
 
-Homage to my [old project,](https://github.com/ghostnear/VitaFNAF1)
+Also runs on Windows, Linux and on the web using Emscriptem.
 
-- ATM, I use a scuffed version of SDL3_Mixer, waiting till somebody makes a proper package.
-    - [This page should not be a 404.](https://github.com/vitasdk/packages/tree/master/sdl3_mixer)
-    
 Obviously the used assets are not owned by me and are under the copyright of the original creator, Scott Cawthon.
 
 The source code is licensed under GPL v3.0.
 
-# How to compile:
+## Preview:
+
+![Freddy vibing in Windows 1.00 menu](./.github/images/preview.png)
+
+## Compilation details:
+
+For more info there's also the [workflows](./.github/workflows/).
 
 ### PSVita:
 
-> make bvr
-
-NOTE: make sure you got all the [PSP2_PVR](https://github.com/GrapheneCt/PVR_PSP2) modules from the release in the assets/modules folder.
+- using the same repo, make a SDL3 build that supports GLES 2.0 using the flags specified [here](https://github.com/libsdl-org/SDL/blob/main/docs/README-vita.md).
+- make your own SDL3_mixer build using [the packages repo](https://github.com/vitasdk/packages).
+- make sure you got all the [PSP2_PVR](https://github.com/GrapheneCt/PVR_PSP2) modules from the release in the assets/modules folder.
 
 ### Unix:
 
-> make bur
+- This works out the box if you got all the packages installed.
 
-### Web through Emscripten (W.I.P and unstable and untested and all that stuff)
+### Web through Emscripten
 
-> make bbr
+- This works out of the box.
+- Make sure you are not running index.html directly in the browser as browsers are not a fan of loading wasm locally.
+
+#### Homage to my [old project,](https://github.com/ghostnear/VitaFNAF1)
 
 ---
 

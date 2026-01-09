@@ -1,0 +1,52 @@
+name: Build for PSVita on Latest Ubuntu
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          submodules: recursive
+
+      - name: Install VDPM dependencies
+        run: |
+            sudo apt-get update
+            sudo apt-get install build-essential git make pkg-config cmake ninja-build fakeroot cmake-data texinfo libtool-bin libarchive-tools xutils-dev
+        
+      - name: Install VDPM
+        run: |
+            export VITASDK=/usr/local/vitasdk
+            export PATH=$VITASDK/bin:$PATH
+            printf '\nexport VITASDK=/usr/local/vitasdk\nexport PATH=$VITASDK/bin:$PATH\n' >> ~/.bashrc
+            git clone https://github.com/vitasdk/vdpm
+            cd vdpm
+            ./bootstrap-vitasdk.sh
+            ./install-all.sh
+
+      - name: Fetch packages.
+        run: |
+            git clone https://github.com/solomonarul/vita-packages.git
+
+      - name: Build SDL3
+        run: |
+            cd vita-packages
+            ./build.sh sdl3
+
+      - name: Build SDL3_mixer
+        run: |
+            cd vita-packages
+            ./build.sh sdl3_mixer
+
+      - name: Build Debug
+        run: make bvd
+
+      - name: Build Release
+        run: |
+            make c
+            make bvr
