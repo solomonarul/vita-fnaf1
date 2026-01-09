@@ -17,7 +17,11 @@ struct AppState : public IAppState
 {
     double timer = 0;
     StateManager states;
+#ifdef APP_IS_DEMO
+    Window window = Window({.title = "Five Nights at Freddy's DEMO", .w = 960, .h = 544});
+#else
     Window window = Window({.title = "Five Nights at Freddy's", .w = 960, .h = 544});
+#endif
 };
 
 bool main_loop(double time, void* userData)
