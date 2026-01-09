@@ -54,6 +54,22 @@ inline void queue_assets(uint8_t* count)
     });
 
     (*count)++;
+    AssetManager::queue<TextureArray>("t_door_right", std::vector<TextureConfig>{
+        TextureConfig{.path = "assets/images/night/office/buttons/right/1-STOPPED.png"},
+        TextureConfig{.path = "assets/images/night/office/buttons/right/2-DOOR.png"},
+        TextureConfig{.path = "assets/images/night/office/buttons/right/3-LIGHT.png"},
+        TextureConfig{.path = "assets/images/night/office/buttons/right/4-BOTH.png"}
+    });
+
+    (*count)++;
+    AssetManager::queue<TextureArray>("t_door_left", std::vector<TextureConfig>{
+        TextureConfig{.path = "assets/images/night/office/buttons/left/1-STOPPED.png"},
+        TextureConfig{.path = "assets/images/night/office/buttons/left/2-DOOR.png"},
+        TextureConfig{.path = "assets/images/night/office/buttons/left/3-LIGHT.png"},
+        TextureConfig{.path = "assets/images/night/office/buttons/left/4-BOTH.png"}
+    });
+
+    (*count)++;
     AssetManager::queue<Texture>("t_newspaper",
         TextureConfig{.path = "assets/images/misc/NEWSPAPER.png"}
     );
