@@ -44,6 +44,8 @@ void States::Newspaper::load_night()
 
 void States::Newspaper::update(double dt)
 {
+    this->o_cursor->update();
+
     float& alpha = this->spr_newspaper.color.a;
 
     switch (this->state)

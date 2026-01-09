@@ -46,6 +46,7 @@ namespace Game::Objects
         bool enabled;
 
         Cursor(std::shared_ptr<Texture>, size_t, size_t);
+        void update(void);
         void draw(Shader&);
         void event(SDL_Event&);
     };

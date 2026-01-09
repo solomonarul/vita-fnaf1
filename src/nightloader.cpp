@@ -81,6 +81,8 @@ void States::NightLoader::draw(int w, int h)
 
 void States::NightLoader::update(double dt)
 {
+    this->o_cursor->update();
+    
     if (this->blip_frame != (uint16_t)-1)
     {
         this->ti_blip_update.update(dt);

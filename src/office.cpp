@@ -60,6 +60,8 @@ void States::Office::draw(int w, int h)
 
 void States::Office::update(double dt)
 {
+    this->o_cursor->update();
+    
     auto m_data = InputManager::get_mouse_data().get_coords();
     if (m_data.x < 0.25)
     {

@@ -10,6 +10,11 @@ Cursor::Cursor(std::shared_ptr<Texture> texture, size_t w, size_t h)
     this->enabled = false;
 }
 
+void Cursor::update(void)
+{
+    this->type = CursorType::CURSOR_NORMAL;
+}
+
 void Cursor::draw(Shader& shader)
 {
     if (!this->enabled)
@@ -21,8 +26,6 @@ void Cursor::draw(Shader& shader)
     shader.setUniform("u_texture", 0);
     this->t_cursor->activate(GL_TEXTURE0);
     this->spr_cursor.draw(shader);
-
-    this->type = CursorType::CURSOR_NORMAL;
 }
 
 void Cursor::event(SDL_Event& event)

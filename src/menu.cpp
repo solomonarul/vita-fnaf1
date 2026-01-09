@@ -83,6 +83,8 @@ void States::Menu::draw(int w, int h)
 
 void States::Menu::update(double dt)
 {
+    this->o_cursor->update();
+
     if (updates_disabled)
     {
         AudioManager::stop_all_tracks();

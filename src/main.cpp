@@ -72,6 +72,8 @@ void States::Main::draw(int w, int h)
 
 void States::Main::update(double dt)
 {
+    this->o_cursor->update();
+
     if (AssetManager::enqueued_count() == 0)
     {
         this->ti_transition.update(dt);

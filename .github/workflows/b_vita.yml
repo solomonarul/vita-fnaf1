@@ -47,7 +47,7 @@ jobs:
             cp PSP_PVR2_Release/libIMGEGL.suprx "platform/vita/module/"
             cp PSP_PVR2_Release/libpvrPSP2_WSEGL.suprx "platform/vita/module/"
 
-      - name: Fetch custom SDL3 and SDL3_mixer
+      - name: Build custom SDL3 and SDL3_mixer
         run: |
             export VITASDK=/usr/local/vitasdk
             export PATH=$VITASDK/bin:$PATH
