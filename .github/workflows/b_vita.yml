@@ -29,18 +29,11 @@ jobs:
             ./bootstrap-vitasdk.sh
             ./install-all.sh
 
-      - name: Fetch packages.
+      - name: Fetch custom SDL3 and SDL3_mixer
         run: |
             git clone https://github.com/solomonarul/vita-packages.git
-
-      - name: Build SDL3
-        run: |
             cd vita-packages
             ./build.sh sdl3
-
-      - name: Build SDL3_mixer
-        run: |
-            cd vita-packages
             ./build.sh sdl3_mixer
 
       - name: Build Debug
