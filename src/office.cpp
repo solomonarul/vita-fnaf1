@@ -30,16 +30,15 @@ States::Office::Office(StateManager& sm, std::shared_ptr<Objects::Cursor> cursor
 
 void States::Office::draw(int w, int h)
 {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    NEX::GL::clear_color(SDL_FColor{.r = 0.0f, .g = 0.0, .b = 0.0, .a = 1.0f});
 
     this->tr_office_view->use();
     Texture::default_shader->use();
-    Texture::default_shader->setUniform("u_texture", 0);
+    Texture::default_shader->set_uniform("u_texture", 0);
     this->t_office->textures[0]->activate(GL_TEXTURE0);
     this->spr_office.draw(*Texture::default_shader);
     Texture::default_shader->use();
-    Texture::default_shader->setUniform("u_texture", 0);
+    Texture::default_shader->set_uniform("u_texture", 0);
     this->t_fan->textures[this->fan_image]->activate(GL_TEXTURE0);
     this->spr_fan.draw(*Texture::default_shader);
     this->tr_office_view->unuse();
@@ -47,8 +46,8 @@ void States::Office::draw(int w, int h)
     NEX::GL::set_view_letterbox({w, h}, {960, 544});
 
     this->s_office->use();
-    this->s_office->setUniform("u_texture", 0);
-    this->s_office->setUniform("u_view_offset", this->u_view_offset);
+    this->s_office->set_uniform("u_texture", 0);
+    this->s_office->set_uniform("u_view_offset", this->u_view_offset);
     this->tr_office_view->activate(GL_TEXTURE0);
     this->spr_office_view.draw(*this->s_office);
 
@@ -61,7 +60,7 @@ void States::Office::draw(int w, int h)
 void States::Office::update(double dt)
 {
     this->o_cursor->update();
-    
+
     auto m_data = InputManager::get_mouse_data().get_coords();
     if (m_data.x < 0.25)
     {

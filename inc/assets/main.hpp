@@ -10,12 +10,7 @@ inline void queue_assets(uint8_t* count)
 {
     // clang-format off
     (*count)++;
-    AssetManager::queue<TextureArray>("t_menu_background", std::vector<TextureConfig>{
-        TextureConfig{.path = "assets/images/menu/background/1.png"},
-        TextureConfig{.path = "assets/images/menu/background/2.png"},
-        TextureConfig{.path = "assets/images/menu/background/3.png"},
-        TextureConfig{.path = "assets/images/menu/background/4.png"},
-    });
+    AssetManager::queue<Texture>("t_menu_background", TextureConfig{.path = "assets/images/menu/background.png"});
 
     (*count)++;
     AssetManager::queue<TextureArray>("t_menu_blip", std::vector<TextureConfig>{

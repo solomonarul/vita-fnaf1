@@ -20,7 +20,7 @@ void CallHandler::draw(void)
     if (t_call.ok && this->a_call->is_playing_track())
     {
         Texture::default_shader->use();
-        Texture::default_shader->setUniform("u_texture", 0);
+        Texture::default_shader->set_uniform("u_texture", 0);
         this->t_mute_call->activate(GL_TEXTURE0);
         this->spr_mute_call.draw(*Texture::default_shader);
     }

@@ -44,9 +44,7 @@ States::Main::Main(StateManager& sm) : IState::IState(sm)
 
 void States::Main::draw(int w, int h)
 {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-
+    NEX::GL::clear_color(SDL_FColor{.r = 0.0, .g = 0.0, .b = 0.0, .a = 1.0f});
     NEX::GL::set_view_letterbox({w, h}, {960, 544});
 
     for (auto index = 0; index < 3; index++)
@@ -61,7 +59,7 @@ void States::Main::draw(int w, int h)
     if (AssetManager::enqueued_count() != 0)
     {
         Texture::default_shader->use();
-        Texture::default_shader->setUniform("u_texture", 0);
+        Texture::default_shader->set_uniform("u_texture", 0);
         this->t_loader->activate(GL_TEXTURE0);
         this->spr_loader.draw(*Texture::default_shader);
     }

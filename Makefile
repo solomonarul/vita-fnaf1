@@ -3,6 +3,7 @@
 .DEFAULT_GOAL := _bruh
 
 TARGET = app
+VITA_APP_ID = SLMNFNAF1
 
 _bruh:
 	@echo "You didn't read the README, did you?"
@@ -86,6 +87,9 @@ rb:
 
 sv:
 	@curl -T ./out/vpk/${TARGET}.vpk ftp://$(VITA_ADDR)/ux0:/VPK/${TARGET}.vpk
+
+sve:
+	@curl -T ./build/${TARGET}.self.out ftp://$(VITA_ADDR)/ux0:/app/${VITA_APP_ID}/eboot.bin
 
 du:
 	@renderdoccmd capture ./out/bin/${TARGET}

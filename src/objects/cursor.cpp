@@ -23,7 +23,7 @@ void Cursor::draw(Shader& shader)
     const auto mouse_pos = InputManager::get_mouse_data().get_coords_normalized();
     this->spr_cursor.push_sprite(this->type, SDL_FRect{.x = mouse_pos.x, .y = mouse_pos.y, .w = 64.0 / 960, .h = -64.0 / 544});
 
-    shader.setUniform("u_texture", 0);
+    shader.set_uniform("u_texture", 0);
     this->t_cursor->activate(GL_TEXTURE0);
     this->spr_cursor.draw(shader);
 }

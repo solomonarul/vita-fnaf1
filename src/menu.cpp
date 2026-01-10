@@ -64,9 +64,7 @@ States::Menu::Menu(StateManager& sm, std::shared_ptr<Objects::Cursor> cursor) : 
 
 void States::Menu::draw(int w, int h)
 {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-
+    NEX::GL::clear_color(SDL_FColor{.r = 0.0f, .g = 0.0, .b = 0.0, .a = 1.0f});
     NEX::GL::set_view_letterbox({w, h}, {960, 544});
 
     this->o_background.draw();

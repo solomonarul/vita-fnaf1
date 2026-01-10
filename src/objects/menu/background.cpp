@@ -6,26 +6,28 @@ Background::Background()
 {
     this->shader = AssetManager::get<Shader>("s_menu_background");
     this->t_blip = AssetManager::get<TextureArray>("t_menu_blip");
-    this->t_background = AssetManager::get<TextureArray>("t_menu_background");
+    this->t_background = AssetManager::get<Texture>("t_menu_background");
     this->t_static = AssetManager::get<TextureArray>("t_static");
 }
 
 void Background::draw()
 {
     this->shader->use();
-    this->shader->setUniform("u_alpha", this->u_alpha);
-    this->shader->setUniform("u_bar_offset", this->u_bar_offset);
-    this->shader->setUniform("u_blip_alpha", this->blip_show ? this->u_blip_alpha : 0);
-    this->shader->setUniform("u_bar_width", this->u_bar_width);
+    this->shader->set_uniform("u_alpha", this->u_alpha);
+    this->shader->set_uniform("u_bar_offset", this->u_bar_offset);
+    this->shader->set_uniform("u_blip_alpha", this->blip_show ? this->u_blip_alpha : 0);
+    this->shader->set_uniform("u_bar_width", this->u_bar_width);
 
-    this->shader->setUniform("u_texture", 0);
-    this->t_background->textures[current_texture]->activate(GL_TEXTURE0);
+    this->shader->set_uniform("u_texture", 0);
+    this->shader->set_uniform("u_texture_count", 4.0);
+    this->shader->set_uniform("u_texture_index", this->current_texture * 1.0);
+    this->t_background->activate(GL_TEXTURE0);
 
-    this->shader->setUniform("u_static_texture", 1);
-    this->t_static->textures[current_static_texture]->activate(GL_TEXTURE1);
+    this->shader->set_uniform("u_static_texture", 1);
+    this->t_static->textures[this->current_static_texture]->activate(GL_TEXTURE1);
 
-    this->shader->setUniform("u_blip_texture", 2);
-    this->t_blip->textures[current_blip_texture]->activate(GL_TEXTURE2);
+    this->shader->set_uniform("u_blip_texture", 2);
+    this->t_blip->textures[this->current_blip_texture]->activate(GL_TEXTURE2);
 
     this->spr_background.draw(*shader);
 }

@@ -20,19 +20,16 @@ States::Newspaper::Newspaper(StateManager& sm, std::shared_ptr<Objects::Cursor> 
 void States::Newspaper::draw(int w, int h)
 {
     if (this->state != NEWSPAPER_STATE_FADING_IN)
-    {
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-    }
+        NEX::GL::clear_color(SDL_FColor{.r = 0.0f, .g = 0.0, .b = 0.0, .a = 1.0f});
+
     NEX::GL::set_view_letterbox({w, h}, {960, 544});
 
     Texture::default_shader->use();
-    Texture::default_shader->setUniform("u_texture", 0);
+    Texture::default_shader->set_uniform("u_texture", 0);
     this->t_newspaper->activate(GL_TEXTURE0);
     this->spr_newspaper.draw(*Texture::default_shader);
 
     Texture::default_shader->use();
-    this->o_cursor->draw(*Texture::default_shader);
 }
 
 void States::Newspaper::load_night()
@@ -84,5 +81,4 @@ void States::Newspaper::event(SDL_Event& event)
             load_night();
             break;
     }
-    this->o_cursor->event(event);
 }

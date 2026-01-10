@@ -29,33 +29,16 @@ jobs:
             ./bootstrap-vitasdk.sh
             ./install-all.sh
 
-      - name: Install PSP_PVR2
-        run: |
-            export VITASDK=/usr/local/vitasdk
-            export PATH=$VITASDK/bin:$PATH
-            wget -O vitasdk_stubs.zip https://github.com/GrapheneCt/PVR_PSP2/releases/download/v3.9/vitasdk_stubs.zip
-            unzip vitasdk_stubs.zip -d vitasdk_stubs
-            cp -r vitasdk_stubs/libGLESv1_CM_stub_vitasdk.a/* "${VITASDK}/arm-vita-eabi/lib/"
-            cp -r vitasdk_stubs/libGLESv2_stub_vitasdk.a/* "${VITASDK}/arm-vita-eabi/lib/"
-            cp -r vitasdk_stubs/libgpu_es4_ext_stub_vitasdk.a/* "${VITASDK}/arm-vita-eabi/lib/"
-            cp -r vitasdk_stubs/libIMGEGL_stub_vitasdk.a/* "${VITASDK}/arm-vita-eabi/lib/"
-
-            wget -O PSVita_Release.zip https://github.com/GrapheneCt/PVR_PSP2/releases/download/v3.9/PSVita_Release.zip
-            unzip PSVita_Release.zip -d PSP_PVR2_Release
-            cp PSP_PVR2_Release/libGLESv2.suprx "platform/vita/module/"
-            cp PSP_PVR2_Release/libgpu_es4_ext.suprx "platform/vita/module/"
-            cp PSP_PVR2_Release/libIMGEGL.suprx "platform/vita/module/"
-            cp PSP_PVR2_Release/libpvrPSP2_WSEGL.suprx "platform/vita/module/"
-
-      - name: Build custom SDL3 and SDL3_mixer
+      - name: Build custom packages
         run: |
             export VITASDK=/usr/local/vitasdk
             export PATH=$VITASDK/bin:$PATH
             git clone https://github.com/solomonarul/vita-packages.git --depth 1
             cd vita-packages
-            ./build.sh sdl3
+            ./build.sh pvr_psp2
+            ./build.sh sdl3_pvr_psp2
             ./build.sh sdl3_mixer
-
+  
       - name: Build Debug
         run: |
             export VITASDK=/usr/local/vitasdk
