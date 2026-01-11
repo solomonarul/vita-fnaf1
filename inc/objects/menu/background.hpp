@@ -30,7 +30,7 @@ namespace Game::Objects::Menu
         std::shared_ptr<TextureArray> t_blip;
         std::shared_ptr<Texture> t_background;
         uint8_t current_static_texture = 0;
-        std::shared_ptr<TextureArray> t_static;
+        std::shared_ptr<Texture> t_static;
         std::shared_ptr<Shader> shader;
         Sprite spr_background;
 

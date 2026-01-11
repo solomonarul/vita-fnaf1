@@ -1,9 +1,11 @@
 precision mediump float;
 
 uniform sampler2D u_texture;
-uniform float u_texture_index;
-uniform float u_texture_count;
+uniform float u_index;
+uniform float u_count;
 uniform sampler2D u_static_texture;
+uniform float u_static_index;
+uniform float u_static_count;
 uniform sampler2D u_blip_texture;
 
 uniform float u_alpha;
@@ -17,10 +19,11 @@ void main()
 {
     vec4 blip_color = texture2D(u_blip_texture, v_texture_coords);
 
-    vec2 background_position = vec2(v_texture_coords.x, (v_texture_coords.y + u_texture_index) / u_texture_count);
+    vec2 background_position = vec2(v_texture_coords.x, (v_texture_coords.y + u_index) / u_count);
     vec3 background_color = (texture2D(u_texture, background_position) * u_alpha).rgb;
 
-    vec3 static_color = texture2D(u_static_texture, v_texture_coords).rgb;
+    vec2 static_position = vec2(v_texture_coords.x, (v_texture_coords.y + u_static_index) / u_static_count);
+    vec3 static_color = texture2D(u_static_texture, static_position).rgb;
 
     gl_FragColor = vec4(background_color + static_color * 0.66, 1.0);
 

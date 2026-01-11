@@ -7,7 +7,7 @@ Background::Background()
     this->shader = AssetManager::get<Shader>("s_menu_background");
     this->t_blip = AssetManager::get<TextureArray>("t_menu_blip");
     this->t_background = AssetManager::get<Texture>("t_menu_background");
-    this->t_static = AssetManager::get<TextureArray>("t_static");
+    this->t_static = AssetManager::get<Texture>("t_static");
 }
 
 void Background::draw()
@@ -19,12 +19,14 @@ void Background::draw()
     this->shader->set_uniform("u_bar_width", this->u_bar_width);
 
     this->shader->set_uniform("u_texture", 0);
-    this->shader->set_uniform("u_texture_count", 4.0);
-    this->shader->set_uniform("u_texture_index", this->current_texture * 1.0);
+    this->shader->set_uniform("u_count", 4.0);
+    this->shader->set_uniform("u_index", (double) this->current_texture);
     this->t_background->activate(GL_TEXTURE0);
 
     this->shader->set_uniform("u_static_texture", 1);
-    this->t_static->textures[this->current_static_texture]->activate(GL_TEXTURE1);
+    this->shader->set_uniform("u_static_count", 8.0);
+    this->shader->set_uniform("u_static_index", (double) this->current_static_texture);
+    this->t_static->activate(GL_TEXTURE1);
 
     this->shader->set_uniform("u_blip_texture", 2);
     this->t_blip->textures[this->current_blip_texture]->activate(GL_TEXTURE2);
@@ -50,7 +52,7 @@ void Background::update(double dt)
     }
 
     if (this->timers[TIMER_STATIC_IMAGE_UPDATE].has_ticked())
-        this->current_static_texture = (this->current_static_texture + 1) % this->t_static->textures.size();
+        this->current_static_texture = (this->current_static_texture + 1) % 8;
 
     if (this->timers[TIMER_STATIC_ALPHA_UPDATE].has_ticked())
         this->u_static_alpha = Random::range(50, 149) / 255.0;

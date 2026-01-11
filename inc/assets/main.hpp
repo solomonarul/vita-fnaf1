@@ -24,16 +24,7 @@ inline void queue_assets(uint8_t* count)
     });
 
     (*count)++;
-    AssetManager::queue<TextureArray>("t_static", std::vector<TextureConfig>{
-        TextureConfig{.path = "assets/images/static/12.png"},
-        TextureConfig{.path = "assets/images/static/13.png"},
-        TextureConfig{.path = "assets/images/static/14.png"},
-        TextureConfig{.path = "assets/images/static/15.png"},
-        TextureConfig{.path = "assets/images/static/16.png"},
-        TextureConfig{.path = "assets/images/static/17.png"},
-        TextureConfig{.path = "assets/images/static/18.png"},
-        TextureConfig{.path = "assets/images/static/20.png"},
-    });
+    AssetManager::queue<Texture>("t_static", TextureConfig{.path = "assets/images/static.png"});
 
     (*count)++;
     AssetManager::queue<TextureArray>("t_blip", std::vector<TextureConfig>{
