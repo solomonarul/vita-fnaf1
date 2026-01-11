@@ -98,12 +98,14 @@ void Manager::event(SDL_Event& event, StateManager& sm)
         }
     };
 
+#if !defined(__psp2__)
     auto set_index = [this](size_t index)
     {
         if (this->current != index)
             this->a_blip3->play_audio();
         this->current = index;
     };
+#endif
 
     switch (event.type)
     {

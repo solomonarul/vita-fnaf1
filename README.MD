@@ -4,7 +4,7 @@ Remake of FNAF1 targeted towards the PSVita.
 
 Also runs on Windows, Linux and on the web using Emscriptem.
 
-Obviously the used assets are not owned by me and are under the copyright of the original creator, Scott Cawthon.
+Obviously, the used assets are not owned by me and are under the copyright of the original creator, Scott Cawthon.
 
 The source code is licensed under GPL v3.0.
 
