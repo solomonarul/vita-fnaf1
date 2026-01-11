@@ -12,7 +12,7 @@ namespace Game::States
 {
     struct NightLoader : public IState
     {
-        NightLoader(StateManager&, std::shared_ptr<Objects::Cursor>, int);
+        NightLoader(StateManager&, int);
 
         uint8_t loaded_count = 0;
         uint16_t blip_frame = 0;
@@ -27,8 +27,6 @@ namespace Game::States
 
         std::shared_ptr<Texture> t_loader;
         Sprite spr_loader;
-
-        std::shared_ptr<Objects::Cursor> o_cursor;
 
         virtual void draw(int w, int h) override;
         virtual void update(double dt) override;

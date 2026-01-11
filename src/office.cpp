@@ -1,12 +1,16 @@
 #include "office.hpp"
 
+#include "appdata.hpp"
+
 using namespace Game;
 
 static SDL_FRect const RECT_FAN = SDL_FRect{.x = -24.0 / 960, .y = -209.0 / 544, .w = 163.0 / 960, .h = 294.0 / 544};
 static SDL_FRect const RECT_FREDDY_NOSE = SDL_FRect{.x = 500.0 / 960, .y = 165.0 / 544, .w = 30.0 / 960, .h = 30.0 / 544};
 
-States::Office::Office(StateManager& sm, std::shared_ptr<Objects::Cursor> cursor) : IState::IState(sm)
+States::Office::Office(StateManager& sm) : IState::IState(sm)
 {
+    auto userdata = std::any_cast<std::shared_ptr<AppData>>(this->state_manager.userdata);
+
     sm.states.erase(sm.states.begin());
 
     this->t_office = AssetManager::get<TextureArray>("t_office");
@@ -24,12 +28,17 @@ States::Office::Office(StateManager& sm, std::shared_ptr<Objects::Cursor> cursor
 
     this->spr_fan.refresh_from_rect(RECT_FAN);
 
-    this->o_cursor = cursor;
-    this->o_call_handler.o_cursor = cursor;
+    this->o_call_handler.o_cursor = userdata->o_cursor;
+
+#ifdef __DEBUG__
+    SDL_Log("[TRCE] Loaded Office state.\n");
+#endif
 }
 
 void States::Office::draw(int w, int h)
 {
+    auto userdata = std::any_cast<std::shared_ptr<AppData>>(this->state_manager.userdata);
+
     NEX::GL::clear_color(SDL_FColor{.r = 0.0f, .g = 0.0, .b = 0.0, .a = 1.0f});
 
     this->tr_office_view->use();
@@ -54,12 +63,14 @@ void States::Office::draw(int w, int h)
     this->o_call_handler.draw();
 
     Texture::default_shader->use();
-    this->o_cursor->draw(*Texture::default_shader);
+    userdata->o_cursor->draw(*Texture::default_shader);
 }
 
 void States::Office::update(double dt)
 {
-    this->o_cursor->update();
+    auto userdata = std::any_cast<std::shared_ptr<AppData>>(this->state_manager.userdata);
+
+    userdata->o_cursor->update();
 
     auto m_data = InputManager::get_mouse_data().get_coords();
     if (m_data.x < 0.25)
@@ -68,7 +79,7 @@ void States::Office::update(double dt)
         if (u_view_offset <= 0)
             u_view_offset = 0;
         else
-            this->o_cursor->type = Objects::CursorType::CURSOR_ARROW_LEFT;
+            userdata->o_cursor->type = Objects::CursorType::CURSOR_ARROW_LEFT;
     }
     else if (m_data.x > 0.75)
     {
@@ -76,7 +87,7 @@ void States::Office::update(double dt)
         if (u_view_offset >= 1)
             u_view_offset = 1;
         else
-            this->o_cursor->type = Objects::CursorType::CURSOR_ARROW_RIGHT;
+            userdata->o_cursor->type = Objects::CursorType::CURSOR_ARROW_RIGHT;
     }
 
     if (!this->a_office_buzz->is_playing_track())
@@ -87,7 +98,7 @@ void States::Office::update(double dt)
     auto mouse = InputManager::get_mouse_data().get_coords();
     mouse.x += u_view_offset * (1210 - 960) / 960.0;
     if (SDL_PointInRectFloat(&mouse, &RECT_FREDDY_NOSE))
-        this->o_cursor->type = Objects::CursorType::CURSOR_MASCOT;
+        userdata->o_cursor->type = Objects::CursorType::CURSOR_MASCOT;
 
     this->ti_fan.update(dt);
     if (this->ti_fan.has_ticked())
@@ -109,5 +120,4 @@ void States::Office::event(SDL_Event& event)
     }
 
     this->o_call_handler.event(event);
-    this->o_cursor->event(event);
 }

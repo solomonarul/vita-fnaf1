@@ -19,12 +19,12 @@ void Background::draw()
     this->shader->set_uniform("u_bar_width", this->u_bar_width);
 
     this->shader->set_uniform("vt_background.texture", 0);
-    this->shader->set_uniform("vt_background.index", (double) this->current_texture);
+    this->shader->set_uniform("vt_background.index", (double)this->current_texture);
     this->shader->set_uniform("vt_background.count", 4.0);
     this->t_background->activate(GL_TEXTURE0);
 
     this->shader->set_uniform("vt_static.texture", 1);
-    this->shader->set_uniform("vt_static.index", (double) this->current_static_texture);
+    this->shader->set_uniform("vt_static.index", (double)this->current_static_texture);
     this->shader->set_uniform("vt_static.count", 8.0);
     this->t_static->activate(GL_TEXTURE1);
 

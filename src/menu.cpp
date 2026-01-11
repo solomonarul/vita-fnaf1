@@ -1,5 +1,7 @@
 #include "menu.hpp"
 
+#include "appdata.hpp"
+
 using namespace Game;
 
 #define VERSION "v. 1.00 "
@@ -16,8 +18,10 @@ using namespace Game;
 #define PLATFORM "GENERIC"
 #endif
 
-States::Menu::Menu(StateManager& sm, std::shared_ptr<Objects::Cursor> cursor) : IState::IState(sm)
+States::Menu::Menu(StateManager& sm) : IState::IState(sm)
 {
+    auto userdata = std::any_cast<std::shared_ptr<AppData>>(this->state_manager.userdata);
+
     sm.states.erase(sm.states.begin());
 
     this->f_consolas = AssetManager::get<MTSDF::Font>("f_consolas");
@@ -58,8 +62,11 @@ States::Menu::Menu(StateManager& sm, std::shared_ptr<Objects::Cursor> cursor) : 
     this->a_static2->play_track();
     this->a_blip3->play_track();
 
-    this->o_cursor = cursor;
-    this->o_selector.o_cursor = cursor;
+    this->o_selector.o_cursor = userdata->o_cursor;
+
+#ifdef __DEBUG__
+    SDL_Log("[TRCE] Loaded Menu state.\n");
+#endif
 }
 
 void States::Menu::draw(int w, int h)
@@ -74,15 +81,10 @@ void States::Menu::draw(int w, int h)
 #ifdef APP_IS_DEMO
     this->t_demo->draw();
 #endif
-
-    Texture::default_shader->use();
-    this->o_cursor->draw(*Texture::default_shader);
 }
 
 void States::Menu::update(double dt)
 {
-    this->o_cursor->update();
-
     if (updates_disabled)
     {
         AudioManager::stop_all_tracks();
@@ -101,5 +103,4 @@ void States::Menu::event(SDL_Event& event)
     if (updates_disabled)
         return;
     this->o_selector.event(event, this->state_manager);
-    this->o_cursor->event(event);
 }

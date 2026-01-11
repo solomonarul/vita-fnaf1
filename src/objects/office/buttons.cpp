@@ -2,15 +2,9 @@
 
 using namespace Game::Objects::Office;
 
-ButtonsHandler::ButtonsHandler()
-{
-    
-}
+ButtonsHandler::ButtonsHandler() {}
 
-void ButtonsHandler::draw(void)
-{
-
-}
+void ButtonsHandler::draw(void) {}
 
 void ButtonsHandler::update(double dt)
 {

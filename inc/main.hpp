@@ -21,8 +21,6 @@ namespace Game::States
         std::shared_ptr<Texture> t_loader;
         Sprite spr_loader;
 
-        std::shared_ptr<Objects::Cursor> o_cursor;
-
         Timer ti_transition = Timer(3.0);
 
         virtual void draw(int w, int h) override;

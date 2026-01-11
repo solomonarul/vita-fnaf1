@@ -1,4 +1,6 @@
 #include <nex.hpp>
+
+#include "appdata.hpp"
 #include "main.hpp"
 
 #include <SDL3/SDL_main.h>
@@ -28,7 +30,7 @@ struct AppState : public IAppState
 bool main_loop(double time, void* userData)
 {
     constexpr double timer_rate = 1.0 / 60;
-    constexpr double delta_time_limit = 1.0 / 2; // If less than 2 fps, ignore the update.
+    constexpr double delta_time_limit = 1.0 / 2;
 
     AppState* const status = static_cast<AppState*>(userData);
     if (time < delta_time_limit)
@@ -37,7 +39,7 @@ bool main_loop(double time, void* userData)
     while (status->timer > timer_rate)
     {
         status->states.update(timer_rate);
-        status->timer -= timer_rate; // All my homies like fixed rate delta timing.
+        status->timer -= timer_rate;
     }
 
     status->states.draw(status->window.w, status->window.h);
@@ -94,7 +96,10 @@ int main(int argc, char* argv[])
     AppState status;
     status.window.use();
     status.window.vsync(true);
+    status.states.userdata = std::make_shared<AppData>(AppData{});
+#if !defined(__psp2__)
     SDL_HideCursor();
+#endif
     PUSH_STATE(status.states, Game::States::Main);
     RUN_MAIN_LOOP(main_loop, &status);
     return EXIT_SUCCESS;

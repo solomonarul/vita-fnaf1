@@ -1,5 +1,6 @@
 #include "main.hpp"
 
+#include "appdata.hpp"
 #include "assets/main.hpp"
 #include "menu.hpp"
 
@@ -7,6 +8,8 @@ using namespace Game;
 
 States::Main::Main(StateManager& sm) : IState::IState(sm)
 {
+    auto userdata = std::any_cast<std::shared_ptr<AppData>>(this->state_manager.userdata);
+
     this->f_tahoma = AssetManager::ensure_loaded<MTSDF::Font>("f_tahoma", "assets/images/fonts/tahoma.sdf.png", "assets/images/fonts/tahoma.csv");
 
     this->t_warning[0] = std::make_unique<MTSDF::Text>(f_tahoma, "WARNING!");
@@ -32,7 +35,7 @@ States::Main::Main(StateManager& sm) : IState::IState(sm)
         .min_filter = GL_LINEAR,
         .mag_filter = GL_LINEAR,
     });
-    this->o_cursor = std::make_shared<Objects::Cursor>(std::make_shared<Texture>(TextureConfig{
+    userdata->o_cursor = std::make_shared<Objects::Cursor>(std::make_shared<Texture>(TextureConfig{
         .path = "assets/images/cursor.png",
     }), 8, 3);
     // clang-format on
@@ -40,6 +43,10 @@ States::Main::Main(StateManager& sm) : IState::IState(sm)
     this->spr_loader.refresh_from_rect(SDL_FRect{.x = 856.0 / 960, .y = -500.0 / 544, .w = 64.0 / 960, .h = 64.0 / 544});
 
     queue_assets(&this->loaded_count);
+
+#ifdef __DEBUG__
+    SDL_Log("[TRCE] Loaded Main state.\n");
+#endif
 }
 
 void States::Main::draw(int w, int h)
@@ -65,18 +72,15 @@ void States::Main::draw(int w, int h)
     }
 
     Texture::default_shader->use();
-    this->o_cursor->draw(*Texture::default_shader);
 }
 
 void States::Main::update(double dt)
 {
-    this->o_cursor->update();
-
     if (AssetManager::enqueued_count() == 0)
     {
         this->ti_transition.update(dt);
         if (this->ti_transition.has_ticked())
-            PUSH_STATE(this->state_manager, Game::States::Menu, this->o_cursor);
+            PUSH_STATE(this->state_manager, Game::States::Menu);
     }
     else
         AssetManager::process_enqueued();
@@ -93,6 +97,4 @@ void States::Main::event(SDL_Event& event)
             this->ti_transition.update(this->ti_transition.rate);
             break;
     }
-
-    this->o_cursor->event(event);
 }

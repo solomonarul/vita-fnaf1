@@ -1,7 +1,6 @@
 #pragma once
 
 #include <nex.hpp>
-#include "objects/cursor.hpp"
 #include "objects/menu/background.hpp"
 #include "objects/menu/manager.hpp"
 
@@ -12,7 +11,7 @@ namespace Game::States
 {
     struct Menu : public IState
     {
-        Menu(StateManager&, std::shared_ptr<Objects::Cursor>);
+        Menu(StateManager&);
 
         std::unique_ptr<MTSDF::Text> t_texts[3];
         std::shared_ptr<MTSDF::Font> f_consolas;
@@ -26,8 +25,6 @@ namespace Game::States
                        // something like that.
         Objects::Menu::Background o_background;
         Objects::Menu::Manager o_selector;
-
-        std::shared_ptr<Objects::Cursor> o_cursor;
 
         bool updates_disabled = false;
         virtual void draw(int w, int h) override;
