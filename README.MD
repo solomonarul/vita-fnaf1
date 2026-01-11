@@ -18,9 +18,7 @@ For more info there's also the [workflows](./.github/workflows/).
 
 ### PSVita:
 
-- using the same repo, make a SDL3 build that supports GLES 2.0 using the flags specified [here](https://github.com/libsdl-org/SDL/blob/main/docs/README-vita.md).
-- make your own SDL3_mixer build using [the packages repo](https://github.com/vitasdk/packages).
-- make sure you got all the [PSP2_PVR](https://github.com/GrapheneCt/PVR_PSP2) modules from the release in the assets/modules folder.
+- after installing VitaSDK, use the sdl3_pvr_psp2, pvr_psp2 and sdl3_mixer packages from [here.](https://github.com/solomonarul/vita-packages)
 
 ### Unix:
 
