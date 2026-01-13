@@ -115,7 +115,7 @@ void Manager::event(SDL_Event& event, StateManager& sm)
             if (event.key.repeat)
                 break;
 
-            if (InputManager::get_mouse_data().is_in_normalized_rect(this->t_texts[this->current - 1]->get_bounding_box()))
+            if (this->current && InputManager::get_mouse_data().is_in_normalized_rect(this->t_texts[this->current - 1]->get_bounding_box()))
                 break;
 
             switch (event.key.key)
